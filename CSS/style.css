@@ -1,0 +1,132 @@
+h1,h2,h3,h4,h5,h6,.lead{
+    font-family: 'Noto Sans TC', sans-serif;
+    /*就是說標題都用Noto Sans*/
+}
+
+p,a,label,input,span,ul,li,textarea{
+    font-family: 'Open Sans', sans-serif;
+}
+
+#intro h1,.lead{
+    color:white;
+}
+
+#intro .lead{
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+
+#intro .jumbotron{ 
+    height: 50vh; 
+    background: black;
+} 
+
+#intro .jumbotron img{
+    width: 200;
+    border-radius: 0px;
+}
+
+#intro h1{
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1.5;
+}
+
+.btn{
+    background:white;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 23px;
+    font-weight: bold;
+}
+
+#intro .container{/*上下居中 vertical align*/
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+
+header li{
+    margin: 0 18px;
+}
+
+header .navbar-brand{
+    font-weight: 800;
+    font-size: xx-large;
+}
+
+#education {
+    margin-bottom: 50px;
+}
+
+#education .lead{
+    color: black;
+    /* align-content: center; */
+    /* background-position-y: center; */
+    text-align: center;
+    font-size: xx-large;
+}
+
+#education img{
+    width: 350;
+    margin-left: 70px;
+}
+
+#education .col-md-8{
+    margin-top: 25px;
+}
+
+#education li{
+    margin-bottom: 30px;
+    font-size: 20;
+}
+
+#prize{
+    background: black;
+}
+
+img{
+    max-width: 100%;
+}
+
+#prize .row{
+    margin-top: 25;
+}
+
+#prize .jumbotron{
+    /*height: 50vh;*/
+    background: black;
+    border-radius: 2px;
+}
+
+#prize .innertext{
+    position: absolute;
+    /* margin-left: 0; */
+    /* margin-bottom: 0; */
+    bottom: 10;
+    left: 40;
+    border-color: black;
+    border-width: 1px;
+    color:white;
+}
+
+#prize .upper{
+    position: relative;
+}
+
+#prize .lower{
+    margin-top: 20px;
+}
+
+
+#prize h3{
+    color: white;
+}
+
+#prize .lower{
+    color: white;
+}
