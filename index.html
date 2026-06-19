@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="CSS/style.css">
   </head>
   <body>
@@ -94,25 +95,28 @@
         <section id="about" class="section">
           <h2>About Me</h2>
           <p>
-            A small non-research corner. The map below is for places I have visited: click a region to toggle
-            highlighting. Current defaults are Hong Kong, Shanghai, and Taipei/Taiwan.
+            A small non-research corner. The map below highlights only the places I have visited.
+            Mainland China regions use administrative boundaries where available; Taiwan, Korea, and Japan
+            are shown as city markers on an interactive map.
           </p>
 
           <div class="china-map-card">
             <div class="map-head">
               <div>
-                <strong>China travel map</strong>
-                <span>Visited regions are highlighted. Click regions to edit the view locally.</span>
+                <strong>East Asia travel map</strong>
+                <span>Edit the VISITED_PLACES list in JS/visited-places.js to add new regions or cities.</span>
               </div>
               <button type="button" class="small-button" data-reset-map>Reset</button>
             </div>
             <div id="china-map" class="china-map" role="img" aria-label="China map with visited regions highlighted."></div>
+            <div id="visited-place-summary" class="visited-place-summary" aria-label="Visited place list"></div>
           </div>
         </section>
       </main>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="JS/visited-places.js"></script>
     <script src="JS/site.js"></script>
   </body>
 </html>

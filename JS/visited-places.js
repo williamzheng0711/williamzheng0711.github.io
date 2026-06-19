@@ -1,0 +1,110 @@
+const PROVINCE_CODES = {
+  "北京市": "110000",
+  "天津市": "120000",
+  "河北省": "130000",
+  "山西省": "140000",
+  "內蒙古自治區": "150000",
+  "内蒙古自治区": "150000",
+  "遼寧省": "210000",
+  "辽宁省": "210000",
+  "吉林省": "220000",
+  "黑龍江省": "230000",
+  "黑龙江省": "230000",
+  "上海市": "310000",
+  "江蘇省": "320000",
+  "江苏省": "320000",
+  "浙江省": "330000",
+  "安徽省": "340000",
+  "福建省": "350000",
+  "江西省": "360000",
+  "山東省": "370000",
+  "山东省": "370000",
+  "河南省": "410000",
+  "湖北省": "420000",
+  "湖南省": "430000",
+  "廣東省": "440000",
+  "广东省": "440000",
+  "廣西壯族自治區": "450000",
+  "广西壮族自治区": "450000",
+  "海南省": "460000",
+  "重慶市": "500000",
+  "重庆市": "500000",
+  "四川省": "510000",
+  "貴州省": "520000",
+  "贵州省": "520000",
+  "雲南省": "530000",
+  "云南省": "530000",
+  "西藏自治區": "540000",
+  "西藏自治区": "540000",
+  "陝西省": "610000",
+  "陕西省": "610000",
+  "甘肅省": "620000",
+  "甘肃省": "620000",
+  "青海省": "630000",
+  "寧夏回族自治區": "640000",
+  "宁夏回族自治区": "640000",
+  "新疆維吾爾自治區": "650000",
+  "新疆维吾尔自治区": "650000",
+};
+
+const PLACE_TEMPLATES = {
+  mainlandCity: { type: "boundary", label: "蘇州市", names: ["苏州市"], province: "江蘇省" },
+  municipality: { type: "boundary", label: "北京市", names: ["北京市"], style: "municipality" },
+  sar: { type: "boundary", label: "香港", names: ["香港特别行政区"], style: "sar" },
+  cityMarker: { type: "marker", label: "東京", coordinates: [139.6917, 35.6895], group: "japan" },
+};
+
+// Add new trips here.
+// - type: "boundary" highlights a China mainland/SAR administrative region.
+//   For ordinary prefecture-level cities, add province, e.g.
+//   { type: "boundary", label: "蘇州市", names: ["苏州市"], province: "江蘇省" }
+// - type: "marker" places an exact point on the interactive map.
+//   coordinates are [longitude, latitude].
+//   Optional labelOffset is [x, y] pixels for crowded clusters.
+const VISITED_PLACES = [
+  { type: "boundary", label: "上海市", names: ["上海市"], style: "municipality" },
+  { type: "boundary", label: "香港", names: ["香港特别行政区"], style: "sar" },
+  { type: "boundary", label: "澳門", names: ["澳门特别行政区"], style: "sar" },
+  { type: "boundary", label: "廣州市", names: ["广州市"], province: "廣東省" },
+  { type: "boundary", label: "深圳市", names: ["深圳市"], province: "廣東省" },
+  { type: "boundary", label: "珠海市", names: ["珠海市"], province: "廣東省" },
+  { type: "boundary", label: "清遠市", names: ["清远市"], province: "廣東省" },
+  { type: "boundary", label: "重慶市", names: ["重庆市"], style: "municipality" },
+  { type: "boundary", label: "北京市", names: ["北京市"], style: "municipality" },
+  { type: "boundary", label: "福州市", names: ["福州市"], province: "福建省" },
+  { type: "boundary", label: "寧德市", names: ["宁德市"], province: "福建省" },
+  { type: "boundary", label: "廈門市", names: ["厦门市"], province: "福建省" },
+  { type: "boundary", label: "泉州市", names: ["泉州市"], province: "福建省" },
+  { type: "boundary", label: "棗莊市", names: ["枣庄市"], province: "山東省" },
+  { type: "boundary", label: "濟寧市", names: ["济宁市"], province: "山東省" },
+  { type: "boundary", label: "新鄉市", names: ["新乡市"], province: "河南省" },
+  { type: "boundary", label: "贛州市", names: ["赣州市"], province: "江西省" },
+  { type: "marker", label: "上海", coordinates: [121.4737, 31.2304], group: "sar" },
+  { type: "marker", label: "香港", coordinates: [114.1694, 22.3193], group: "sar" },
+  { type: "marker", label: "澳門", coordinates: [113.5439, 22.1987], group: "sar" },
+  { type: "marker", label: "花蓮", coordinates: [121.6044, 23.9872], group: "taiwan", labelOffset: [7, 8] },
+  { type: "marker", label: "台北", coordinates: [121.5654, 25.033], group: "taiwan", labelOffset: [8, -12] },
+  { type: "marker", label: "新北", coordinates: [121.4628, 25.0169], group: "taiwan", labelOffset: [-42, 6] },
+  { type: "marker", label: "南投", coordinates: [120.9876, 23.8388], group: "taiwan", labelOffset: [-42, -4] },
+  { type: "marker", label: "釜山", coordinates: [129.0756, 35.1796], group: "korea" },
+  { type: "marker", label: "首爾", coordinates: [126.978, 37.5665], group: "korea" },
+  { type: "marker", label: "濟州", coordinates: [126.5312, 33.4996], group: "korea" },
+  { type: "marker", label: "京都", coordinates: [135.7681, 35.0116], group: "japan", labelOffset: [-34, -14] },
+  { type: "marker", label: "大津", coordinates: [135.8546, 35.0179], group: "japan", labelOffset: [8, -12] },
+  { type: "marker", label: "名古屋", coordinates: [136.9066, 35.1815], group: "japan", labelOffset: [8, 4] },
+  { type: "marker", label: "大阪", coordinates: [135.5023, 34.6937], group: "japan", labelOffset: [-34, 12] },
+];
+
+const SUMMARY_GROUPS = [
+  { key: "boundary", title: "Mainland / SAR" },
+  { key: "taiwan", title: "Taiwan" },
+  { key: "korea", title: "Korea" },
+  { key: "japan", title: "Japan" },
+];
+
+window.TRAVEL_MAP_DATA = {
+  PROVINCE_CODES,
+  PLACE_TEMPLATES,
+  VISITED_PLACES,
+  SUMMARY_GROUPS,
+};

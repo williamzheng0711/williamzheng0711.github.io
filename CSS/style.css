@@ -9,6 +9,7 @@
   --visited: #2f7df6;
   --visited-2: #ff8a3d;
   --visited-3: #2fa84f;
+  --visited-4: #8b5cf6;
   --land: #f3f5f8;
   --land-stroke: #aab3c0;
 }
@@ -192,13 +193,17 @@ p {
   background: #ffffff;
 }
 
-.china-map svg {
-  display: block;
+.china-map .leaflet-container,
+.china-map {
   width: 100%;
   height: 580px;
 }
 
-.china-region {
+.leaflet-container {
+  font: inherit;
+}
+
+.travel-region {
   fill: var(--land);
   stroke: var(--land-stroke);
   stroke-width: 0.45;
@@ -206,25 +211,33 @@ p {
   transition: fill 120ms ease, stroke 120ms ease;
 }
 
-.china-region:hover {
+.country-region {
+  fill: #f9fafb;
+  stroke: #c1cad8;
+  stroke-width: 0.55;
+  pointer-events: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.travel-region:hover {
   fill: #dfeafe;
   stroke: #6f84a6;
 }
 
-.china-region.visited {
+.travel-region.visited {
   fill: var(--visited);
   stroke: #1557c0;
   stroke-width: 0.7;
 }
 
-.china-region.visited.shanghai {
+.travel-region.visited.municipality {
   fill: var(--visited-2);
   stroke: #c95f15;
 }
 
-.china-region.visited.taiwan {
-  fill: var(--visited-3);
-  stroke: #18783a;
+.travel-region.visited.sar {
+  fill: var(--visited-4);
+  stroke: #6441c9;
 }
 
 .province-outline {
@@ -232,38 +245,10 @@ p {
   stroke: #657083;
   stroke-width: 0.75;
   pointer-events: none;
+  vector-effect: non-scaling-stroke;
 }
 
-.map-label {
-  fill: #1f2937;
-  font-size: 11px;
-  font-weight: 700;
-  paint-order: stroke;
-  stroke: rgba(255, 255, 255, 0.85);
-  stroke-width: 3px;
-}
-
-.map-marker circle {
-  stroke: #ffffff;
-  stroke-width: 1.8;
-}
-
-.marker-shanghai circle {
-  fill: var(--visited-2);
-}
-
-.marker-hk circle {
-  fill: var(--visited);
-}
-
-.marker-taipei circle {
-  fill: var(--visited-3);
-}
-
-.map-tip {
-  position: absolute;
-  left: 12px;
-  bottom: 12px;
+.leaflet-map-tip {
   max-width: min(460px, calc(100% - 24px));
   padding: 8px 10px;
   border: 1px solid rgba(185, 195, 210, 0.75);
@@ -272,6 +257,53 @@ p {
   background: rgba(255, 255, 255, 0.92);
   font-size: 12px;
   line-height: 1.45;
+}
+
+.place-tooltip {
+  border: 0;
+  color: #1f2937;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 4px rgba(31, 41, 55, 0.18);
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.visited-place-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px;
+  border-top: 1px solid var(--line);
+  background: #ffffff;
+}
+
+.visited-group {
+  min-width: 0;
+}
+
+.visited-group h3 {
+  margin: 0 0 6px;
+  color: #263242;
+  font-size: 13px;
+}
+
+.visited-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.visited-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 2px 7px;
+  border: 1px solid #d5dce8;
+  border-radius: 999px;
+  background: #f8fafc;
+  color: #344054;
+  font-size: 12px;
+  line-height: 1.2;
 }
 
 @media (max-width: 760px) {
@@ -319,5 +351,9 @@ p {
   .china-map svg {
     min-height: 430px;
     height: 430px;
+  }
+
+  .visited-place-summary {
+    grid-template-columns: 1fr 1fr;
   }
 }

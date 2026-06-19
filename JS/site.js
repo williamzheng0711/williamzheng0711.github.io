@@ -1,8 +1,16 @@
-const DEFAULT_VISITED = new Set(["上海市"]);
-const DEFAULT_VISITED_CODES = new Set(["310000"]);
-const DETAIL_CODES = [];
 const CHINA_BASE = "https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json";
-const DETAIL_BASE = "https://geo.datav.aliyun.com/areas_v3/bound";
+const CHINA_DETAIL_BASE = "https://geo.datav.aliyun.com/areas_v3/bound";
+
+const travelMapData = window.TRAVEL_MAP_DATA || {};
+const travelProvinceCodes = travelMapData.PROVINCE_CODES || {};
+const travelVisitedPlaces = travelMapData.VISITED_PLACES || [];
+const travelSummaryGroups = travelMapData.SUMMARY_GROUPS || [];
+
+const boundaryPlaces = travelVisitedPlaces.filter((place) => place.type === "boundary");
+const markerPlaces = travelVisitedPlaces.filter((place) => place.type === "marker");
+const detailCodes = [...new Set(boundaryPlaces.map((place) => travelProvinceCodes[place.province]).filter(Boolean))];
+const visitedNames = new Set(boundaryPlaces.flatMap((place) => place.names));
+const placeByName = new Map(boundaryPlaces.flatMap((place) => place.names.map((name) => [name, place])));
 
 const navLinks = [...document.querySelectorAll(".menu-item")];
 const sections = navLinks
@@ -23,134 +31,237 @@ const observer = new IntersectionObserver(
 
 sections.forEach((section) => observer.observe(section));
 
-function renderChinaMap() {
+function renderTravelMap() {
   const container = document.querySelector("#china-map");
-  if (!container || !window.d3) return;
+  if (!container || !window.L) return;
 
-  const tip = d3.select(container).append("div").attr("class", "map-tip");
-  tip.text("Loading China administrative boundaries...");
+  container.innerHTML = "";
+  const map = L.map(container, {
+    zoomControl: true,
+    scrollWheelZoom: true,
+  }).setView([31.5, 121.8], 4);
 
-  const rect = container.getBoundingClientRect();
-  const width = Math.max(320, rect.width);
-  const height = window.matchMedia("(max-width: 760px)").matches ? 430 : 580;
-  const visited = new Set(DEFAULT_VISITED);
-  const visitedCodes = new Set(DEFAULT_VISITED_CODES);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 11,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
 
-  const svg = d3
-    .select(container)
-    .append("svg")
-    .attr("viewBox", `0 0 ${width} ${height}`)
-    .attr("preserveAspectRatio", "xMidYMid meet");
+  const status = L.control({ position: "bottomleft" });
+  status.onAdd = () => {
+    const div = L.DomUtil.create("div", "leaflet-map-tip");
+    div.textContent = "Loading visited regions...";
+    return div;
+  };
+  status.addTo(map);
 
-  const detailRequests = DETAIL_CODES.map((code) =>
-    d3.json(`${DETAIL_BASE}/${code}_full.json`).catch(() => null)
+  const visitedLayer = L.featureGroup().addTo(map);
+  const contextLayer = L.featureGroup().addTo(map);
+  const markerLayer = L.featureGroup().addTo(map);
+  const visited = new Set(visitedNames);
+  let redrawVisited = () => {};
+
+  markerPlaces.forEach((place) => {
+    const [lng, lat] = place.coordinates;
+    L.circleMarker([lat, lng], markerStyle(place.group))
+      .bindTooltip(place.label, {
+        permanent: true,
+        direction: tooltipDirection(place.group),
+        offset: tooltipOffset(place),
+        className: `place-tooltip tooltip-${place.group}`,
+      })
+      .addTo(markerLayer);
+  });
+
+  document.querySelector(".leaflet-map-tip").textContent =
+    "City markers loaded. Loading administrative boundaries...";
+
+  const markerBounds = markerLayer.getBounds();
+  if (markerBounds.isValid()) map.fitBounds(markerBounds.pad(0.22), { maxZoom: 5 });
+
+  const detailRequests = detailCodes.map((code) =>
+    fetch(`${CHINA_DETAIL_BASE}/${code}_full.json`).then((response) => response.json()).catch(() => null)
   );
 
-  Promise.all([d3.json(CHINA_BASE), ...detailRequests])
+  Promise.all([fetch(CHINA_BASE).then((response) => response.json()), ...detailRequests])
     .then(([china, ...details]) => {
       const baseFeatures = china.features || [];
+      const detailedProvinceCodes = new Set(detailCodes);
+      const contextFeatures = baseFeatures.filter(
+        (feature) => !detailedProvinceCodes.has(String(feature.properties?.adcode))
+      );
       const detailFeatures = details.flatMap((item) => item?.features || []);
-      const drawFeatures = [
-        ...baseFeatures.filter((feature) => !DETAIL_CODES.includes(String(feature.properties?.adcode))),
-        ...detailFeatures,
-      ];
+      const allBoundaryFeatures = [...contextFeatures, ...detailFeatures];
 
-      const projection = d3
-        .geoMercator()
-        .center([104, 36])
-        .scale(Math.min(width * 0.82, height * 1.05))
-        .translate([width * 0.5, height * 0.52]);
-      const path = d3.geoPath(projection);
-      const map = svg.append("g");
+      L.geoJSON(contextFeatures, {
+        style: neutralRegionStyle,
+        interactive: false,
+      }).addTo(contextLayer);
 
-      const zoom = d3
-        .zoom()
-        .scaleExtent([1, 7])
-        .on("zoom", (event) => map.attr("transform", event.transform));
+      L.geoJSON(detailFeatures, {
+        style: neutralRegionStyle,
+        interactive: false,
+      }).addTo(contextLayer);
 
-      svg.call(zoom);
+      redrawVisited = function () {
+        visitedLayer.clearLayers();
+        L.geoJSON(allBoundaryFeatures.filter((feature) => visited.has(regionName(feature))), {
+          style: (feature) => visitedRegionStyle(placeByName.get(regionName(feature))),
+          onEachFeature: (feature, layer) => {
+            const name = regionName(feature);
+            layer.bindTooltip(placeByName.get(name)?.label || name);
+            layer.on("click", () => {
+              visited.delete(name);
+              redrawVisited();
+            });
+          },
+        }).addTo(visitedLayer);
 
-      document.querySelector("[data-reset-map]")?.addEventListener("click", () => {
-        visited.clear();
-        visitedCodes.clear();
-        DEFAULT_VISITED.forEach((name) => visited.add(name));
-        DEFAULT_VISITED_CODES.forEach((code) => visitedCodes.add(code));
-        updateVisited();
-        svg.transition().duration(350).call(zoom.transform, d3.zoomIdentity);
+        const labels = [...visited].map((name) => placeByName.get(name)?.label || name);
+        document.querySelector(".leaflet-map-tip").textContent =
+          `Highlighted: ${labels.join(", ")}. City markers show Taiwan, Korea, and Japan.`;
+      };
+
+      allBoundaryFeatures.forEach((feature) => {
+        const name = regionName(feature);
+        if (!name || !placeByName.has(name)) return;
+        L.geoJSON(feature, {
+          style: { fillOpacity: 0, opacity: 0, weight: 0 },
+          onEachFeature: (_, layer) => {
+            layer.on("click", () => {
+              if (visited.has(name)) visited.delete(name);
+              else visited.add(name);
+              redrawVisited();
+            });
+          },
+        }).addTo(contextLayer);
       });
 
-      map
-        .selectAll(".china-region")
-        .data(drawFeatures)
-        .join("path")
-        .attr("class", (feature) => regionClass(feature, visited, visitedCodes))
-        .attr("d", path)
-        .on("click", (_, feature) => {
-          const name = feature.properties?.name;
-          if (!name) return;
-          if (visited.has(name)) visited.delete(name);
-          else visited.add(name);
-          updateVisited();
-        })
-        .append("title")
-        .text((feature) => feature.properties?.name || "行政区");
-
-      map
-        .selectAll(".province-outline")
-        .data(baseFeatures)
-        .join("path")
-        .attr("class", "province-outline")
-        .attr("d", path);
-
-      const labelData = [
-        { name: "Shanghai", coordinates: [121.4737, 31.2304], className: "marker-shanghai" },
-        { name: "Hong Kong", coordinates: [114.1694, 22.3193], className: "marker-hk" },
-        { name: "Taipei", coordinates: [121.5654, 25.033], className: "marker-taipei" },
-      ];
-
-      const markers = map
-        .selectAll(".map-marker")
-        .data(labelData)
-        .join("g")
-        .attr("class", (d) => `map-marker ${d.className}`)
-        .attr("transform", (d) => `translate(${projection(d.coordinates)})`);
-
-      markers.append("circle").attr("r", 4.5);
-
-      map
-        .selectAll(".map-label")
-        .data(labelData)
-        .join("text")
-        .attr("class", "map-label")
-        .attr("x", (d) => projection(d.coordinates)[0] + 7)
-        .attr("y", (d) => projection(d.coordinates)[1] - 5)
-        .text((d) => d.name);
-
-      function updateVisited() {
-        map.selectAll(".china-region").attr("class", (feature) => regionClass(feature, visited, visitedCodes));
-        tip.text(`Highlighted: ${[...visited].join(", ")}, Hong Kong, Taipei. Click any visible region to toggle it.`);
-      }
-
-      updateVisited();
+      redrawVisited();
+      const bounds = L.featureGroup([visitedLayer, markerLayer]).getBounds();
+      if (bounds.isValid()) map.fitBounds(bounds.pad(0.28), { maxZoom: 5 });
     })
     .catch(() => {
-      tip.text("Map data could not be loaded. Please check the network connection and reload.");
+      document.querySelector(".leaflet-map-tip").textContent =
+        "Administrative boundaries could not be loaded. City markers remain available.";
     });
+
+  document.querySelector("[data-reset-map]")?.addEventListener("click", () => {
+    visited.clear();
+    visitedNames.forEach((name) => visited.add(name));
+    redrawVisited();
+    const bounds = L.featureGroup([visitedLayer, markerLayer]).getBounds();
+    if (bounds.isValid()) map.fitBounds(bounds.pad(0.28), { maxZoom: 5 });
+  });
 }
 
-function regionClass(feature, visited, visitedCodes) {
-  const name = feature.properties?.name || "";
-  const code = String(feature.properties?.adcode || "");
-  const parentCode = String(feature.properties?.parent?.adcode || "");
-  const classes = ["china-region"];
-  if (visited.has(name) || visitedCodes.has(code) || visitedCodes.has(parentCode)) {
-    classes.push("visited");
-  }
-  if (name.includes("上海") || code === "310000" || parentCode === "310000") classes.push("shanghai");
-  if (name.includes("台湾") || name.includes("臺灣") || code === "710000" || parentCode === "710000") {
-    classes.push("taiwan");
-  }
-  return classes.join(" ");
+function regionName(feature) {
+  return feature.properties?.name || "";
 }
 
-window.addEventListener("load", renderChinaMap);
+function neutralRegionStyle() {
+  return {
+    color: "#8c98aa",
+    weight: 0.65,
+    fillColor: "#f3f5f8",
+    fillOpacity: 0.32,
+  };
+}
+
+function visitedRegionStyle(place) {
+  const palette = {
+    municipality: ["#ff8a3d", "#c95f15"],
+    sar: ["#8b5cf6", "#6441c9"],
+    default: ["#2f7df6", "#1557c0"],
+  };
+  const [fillColor, color] = palette[place?.style || "default"];
+  return {
+    color,
+    weight: 1.2,
+    fillColor,
+    fillOpacity: 0.5,
+  };
+}
+
+function markerStyle(group) {
+  const colors = {
+    taiwan: "#2fa84f",
+    korea: "#2f7df6",
+    japan: "#ff8a3d",
+    sar: "#8b5cf6",
+  };
+  return {
+    radius: 5,
+    color: "#ffffff",
+    weight: 2,
+    fillColor: colors[group] || "#2f7df6",
+    fillOpacity: 0.95,
+  };
+}
+
+function tooltipDirection(group) {
+  if (group === "taiwan") return "right";
+  if (group === "japan") return "top";
+  return "right";
+}
+
+function tooltipOffset(place) {
+  if (place.labelOffset) return L.point(place.labelOffset[0], place.labelOffset[1]);
+  return L.point(6, -4);
+}
+
+function renderVisitedSummary() {
+  const container = document.querySelector("#visited-place-summary");
+  if (!container) return;
+
+  container.innerHTML = travelSummaryGroups.map((group) => {
+    const places = travelVisitedPlaces.filter((place) =>
+      group.key === "boundary" ? place.type === "boundary" : place.group === group.key
+    );
+    const tags = places.map((place) => `<span class="visited-tag">${place.label}</span>`).join("");
+    return `
+      <section class="visited-group">
+        <h3>${group.title}</h3>
+        <div class="visited-tags">${tags}</div>
+      </section>
+    `;
+  }).join("");
+}
+
+function validateVisitedPlaces() {
+  const warnings = [];
+  const labels = new Set();
+
+  travelVisitedPlaces.forEach((place, index) => {
+    const labelKey = `${place.type}:${place.label}`;
+    if (!place.label) warnings.push(`VISITED_PLACES[${index}] is missing label.`);
+    if (labels.has(labelKey)) warnings.push(`Duplicate visited label for ${place.type}: ${place.label}.`);
+    labels.add(labelKey);
+
+    if (place.type === "boundary") {
+      if (!Array.isArray(place.names) || place.names.length === 0) {
+        warnings.push(`${place.label || `VISITED_PLACES[${index}]`} boundary entry needs names.`);
+      }
+      if (place.province && !travelProvinceCodes[place.province]) {
+        warnings.push(`${place.label} uses unknown province "${place.province}". Add it to PROVINCE_CODES.`);
+      }
+    } else if (place.type === "marker") {
+      if (!Array.isArray(place.coordinates) || place.coordinates.length !== 2) {
+        warnings.push(`${place.label || `VISITED_PLACES[${index}]`} marker entry needs [longitude, latitude].`);
+      }
+      if (place.labelOffset && (!Array.isArray(place.labelOffset) || place.labelOffset.length !== 2)) {
+        warnings.push(`${place.label} labelOffset must be [x, y].`);
+      }
+      if (!place.group) warnings.push(`${place.label} marker entry needs group.`);
+    } else {
+      warnings.push(`${place.label || `VISITED_PLACES[${index}]`} has unknown type "${place.type}".`);
+    }
+  });
+
+  if (warnings.length) console.warn(`Travel map data warnings:\n${warnings.join("\n")}`);
+}
+
+window.addEventListener("load", () => {
+  validateVisitedPlaces();
+  renderVisitedSummary();
+  renderTravelMap();
+});
