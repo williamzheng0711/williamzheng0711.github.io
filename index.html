@@ -1,150 +1,118 @@
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <script src="https://kit.fontawesome.com/2f92ced58d.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&family=Open+Sans&display=swap" rel="stylesheet">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="William W. Zheng's personal academic homepage.">
+    <title>William W. Zheng</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/style.css">
+  </head>
+  <body>
+    <div class="page">
+      <aside class="layout-menu" aria-label="Primary navigation">
+        <div class="menu-category">Home</div>
+        <a class="menu-item current" href="#home">About me</a>
+        <a class="menu-item" href="#research">Research</a>
+        <a class="menu-item" href="#publications">Publications</a>
+        <a class="menu-item" href="#about">About Me</a>
+      </aside>
 
+      <main class="layout-content">
+        <section id="home" class="section">
+          <div class="top-title">
+            <h1>William W. Zheng's Homepage</h1>
+          </div>
 
-        <link rel="stylesheet" href="CSS/style.css"> 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-        
+          <div class="profile-row">
+            <img src="img/IMG_8179.JPG" alt="Portrait of William W. Zheng">
+            <p>
+              <strong>William Weijia Zheng</strong><br>
+              Department of Information Engineering<br>
+              The Chinese University of Hong Kong<br>
+              Hong Kong SAR<br>
+              <br>
+              Also published as William W. Zheng and Weijia Zheng.<br>
+              [<a href="https://scholar.google.com/citations?user=3n35D1IAAAAJ&hl=zh-TW" target="_blank" rel="noreferrer">Google Scholar</a>]
+            </p>
+          </div>
 
-        <title>William Zheng</title>
-    </head>
+          <h2>About me</h2>
+          <p>
+            I am a student in the Department of Information Engineering at The Chinese University of Hong Kong.
+            My research interests include coding theory, wireless communications, unsourced random access,
+            erasure channels, and learning-based methods for reliable communication systems.
+          </p>
 
-    <body>
-        <header>
-            <div class="container">
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="navbar-brand" href="#">
-                        大寶 個人主頁 <!可以改成圖片>
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                    </button>
-                
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">背景</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">事跡</a>
-                        </li>
-                    </ul>
-                    </div>
-                </nav>
-            </div>
-        </header>
-
-        <section id="intro">
-            <div class="jumbotron"> <!因為container 是沒有邊上的留白部分的，所以要再弄一個div>
-                <div class="container"> <! Container裡面（其實外面也可以）可以使用grid system，將layout變成12格>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h1>鄭 大寶（Zheng）</h1>
-                            <p class="lead">24歳、学生です。</p>
-                        </div>
-
-                        <div class="col-md-4">
-                            <img src="img/IMG_8179.JPG">
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <h2>News</h2>
+          <ul class="plain-list">
+            <li>[2026] Our work on safety-critical wireless communications via safe reinforcement learning is available on arXiv.</li>
+            <li>[2025] Our work on linked-loop codes for unsourced A- and B-channels with erasures appeared in IEEE Transactions on Communications.</li>
+          </ul>
         </section>
 
-        <section id = "education">
-            <div class="container">
-
-                <div class="row">
-                    <div class="col-md-8 offset-md-2 text-center">
-                        <h3>背景</h3>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-3 text-right">
-                        <img src="img/xingyi.jpg">
-                    </div>
-                    <div class="col-md-8 text-right">
-                            <li>2015年-2018年 就讀於尚海市旦熙中學，
-                                （同學厲害但我很菜的）普通班。
-                            </li>
-                            <li>
-                                2018年-2022年 就讀於香城華語大學。
-                                （也沒有什麽厲害的專業）
-                            </li>
-                            <li>2018年7月 前往北境大學攻讀工學。</li>
-                            <li>2020年7月迄今  在香城華語大學進行學術研究。</li>
-                    </div>
-                </div>
-            </div>
+        <section id="research" class="section">
+          <h2>Research</h2>
+          <p>
+            My current work studies communication and coding problems that arise in modern multi-user wireless systems.
+          </p>
+          <ul class="plain-list">
+            <li><strong>Unsourced random access:</strong> coding schemes for A- and B-channels with erasures.</li>
+            <li><strong>Reliable communication:</strong> code design and analysis for multi-user channel models.</li>
+            <li><strong>Safe learning:</strong> reinforcement learning methods for safety-critical wireless communications.</li>
+          </ul>
         </section>
 
-        <section id="prize">
-            <div class="jumbotron"> <!因為container 是沒有邊上的留白部分的，所以要再弄一個div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8 offset-md-2 text-center">
-                            <h3>事跡</h3>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4 text-center">
-                            <div class="outer">
-                                <div class="upper">
-                                    <div class="innertext text-left">
-                                        <span>2018年</span>
-                                        <h4>并沒什麽特別的</h4>
-                                    </div>
-                                </div>
-                                <div class="lower">
-                                    <i class="fas fa-award">崇極 通識課程獎學金（香城）</i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 text-center">
-                            <div class="outer">
-                                <div class="upper">
-                                    <div class="innertext text-left">
-                                        <span>2018/19年</span>
-                                        <h4>以末位考入香城華語大學</h4>
-                                    </div>
-                                </div>
-                                <div class="lower">
-                                    <i class="fas fa-award">至德 學術獎學金（尚海）</i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 text-center">
-                            <div class="outer">
-                                <div class="upper">
-                                    <div class="innertext text-left">
-                                        <span>2016年</span>
-                                        <h4>計算機競賽優勝</h4>
-                                    </div>
-                                </div>
-                                <div class="lower">
-                                    <i class="fas fa-award">競飛 通訊科技獎學金（尚海）</i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <section id="publications" class="section">
+          <h2>Selected Publications</h2>
+          <ul class="publication-list">
+            <li>
+              H. Peng, T. Wu, H. Liu, <strong>W. Zheng</strong>, Y.-J. A. Zhang, and A. Scaglione,
+              "Enabling Safety-Critical Wireless Communications via Safe Reinforcement Learning,"
+              <em>arXiv preprint arXiv:2604.17032</em>, 2026.
+            </li>
+            <li>
+              <strong>W. W. Zheng</strong>, J. R. Ebert, S. Rini, and J.-F. Chamberland,
+              "Linked-Loop Codes for the Unsourced A- and B-Channels with Erasures,"
+              <em>IEEE Transactions on Communications</em>, 2025.
+            </li>
+            <li>
+              <strong>W. W. Zheng</strong>, J. R. Ebert, S. Rini, and J.-F. Chamberland,
+              "Coding for the Unsourced B-Channel with Erasures: Enhancing the Linked Loop Code,"
+              <em>ICASSP</em>, 2024.
+            </li>
+            <li>
+              <strong>W. W. Zheng</strong>, J. R. Ebert, S. Rini, and J.-F. Chamberland,
+              "Coding for the Unsourced A-Channel with Erasures: The Linked Loop Code,"
+              <em>EUSIPCO</em>, 2023.
+            </li>
+          </ul>
         </section>
 
-    </body>
+        <section id="about" class="section">
+          <h2>About Me</h2>
+          <p>
+            A small non-research corner. The map below is for places I have visited: click a region to toggle
+            highlighting. Current defaults are Hong Kong, Shanghai, and Taipei/Taiwan.
+          </p>
 
+          <div class="china-map-card">
+            <div class="map-head">
+              <div>
+                <strong>China travel map</strong>
+                <span>Visited regions are highlighted. Click regions to edit the view locally.</span>
+              </div>
+              <button type="button" class="small-button" data-reset-map>Reset</button>
+            </div>
+            <div id="china-map" class="china-map" role="img" aria-label="China map with visited regions highlighted."></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="JS/site.js"></script>
+  </body>
 </html>
