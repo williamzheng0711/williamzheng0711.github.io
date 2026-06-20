@@ -3,6 +3,7 @@ import vm from "node:vm";
 
 const dataSource = fs.readFileSync(new URL("./visited-places.js", import.meta.url), "utf8");
 const siteSource = fs.readFileSync(new URL("./site.js", import.meta.url), "utf8");
+const localBoundaries = JSON.parse(fs.readFileSync(new URL("../data/visited-boundaries.geojson", import.meta.url), "utf8"));
 
 const dataContext = { window: {} };
 vm.createContext(dataContext);
@@ -10,16 +11,18 @@ vm.runInContext(dataSource, dataContext, { filename: "visited-places.js" });
 
 const { PROVINCE_CODES = {}, VISITED_PLACES = [] } = dataContext.window.TRAVEL_MAP_DATA || {};
 const boundaryPlaces = VISITED_PLACES.filter((place) => place.type === "boundary");
-const markerPlaces = VISITED_PLACES.filter((place) => place.type === "marker");
-const provincePlaces = boundaryPlaces.filter((place) => place.province);
-const baseBoundaryPlaces = boundaryPlaces.filter((place) => !place.province);
+const datavPlaces = boundaryPlaces.filter((place) => place.source !== "local");
+const localPlaces = boundaryPlaces.filter((place) => place.source === "local");
+const provincePlaces = datavPlaces.filter((place) => place.province);
+const baseBoundaryPlaces = datavPlaces.filter((place) => !place.province);
 const expectedDetailCodes = [...new Set(provincePlaces.map((place) => PROVINCE_CODES[place.province]))];
 
 const forbiddenFeatureNames = ["东莞市", "江门市", "三明市", "龙岩市"];
 const baseFeatures = [
   ...baseBoundaryPlaces.map((place, index) => mockFeature(place.names[0], 100000 + index)),
   mockFeature("台湾省", 710000),
-  mockFeature("浙江省", 330000),
+  mockFeature("日本", 392000),
+  mockFeature("대한민국", 410000),
 ];
 const detailByCode = Object.fromEntries(
   expectedDetailCodes.map((code) => {
@@ -37,8 +40,11 @@ const detailByCode = Object.fromEntries(
 const success = await runMapRuntime();
 assertEqualSets(success.requestedDetailCodes, expectedDetailCodes, "province detail fetches");
 assertEqualSets(success.highlightedLabels, boundaryPlaces.map((place) => place.label), "highlighted boundary labels");
-assertEqualSets(success.markerLabels, markerPlaces.map((place) => place.label), "marker labels");
-assertMarkerRendering(success.markerLayers, markerPlaces, "success marker rendering");
+assertEqualSets(success.localHighlightedLabels, localPlaces.map((place) => place.label), "local polygon labels");
+
+if (success.circleMarkerCalls !== 0) {
+  throw new Error(`Expected zero point markers, got ${success.circleMarkerCalls}`);
+}
 
 for (const name of forbiddenFeatureNames) {
   if (success.highlightedLabels.includes(name)) throw new Error(`Forbidden feature was highlighted: ${name}`);
@@ -48,26 +54,18 @@ if (!success.summary.includes("Taiwan") || !success.summary.includes("Japan")) {
   throw new Error("Visited summary did not render expected group headings.");
 }
 
-const fallback = await runMapRuntime({ failChinaBoundary: true });
-assertEqualSets(fallback.markerLabels, markerPlaces.map((place) => place.label), "fallback marker labels");
-assertMarkerRendering(fallback.markerLayers, markerPlaces, "fallback marker rendering");
-
-if (fallback.highlightedLabels.length !== 0) {
-  throw new Error("Fallback scenario should not highlight administrative boundaries.");
-}
-
-if (!fallback.status.includes("City markers remain available")) {
-  throw new Error("Fallback status did not explain that city markers remain available.");
+if (success.status.includes("unavailable")) {
+  throw new Error(`Expected all visited boundaries to render, got status: ${success.status}`);
 }
 
 console.log(
-  `Map runtime verification passed: ${success.highlightedLabels.length} highlighted boundaries, ` +
-    `${success.markerLabels.length} markers, ${success.requestedDetailCodes.length} province detail requests, ` +
-    "marker fallback verified."
+  `Map runtime verification passed: ${success.highlightedLabels.length} highlighted boundary regions, ` +
+    `${success.localHighlightedLabels.length} local polygons, ${success.requestedDetailCodes.length} province detail requests, ` +
+    "0 point markers."
 );
 
-async function runMapRuntime(options = {}) {
-  const runtime = createRuntime(options);
+async function runMapRuntime() {
+  const runtime = createRuntime();
   vm.createContext(runtime.context);
   vm.runInContext(dataSource, runtime.context, { filename: "visited-places.js" });
   vm.runInContext(siteSource, runtime.context, { filename: "site.js" });
@@ -75,20 +73,23 @@ async function runMapRuntime(options = {}) {
   await runtime.fireLoad();
   await new Promise((resolve) => setTimeout(resolve, 0));
 
-  const [visitedLayer, , markerLayer] = runtime.featureGroups;
+  const [visitedLayer] = runtime.featureGroups;
+  const highlightedLabels = flattenLayerLabels(visitedLayer);
+  const localLabels = new Set(localPlaces.map((place) => place.label));
+
   return {
-    highlightedLabels: flattenLayerLabels(visitedLayer),
-    markerLabels: markerLayer.layers.map((layer) => layer.tooltip.text),
-    markerLayers: markerLayer.layers,
+    highlightedLabels,
+    localHighlightedLabels: highlightedLabels.filter((label) => localLabels.has(label)),
     requestedDetailCodes: runtime.fetchUrls
       .map((url) => url.match(/bound\/(\d+)_full\.json/)?.[1])
       .filter((code) => code && code !== "100000"),
+    circleMarkerCalls: runtime.circleMarkerCalls,
     status: runtime.status.textContent,
     summary: runtime.summary.innerHTML,
   };
 }
 
-function createRuntime(options = {}) {
+function createRuntime() {
   const loadHandlers = [];
   const fetchUrls = [];
   const featureGroups = [];
@@ -112,6 +113,7 @@ function createRuntime(options = {}) {
       return this;
     },
   };
+  let circleMarkerCalls = 0;
 
   class MockIntersectionObserver {
     observe() {}
@@ -137,14 +139,6 @@ function createRuntime(options = {}) {
     map() {
       return map;
     },
-    tileLayer() {
-      return {
-        addTo(targetMap) {
-          targetMap.layers.push(this);
-          return this;
-        },
-      };
-    },
     featureGroup(initialLayers = []) {
       const group = createFeatureGroup(initialLayers);
       featureGroups.push(group);
@@ -162,23 +156,9 @@ function createRuntime(options = {}) {
 
       return group;
     },
-    circleMarker(latLng, style) {
-      return {
-        latLng,
-        style,
-        tooltip: null,
-        bindTooltip(text, options) {
-          this.tooltip = { text, options };
-          return this;
-        },
-        addTo(group) {
-          group.layers.push(this);
-          return this;
-        },
-      };
-    },
-    point(x, y) {
-      return [x, y];
+    circleMarker() {
+      circleMarkerCalls += 1;
+      throw new Error("Point markers should not be used for visited places.");
     },
   };
 
@@ -186,8 +166,8 @@ function createRuntime(options = {}) {
     console,
     fetch(url) {
       fetchUrls.push(url);
-      if (options.failChinaBoundary && url.endsWith("100000_full.json")) {
-        return Promise.reject(new Error("mock China boundary failure"));
+      if (url.endsWith("data/visited-boundaries.geojson") || url.endsWith("visited-boundaries.geojson")) {
+        return Promise.resolve(mockResponse(localBoundaries));
       }
       if (url.endsWith("100000_full.json")) return Promise.resolve(mockResponse({ features: baseFeatures }));
 
@@ -222,6 +202,9 @@ function createRuntime(options = {}) {
     context,
     featureGroups,
     fetchUrls,
+    get circleMarkerCalls() {
+      return circleMarkerCalls;
+    },
     status,
     summary,
     async fireLoad() {
@@ -289,31 +272,4 @@ function assertEqualSets(actual, expected, label) {
       `${label} mismatch\nActual:\n${actualSorted.join("\n")}\nExpected:\n${expectedSorted.join("\n")}`
     );
   }
-}
-
-function assertMarkerRendering(markerLayers, expectedPlaces, label) {
-  const layerByLabel = new Map(markerLayers.map((layer) => [layer.tooltip?.text, layer]));
-
-  expectedPlaces.forEach((place) => {
-    const layer = layerByLabel.get(place.label);
-    if (!layer) throw new Error(`${label}: missing marker layer for ${place.label}`);
-
-    const [expectedLng, expectedLat] = place.coordinates;
-    const [actualLat, actualLng] = layer.latLng;
-    if (actualLng !== expectedLng || actualLat !== expectedLat) {
-      throw new Error(
-        `${label}: ${place.label} coordinate mismatch, got [${actualLng}, ${actualLat}], ` +
-          `expected [${expectedLng}, ${expectedLat}]`
-      );
-    }
-
-    const expectedOffset = place.labelOffset || [6, -4];
-    const actualOffset = layer.tooltip.options.offset;
-    if (actualOffset[0] !== expectedOffset[0] || actualOffset[1] !== expectedOffset[1]) {
-      throw new Error(
-        `${label}: ${place.label} label offset mismatch, got [${actualOffset.join(", ")}], ` +
-          `expected [${expectedOffset.join(", ")}]`
-      );
-    }
-  });
 }

@@ -34,6 +34,8 @@ const label = args.label || preset?.label || args.preset;
 const names = args.names || args.name ? splitList(args.names || args.name) : preset?.names || [];
 const province = args.province || preset?.province;
 const style = args.style || preset?.style;
+const sourceType = args.source || preset?.source;
+const group = args.group || preset?.group;
 const required = [];
 if (!label) required.push("label or preset");
 if (!names.length) required.push("name/names or preset");
@@ -49,8 +51,8 @@ if (VISITED_PLACES.some((place) => place.type === "boundary" && place.label === 
   process.exit(1);
 }
 
-if (!province && !style) {
-  console.error("Boundary entries need either --province or --style.");
+if (!province && !style && sourceType !== "local") {
+  console.error("Boundary entries need either --province, --style, or --source=local.");
   printUsage();
   process.exit(1);
 }
@@ -67,6 +69,17 @@ if (style && !boundaryStyles.has(style)) {
   process.exit(1);
 }
 
+if (sourceType && sourceType !== "local") {
+  console.error(`Unknown boundary source: ${sourceType}`);
+  console.error("Allowed source: local");
+  process.exit(1);
+}
+
+if (sourceType === "local" && !group) {
+  console.error("Local boundary entries need --group, e.g. taiwan, korea, or japan.");
+  process.exit(1);
+}
+
 const fields = [
   'type: "boundary"',
   `label: "${escapeJs(label)}"`,
@@ -75,10 +88,12 @@ const fields = [
 
 if (province) fields.push(`province: "${escapeJs(province)}"`);
 if (style) fields.push(`style: "${escapeJs(style)}"`);
+if (sourceType) fields.push(`source: "${escapeJs(sourceType)}"`);
+if (group) fields.push(`group: "${escapeJs(group)}"`);
 
 const entry = `  { ${fields.join(", ")} },`;
-const markerAnchor = "];\n\nconst SUMMARY_GROUPS";
-const updated = source.replace(markerAnchor, `${entry}\n${markerAnchor}`);
+const insertionAnchor = "];\n\nconst SUMMARY_GROUPS";
+const updated = source.replace(insertionAnchor, `${entry}\n${insertionAnchor}`);
 
 if (updated === source) {
   console.error("Could not find VISITED_PLACES insertion point.");
@@ -130,7 +145,7 @@ function printPresets(presets) {
   console.log(`Available boundary presets (${names.length}):`);
   names.forEach((name) => {
     const preset = presets[name];
-    const source = preset.province || preset.style;
+    const source = preset.province || preset.style || `${preset.source}:${preset.group}`;
     console.log(`- ${name}: ${preset.label} [${preset.names.join(", ")}], ${source}`);
   });
 }

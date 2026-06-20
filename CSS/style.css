@@ -190,7 +190,7 @@ p {
 .china-map {
   position: relative;
   min-height: 580px;
-  background: #ffffff;
+  background: #f8fafc;
 }
 
 .china-map .leaflet-container,
@@ -201,6 +201,7 @@ p {
 
 .leaflet-container {
   font: inherit;
+  background: #f8fafc;
 }
 
 .travel-region {
@@ -257,15 +258,6 @@ p {
   background: rgba(255, 255, 255, 0.92);
   font-size: 12px;
   line-height: 1.45;
-}
-
-.place-tooltip {
-  border: 0;
-  color: #1f2937;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 1px 4px rgba(31, 41, 55, 0.18);
-  font-size: 11px;
-  font-weight: 750;
 }
 
 .visited-place-summary {
