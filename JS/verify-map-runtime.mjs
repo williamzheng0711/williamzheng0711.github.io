@@ -22,6 +22,12 @@ const greaterChinaLabels = boundaryPlaces
   .map((place) => place.label);
 const koreaLabels = boundaryPlaces.filter((place) => place.group === "korea").map((place) => place.label);
 const japanLabels = boundaryPlaces.filter((place) => place.group === "japan").map((place) => place.label);
+const contextCountryNames = new Set((contextBoundaries.features || []).map((feature) => feature.properties?.name));
+const contextDetailCounts = (cityContextBoundaries.features || []).reduce((counts, feature) => {
+  const group = feature.properties?.group;
+  if (group) counts[group] = (counts[group] || 0) + 1;
+  return counts;
+}, {});
 
 const success = await runMapRuntime();
 assertEqualSets(success.highlightedLabels, expectedBoundaryLabels, "highlighted boundary labels");
@@ -52,6 +58,17 @@ if (!success.localBoundariesRequested) {
 
 if (success.remoteFetches.length) {
   throw new Error(`Expected no remote fetches, got: ${success.remoteFetches.join(", ")}`);
+}
+
+if (contextCountryNames.has("Japan") || contextCountryNames.has("South Korea")) {
+  throw new Error("Expected coarse Japan/South Korea country outlines to be replaced by detailed ADM1 context polygons.");
+}
+
+if (contextDetailCounts["context-japan"] !== 47 || contextDetailCounts["context-korea"] !== 17) {
+  throw new Error(
+    `Expected detailed Japan/Korea context boundaries, got Japan=${contextDetailCounts["context-japan"] || 0}, ` +
+      `Korea=${contextDetailCounts["context-korea"] || 0}`
+  );
 }
 
 for (const name of forbiddenFeatureNames) {

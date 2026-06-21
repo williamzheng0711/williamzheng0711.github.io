@@ -192,7 +192,7 @@ const VISITED_PLACES = [
   { type: "boundary", label: "八幡市", names: ["八幡市"], source: "local", group: "japan" },
   { type: "boundary", label: "奈良市", names: ["奈良市"], source: "local", group: "japan" },
   { type: "boundary", label: "高山市", names: ["高山市"], source: "local", group: "japan" },
-  { type: "boundary", label: "松江市", names: ["松江市"], source: "local", group: "japan" },
+  // { type: "boundary", label: "松江市", names: ["松江市"], source: "local", group: "japan" },
   { type: "boundary", label: "白川村", names: ["白川村"], source: "local", group: "japan" },
   { type: "boundary", label: "大阪市", names: ["大阪市"], source: "local", group: "japan" },
 ];
