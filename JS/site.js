@@ -235,6 +235,6 @@ function validateVisitedPlaces() {
 
 window.addEventListener("load", () => {
   validateVisitedPlaces();
-  renderVisitedSummary();
+  // renderVisitedSummary();
   renderTravelMap();
 });

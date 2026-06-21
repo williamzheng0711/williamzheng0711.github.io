@@ -144,32 +144,56 @@ const BOUNDARY_PRESETS = {
 // - Taiwan/Korea/Japan entries use source: "local" plus group: "taiwan" | "korea" | "japan".
 const VISITED_PLACES = [
   { type: "boundary", label: "上海市", names: ["上海市"], style: "municipality" },
+  { type: "boundary", label: "重慶市", names: ["重庆市"], style: "municipality" },
+  { type: "boundary", label: "北京市", names: ["北京市"], style: "municipality" },
+
   { type: "boundary", label: "香港", names: ["香港特别行政区"], style: "sar" },
   { type: "boundary", label: "澳門", names: ["澳门特别行政区"], style: "sar" },
+
+  { type: "boundary", label: "蘇州市", names: ["苏州市"], province: "江蘇省" },
+  { type: "boundary", label: "南京市", names: ["南京市"], province: "江蘇省" },
+
+  { type: "boundary", label: "杭州市", names: ["杭州市"], province: "浙江省" },
+
   { type: "boundary", label: "廣州市", names: ["广州市"], province: "廣東省" },
   { type: "boundary", label: "深圳市", names: ["深圳市"], province: "廣東省" },
   { type: "boundary", label: "珠海市", names: ["珠海市"], province: "廣東省" },
   { type: "boundary", label: "清遠市", names: ["清远市"], province: "廣東省" },
-  { type: "boundary", label: "重慶市", names: ["重庆市"], style: "municipality" },
-  { type: "boundary", label: "北京市", names: ["北京市"], style: "municipality" },
+  { type: "boundary", label: "中山市", names: ["中山市"], province: "廣東省" },
+  { type: "boundary", label: "肇慶市", names: ["肇庆市"], province: "廣東省" },
+
   { type: "boundary", label: "福州市", names: ["福州市"], province: "福建省" },
   { type: "boundary", label: "寧德市", names: ["宁德市"], province: "福建省" },
   { type: "boundary", label: "廈門市", names: ["厦门市"], province: "福建省" },
   { type: "boundary", label: "泉州市", names: ["泉州市"], province: "福建省" },
+  { type: "boundary", label: "南平市", names: ["南平市"], province: "福建省" },
+
   { type: "boundary", label: "棗莊市", names: ["枣庄市"], province: "山東省" },
   { type: "boundary", label: "濟寧市", names: ["济宁市"], province: "山東省" },
+
   { type: "boundary", label: "新鄉市", names: ["新乡市"], province: "河南省" },
+
   { type: "boundary", label: "贛州市", names: ["赣州市"], province: "江西省" },
+
   { type: "boundary", label: "花蓮縣", names: ["花蓮縣"], source: "local", group: "taiwan" },
   { type: "boundary", label: "台北市", names: ["臺北市"], source: "local", group: "taiwan" },
   { type: "boundary", label: "新北市", names: ["新北市"], source: "local", group: "taiwan" },
   { type: "boundary", label: "南投縣", names: ["南投縣"], source: "local", group: "taiwan" },
+
   { type: "boundary", label: "釜山廣域市", names: ["부산광역시"], source: "local", group: "korea" },
   { type: "boundary", label: "首爾特別市", names: ["서울특별시"], source: "local", group: "korea" },
   { type: "boundary", label: "濟州道", names: ["제주특별자치도"], source: "local", group: "korea" },
+  { type: "boundary", label: "水原市", names: ["수원시"], source: "local", group: "korea" },
+
   { type: "boundary", label: "京都市", names: ["京都市"], source: "local", group: "japan" },
   { type: "boundary", label: "大津市", names: ["大津市"], source: "local", group: "japan" },
   { type: "boundary", label: "名古屋市", names: ["名古屋市"], source: "local", group: "japan" },
+  { type: "boundary", label: "宇治市", names: ["宇治市"], source: "local", group: "japan" },
+  { type: "boundary", label: "八幡市", names: ["八幡市"], source: "local", group: "japan" },
+  { type: "boundary", label: "奈良市", names: ["奈良市"], source: "local", group: "japan" },
+  { type: "boundary", label: "高山市", names: ["高山市"], source: "local", group: "japan" },
+  { type: "boundary", label: "松江市", names: ["松江市"], source: "local", group: "japan" },
+  { type: "boundary", label: "白川村", names: ["白川村"], source: "local", group: "japan" },
   { type: "boundary", label: "大阪市", names: ["大阪市"], source: "local", group: "japan" },
 ];
 

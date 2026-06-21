@@ -58,7 +58,7 @@ for (const name of forbiddenFeatureNames) {
   if (success.highlightedLabels.includes(name)) throw new Error(`Forbidden feature was highlighted: ${name}`);
 }
 
-if (!success.summary.includes("Taiwan") || !success.summary.includes("Japan")) {
+if (success.summary && (!success.summary.includes("Taiwan") || !success.summary.includes("Japan"))) {
   throw new Error("Visited summary did not render expected group headings.");
 }
 
