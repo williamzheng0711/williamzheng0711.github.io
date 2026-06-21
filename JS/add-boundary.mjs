@@ -10,7 +10,10 @@ const args = Object.fromEntries(
 );
 
 const dataPath = new URL("./visited-places.js", import.meta.url);
+const boundaryPath = new URL("../data/visited-boundaries.geojson", import.meta.url);
 const source = fs.readFileSync(dataPath, "utf8");
+const localBoundaries = JSON.parse(fs.readFileSync(boundaryPath, "utf8"));
+const localBoundaryNames = new Set((localBoundaries.features || []).map((feature) => feature.properties?.name).filter(Boolean));
 const context = { window: {} };
 vm.createContext(context);
 vm.runInContext(source, context, { filename: "visited-places.js" });
@@ -77,6 +80,13 @@ if (sourceType && sourceType !== "local") {
 
 if (sourceType === "local" && !group) {
   console.error("Local boundary entries need --group, e.g. taiwan, korea, or japan.");
+  process.exit(1);
+}
+
+const missingLocalBoundaries = names.filter((name) => !localBoundaryNames.has(name));
+if (missingLocalBoundaries.length) {
+  console.error(`Missing polygon data in data/visited-boundaries.geojson: ${missingLocalBoundaries.join(", ")}`);
+  console.error("Add the matching GeoJSON feature first, then add it to VISITED_PLACES.");
   process.exit(1);
 }
 

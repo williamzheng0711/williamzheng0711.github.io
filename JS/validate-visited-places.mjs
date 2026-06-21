@@ -71,6 +71,11 @@ VISITED_PLACES.forEach((place, index) => {
 
   if (place.type === "boundary") {
     validateBoundaryShape(place, id);
+    (place.names || []).forEach((name) => {
+      if (!localBoundaryNames.has(name)) {
+        errors.push(`${id}: boundary "${name}" is missing from data/visited-boundaries.geojson`);
+      }
+    });
     const matchingPreset = boundaryPresetByLabel.get(place.label);
     if (matchingPreset) {
       if (!sameList(place.names, matchingPreset.names)) {
@@ -139,11 +144,6 @@ function validateBoundaryShape(place, id) {
   }
   if (place.source === "local") {
     if (!place.group || !groups.has(place.group)) errors.push(`${id}: local boundary needs a summary group`);
-    (place.names || []).forEach((name) => {
-      if (!localBoundaryNames.has(name)) {
-        errors.push(`${id}: local boundary "${name}" is missing from data/visited-boundaries.geojson`);
-      }
-    });
   } else if (!place.province && !place.style) {
     errors.push(`${id}: boundary entry needs either province, style, or source "local"`);
   }

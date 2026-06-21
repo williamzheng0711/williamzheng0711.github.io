@@ -6,10 +6,10 @@
   --line: #d9dde6;
   --menu: #eef3fb;
   --menu-active: #ffffff;
-  --visited: #2f7df6;
-  --visited-2: #ff8a3d;
-  --visited-3: #2fa84f;
-  --visited-4: #8b5cf6;
+  --visited: #000095;
+  --visited-2: #c60c30;
+  --visited-3: #d66a35;
+  --visited-4: #000095;
   --land: #f8fafc;
   --land-stroke: #9aa7b8;
 }
@@ -232,13 +232,13 @@ p {
 }
 
 .travel-region.visited.municipality {
-  fill: var(--visited-2);
-  stroke: #c95f15;
+  fill: var(--visited);
+  stroke: #00006b;
 }
 
 .travel-region.visited.sar {
-  fill: var(--visited-4);
-  stroke: #6441c9;
+  fill: var(--visited);
+  stroke: #00006b;
 }
 
 .province-outline {

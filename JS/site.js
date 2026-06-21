@@ -176,19 +176,18 @@ function contextRegionStyle() {
 
 function visitedRegionStyle(place) {
   const palette = {
-    municipality: ["#ff8a3d", "#c95f15"],
-    sar: ["#8b5cf6", "#6441c9"],
-    taiwan: ["#2fa84f", "#1f7a3b"],
-    korea: ["#2f7df6", "#1557c0"],
-    japan: ["#ff8a3d", "#c95f15"],
-    default: ["#2f7df6", "#1557c0"],
+    greaterChina: ["#000095", "#00006b"],
+    korea: ["#C60C30", "#8d0922"],
+    japan: ["#D66A35", "#9b4a24"],
   };
-  const [fillColor, color] = palette[place?.style || place?.group || "default"];
+  const key = place?.group === "korea" || place?.group === "japan" ? place.group : "greaterChina";
+  const [fillColor, color] = palette[key];
   return {
     color,
-    weight: 1,
+    weight: 1.05,
+    opacity: 0.88,
     fillColor,
-    fillOpacity: 0.56,
+    fillOpacity: 0.44,
   };
 }
 

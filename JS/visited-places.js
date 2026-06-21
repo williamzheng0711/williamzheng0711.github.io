@@ -137,10 +137,11 @@ const BOUNDARY_PRESETS = {
 };
 
 // Add new trips here.
-// - type: "boundary" highlights a China mainland/SAR administrative region.
-//   For ordinary prefecture-level cities, add province, e.g.
+// Every entry must match a feature name in data/visited-boundaries.geojson.
+// - Mainland China and SAR entries use the Greater China color by default.
+//   For ordinary prefecture-level cities, include province, e.g.
 //   { type: "boundary", label: "蘇州市", names: ["苏州市"], province: "江蘇省" }
-// - source: "local" uses bundled GeoJSON boundaries in data/visited-boundaries.geojson.
+// - Taiwan/Korea/Japan entries use source: "local" plus group: "taiwan" | "korea" | "japan".
 const VISITED_PLACES = [
   { type: "boundary", label: "上海市", names: ["上海市"], style: "municipality" },
   { type: "boundary", label: "香港", names: ["香港特别行政区"], style: "sar" },

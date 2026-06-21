@@ -4,13 +4,16 @@ myPage
 
 Visited places are maintained in `JS/visited-places.js`.
 
-- Add mainland China or SAR administrative regions as `type: "boundary"`.
-- Add Taiwan, Korea, Japan, or other city-level places as `type: "boundary"` with `source: "local"` and a bundled polygon in `data/visited-boundaries.geojson`.
-- Copy examples from `PLACE_TEMPLATES` in `JS/visited-places.js` when adding a new entry.
-- List boundary presets with `node JS/add-boundary.mjs --list-presets`.
-- Add a preset boundary with `node JS/add-boundary.mjs --preset=蘇州市`.
-- For a new Taiwan, Korea, or Japan city, add its polygon to `data/visited-boundaries.geojson`, then add a `source: "local"` boundary entry.
-- Add a boundary from the command line with `node JS/add-boundary.mjs --label=蘇州市 --name=苏州市 --province=江蘇省`.
-- Add alternate boundary names with `node JS/add-boundary.mjs --label=蘇州市 --names='苏州市|蘇州市' --province=江蘇省`.
+The visible list is `VISITED_PLACES`. The map is polygon-only: every entry must match a feature in `data/visited-boundaries.geojson` through `properties.name`.
+
+- Greater China entries use `#000095` automatically. Mainland city example: `{ type: "boundary", label: "蘇州市", names: ["苏州市"], province: "江蘇省" }`
+- Municipalities use `style: "municipality"` and SARs use `style: "sar"`; they still render with the Greater China color.
+- Taiwan entries use `source: "local", group: "taiwan"`, e.g. `{ type: "boundary", label: "台中市", names: ["臺中市"], source: "local", group: "taiwan" }`
+- Korea entries use `source: "local", group: "korea"` and render as `#C60C30`.
+- Japan entries use `source: "local", group: "japan"` and render as `#D66A35`.
+- If the city is not already in `data/visited-boundaries.geojson`, add a GeoJSON Feature first. Its `properties.name` must exactly match one of the strings in `names`.
+- List known presets with `node JS/add-boundary.mjs --list-presets`.
+- Add a bundled preset with `node JS/add-boundary.mjs --preset=城市名`; the script refuses entries whose polygon is not yet bundled.
+- Add a boundary manually with `node JS/add-boundary.mjs --label=蘇州市 --name=苏州市 --province=江蘇省`.
 - Run `node JS/validate-visited-places.mjs` after editing the list.
-- Run `node JS/verify-map-runtime.mjs` to check that the map logic highlights configured boundary regions without point markers.
+- Run `node JS/verify-map-runtime.mjs` to check that all configured places render as boundary fills without point markers or remote map tiles.

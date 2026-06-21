@@ -17,10 +17,18 @@ const bundledBoundaryLabels = (localBoundaries.features || []).map((feature) => 
 
 const forbiddenFeatureNames = ["东莞市", "江门市", "三明市", "龙岩市"];
 const expectedBoundaryLabels = boundaryPlaces.map((place) => place.label);
+const greaterChinaLabels = boundaryPlaces
+  .filter((place) => place.group !== "korea" && place.group !== "japan")
+  .map((place) => place.label);
+const koreaLabels = boundaryPlaces.filter((place) => place.group === "korea").map((place) => place.label);
+const japanLabels = boundaryPlaces.filter((place) => place.group === "japan").map((place) => place.label);
 
 const success = await runMapRuntime();
 assertEqualSets(success.highlightedLabels, expectedBoundaryLabels, "highlighted boundary labels");
 assertEqualSets(success.bundledHighlightedLabels, expectedBoundaryLabels, "bundled polygon labels");
+assertStyles(success.highlightedStyles, greaterChinaLabels, "#000095", 0.44, "Greater China");
+assertStyles(success.highlightedStyles, koreaLabels, "#C60C30", 0.44, "Korea");
+assertStyles(success.highlightedStyles, japanLabels, "#D66A35", 0.44, "Japan");
 
 if (success.circleMarkerCalls !== 0) {
   throw new Error(`Expected zero point markers, got ${success.circleMarkerCalls}`);
@@ -76,10 +84,12 @@ async function runMapRuntime(options = {}) {
 
   const [visitedLayer] = runtime.featureGroups;
   const highlightedLabels = flattenLayerLabels(visitedLayer);
+  const highlightedStyles = flattenLayerStyles(visitedLayer);
   const bundledLabels = new Set(bundledBoundaryLabels);
 
   return {
     highlightedLabels,
+    highlightedStyles,
     bundledHighlightedLabels: highlightedLabels.filter((label) => bundledLabels.has(label)),
     circleMarkerCalls: runtime.circleMarkerCalls,
     tileLayerCalls: runtime.tileLayerCalls,
@@ -162,7 +172,8 @@ function createRuntime() {
       const group = createFeatureGroup();
 
       features.filter(Boolean).forEach((feature) => {
-        const layer = createLayer(feature);
+        const style = typeof options.style === "function" ? options.style(feature) : options.style;
+        const layer = createLayer(feature, style);
         if (options.onEachFeature) options.onEachFeature(feature, layer);
         group.layers.push(layer);
       });
@@ -249,9 +260,10 @@ function createFeatureGroup(initialLayers = []) {
   };
 }
 
-function createLayer(feature) {
+function createLayer(feature, style) {
   return {
     feature,
+    style,
     events: {},
     tooltip: null,
     bindTooltip(text) {
@@ -273,6 +285,14 @@ function flattenLayerLabels(layerGroup) {
   });
 }
 
+function flattenLayerStyles(layerGroup) {
+  return layerGroup.layers.flatMap((layer) => {
+    if (layer.tooltip?.text) return [{ label: layer.tooltip.text, style: layer.style || {} }];
+    if (layer.layers) return flattenLayerStyles(layer);
+    return [];
+  });
+}
+
 function mockResponse(payload) {
   return { json: () => Promise.resolve(payload) };
 }
@@ -285,4 +305,18 @@ function assertEqualSets(actual, expected, label) {
       `${label} mismatch\nActual:\n${actualSorted.join("\n")}\nExpected:\n${expectedSorted.join("\n")}`
     );
   }
+}
+
+function assertStyles(actual, labels, fillColor, fillOpacity, groupLabel) {
+  const byLabel = new Map(actual.map((item) => [item.label, item.style]));
+  labels.forEach((label) => {
+    const style = byLabel.get(label);
+    if (!style) throw new Error(`${groupLabel} style missing for ${label}`);
+    if (String(style.fillColor).toLowerCase() !== fillColor.toLowerCase()) {
+      throw new Error(`${groupLabel} color mismatch for ${label}: ${style.fillColor} !== ${fillColor}`);
+    }
+    if (style.fillOpacity !== fillOpacity) {
+      throw new Error(`${groupLabel} opacity mismatch for ${label}: ${style.fillOpacity} !== ${fillOpacity}`);
+    }
+  });
 }
