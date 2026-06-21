@@ -156,12 +156,13 @@ function uniqueFeaturesByName(features) {
   });
 }
 
-function neutralRegionStyle() {
+function neutralRegionStyle(feature) {
+  const isDetailedCountryContext = ["context-japan", "context-korea"].includes(feature?.properties?.group);
   return {
     color: "#aeb8c7",
     weight: 0.55,
     fillColor: "#f8fafc",
-    fillOpacity: 0.42,
+    fillOpacity: isDetailedCountryContext ? 0.84 : 0.42,
   };
 }
 

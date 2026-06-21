@@ -35,6 +35,8 @@ assertEqualSets(success.bundledHighlightedLabels, expectedBoundaryLabels, "bundl
 assertStyles(success.highlightedStyles, greaterChinaLabels, "#000095", 0.44, "Greater China");
 assertStyles(success.highlightedStyles, koreaLabels, "#C60C30", 0.44, "Korea");
 assertStyles(success.highlightedStyles, japanLabels, "#D66A35", 0.44, "Japan");
+assertContextOpacity(success.contextStyles, "context-japan", 47, 0.84);
+assertContextOpacity(success.contextStyles, "context-korea", 17, 0.84);
 
 if (success.circleMarkerCalls !== 0) {
   throw new Error(`Expected zero point markers, got ${success.circleMarkerCalls}`);
@@ -99,14 +101,16 @@ async function runMapRuntime(options = {}) {
   await runtime.fireLoad();
   await new Promise((resolve) => setTimeout(resolve, 0));
 
-  const [visitedLayer] = runtime.featureGroups;
+  const [visitedLayer, contextLayer] = runtime.featureGroups;
   const highlightedLabels = flattenLayerLabels(visitedLayer);
   const highlightedStyles = flattenLayerStyles(visitedLayer);
+  const contextStyles = flattenFeatureStyles(contextLayer);
   const bundledLabels = new Set(bundledBoundaryLabels);
 
   return {
     highlightedLabels,
     highlightedStyles,
+    contextStyles,
     bundledHighlightedLabels: highlightedLabels.filter((label) => bundledLabels.has(label)),
     circleMarkerCalls: runtime.circleMarkerCalls,
     tileLayerCalls: runtime.tileLayerCalls,
@@ -310,6 +314,16 @@ function flattenLayerStyles(layerGroup) {
   });
 }
 
+function flattenFeatureStyles(layerGroup) {
+  return layerGroup.layers.flatMap((layer) => {
+    if (layer.feature) {
+      return [{ group: layer.feature.properties?.group, name: layer.feature.properties?.name, style: layer.style || {} }];
+    }
+    if (layer.layers) return flattenFeatureStyles(layer);
+    return [];
+  });
+}
+
 function mockResponse(payload) {
   return { json: () => Promise.resolve(payload) };
 }
@@ -334,6 +348,18 @@ function assertStyles(actual, labels, fillColor, fillOpacity, groupLabel) {
     }
     if (style.fillOpacity !== fillOpacity) {
       throw new Error(`${groupLabel} opacity mismatch for ${label}: ${style.fillOpacity} !== ${fillOpacity}`);
+    }
+  });
+}
+
+function assertContextOpacity(actual, group, expectedCount, fillOpacity) {
+  const styles = actual.filter((item) => item.group === group);
+  if (styles.length !== expectedCount) {
+    throw new Error(`Expected ${expectedCount} ${group} context styles, got ${styles.length}`);
+  }
+  styles.forEach((item) => {
+    if (item.style.fillOpacity !== fillOpacity) {
+      throw new Error(`${group} opacity mismatch for ${item.name}: ${item.style.fillOpacity} !== ${fillOpacity}`);
     }
   });
 }
