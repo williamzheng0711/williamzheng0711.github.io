@@ -4,46 +4,46 @@ import vm from "node:vm";
 const dataSource = fs.readFileSync(new URL("./visited-places.js", import.meta.url), "utf8");
 const siteSource = fs.readFileSync(new URL("./site.js", import.meta.url), "utf8");
 const localBoundaries = JSON.parse(fs.readFileSync(new URL("../data/visited-boundaries.geojson", import.meta.url), "utf8"));
+const contextBoundaries = JSON.parse(fs.readFileSync(new URL("../data/context-boundaries.geojson", import.meta.url), "utf8"));
+const cityContextBoundaries = JSON.parse(fs.readFileSync(new URL("../data/context-city-boundaries.geojson", import.meta.url), "utf8"));
 
 const dataContext = { window: {} };
 vm.createContext(dataContext);
 vm.runInContext(dataSource, dataContext, { filename: "visited-places.js" });
 
-const { PROVINCE_CODES = {}, VISITED_PLACES = [] } = dataContext.window.TRAVEL_MAP_DATA || {};
+const { VISITED_PLACES = [] } = dataContext.window.TRAVEL_MAP_DATA || {};
 const boundaryPlaces = VISITED_PLACES.filter((place) => place.type === "boundary");
-const datavPlaces = boundaryPlaces.filter((place) => place.source !== "local");
-const localPlaces = boundaryPlaces.filter((place) => place.source === "local");
-const provincePlaces = datavPlaces.filter((place) => place.province);
-const baseBoundaryPlaces = datavPlaces.filter((place) => !place.province);
-const expectedDetailCodes = [...new Set(provincePlaces.map((place) => PROVINCE_CODES[place.province]))];
+const bundledBoundaryLabels = (localBoundaries.features || []).map((feature) => feature.properties?.label).filter(Boolean);
 
 const forbiddenFeatureNames = ["东莞市", "江门市", "三明市", "龙岩市"];
-const baseFeatures = [
-  ...baseBoundaryPlaces.map((place, index) => mockFeature(place.names[0], 100000 + index)),
-  mockFeature("台湾省", 710000),
-  mockFeature("日本", 392000),
-  mockFeature("대한민국", 410000),
-];
-const detailByCode = Object.fromEntries(
-  expectedDetailCodes.map((code) => {
-    const features = provincePlaces
-      .filter((place) => PROVINCE_CODES[place.province] === code)
-      .map((place, index) => mockFeature(place.names[0], Number(code) + index + 1));
-
-    if (code === "440000") features.push(mockFeature("东莞市", 441900), mockFeature("江门市", 440700));
-    if (code === "350000") features.push(mockFeature("三明市", 350400), mockFeature("龙岩市", 350800));
-
-    return [code, { features }];
-  })
-);
+const expectedBoundaryLabels = boundaryPlaces.map((place) => place.label);
 
 const success = await runMapRuntime();
-assertEqualSets(success.requestedDetailCodes, expectedDetailCodes, "province detail fetches");
-assertEqualSets(success.highlightedLabels, boundaryPlaces.map((place) => place.label), "highlighted boundary labels");
-assertEqualSets(success.localHighlightedLabels, localPlaces.map((place) => place.label), "local polygon labels");
+assertEqualSets(success.highlightedLabels, expectedBoundaryLabels, "highlighted boundary labels");
+assertEqualSets(success.bundledHighlightedLabels, expectedBoundaryLabels, "bundled polygon labels");
 
 if (success.circleMarkerCalls !== 0) {
   throw new Error(`Expected zero point markers, got ${success.circleMarkerCalls}`);
+}
+
+if (success.tileLayerCalls !== 0) {
+  throw new Error(`Expected zero remote tile layers, got ${success.tileLayerCalls}`);
+}
+
+if (!success.contextRequested) {
+  throw new Error("Expected local context boundary data to be requested.");
+}
+
+if (!success.cityContextRequested) {
+  throw new Error("Expected local city context boundary data to be requested.");
+}
+
+if (!success.localBoundariesRequested) {
+  throw new Error("Expected bundled visited boundary data to be requested.");
+}
+
+if (success.remoteFetches.length) {
+  throw new Error(`Expected no remote fetches, got: ${success.remoteFetches.join(", ")}`);
 }
 
 for (const name of forbiddenFeatureNames) {
@@ -54,18 +54,19 @@ if (!success.summary.includes("Taiwan") || !success.summary.includes("Japan")) {
   throw new Error("Visited summary did not render expected group headings.");
 }
 
-if (success.status.includes("unavailable")) {
+if (success.status.includes("unavailable") || success.status.includes("could not be loaded")) {
   throw new Error(`Expected all visited boundaries to render, got status: ${success.status}`);
 }
 
 console.log(
   `Map runtime verification passed: ${success.highlightedLabels.length} highlighted boundary regions, ` +
-    `${success.localHighlightedLabels.length} local polygons, ${success.requestedDetailCodes.length} province detail requests, ` +
-    "0 point markers."
+    `${success.bundledHighlightedLabels.length} bundled polygons, ` +
+    `${contextBoundaries.features.length} country outlines, ${cityContextBoundaries.features.length} city/province outlines, ` +
+    "0 point markers, 0 remote tile layers."
 );
 
-async function runMapRuntime() {
-  const runtime = createRuntime();
+async function runMapRuntime(options = {}) {
+  const runtime = createRuntime(options);
   vm.createContext(runtime.context);
   vm.runInContext(dataSource, runtime.context, { filename: "visited-places.js" });
   vm.runInContext(siteSource, runtime.context, { filename: "site.js" });
@@ -75,15 +76,17 @@ async function runMapRuntime() {
 
   const [visitedLayer] = runtime.featureGroups;
   const highlightedLabels = flattenLayerLabels(visitedLayer);
-  const localLabels = new Set(localPlaces.map((place) => place.label));
+  const bundledLabels = new Set(bundledBoundaryLabels);
 
   return {
     highlightedLabels,
-    localHighlightedLabels: highlightedLabels.filter((label) => localLabels.has(label)),
-    requestedDetailCodes: runtime.fetchUrls
-      .map((url) => url.match(/bound\/(\d+)_full\.json/)?.[1])
-      .filter((code) => code && code !== "100000"),
+    bundledHighlightedLabels: highlightedLabels.filter((label) => bundledLabels.has(label)),
     circleMarkerCalls: runtime.circleMarkerCalls,
+    tileLayerCalls: runtime.tileLayerCalls,
+    localBoundariesRequested: runtime.fetchUrls.some((url) => url.endsWith("visited-boundaries.geojson")),
+    contextRequested: runtime.fetchUrls.some((url) => url.endsWith("context-boundaries.geojson")),
+    cityContextRequested: runtime.fetchUrls.some((url) => url.endsWith("context-city-boundaries.geojson")),
+    remoteFetches: runtime.fetchUrls.filter((url) => /^https?:\/\//.test(url)),
     status: runtime.status.textContent,
     summary: runtime.summary.innerHTML,
   };
@@ -114,6 +117,7 @@ function createRuntime() {
     },
   };
   let circleMarkerCalls = 0;
+  let tileLayerCalls = 0;
 
   class MockIntersectionObserver {
     observe() {}
@@ -138,6 +142,15 @@ function createRuntime() {
     },
     map() {
       return map;
+    },
+    tileLayer() {
+      tileLayerCalls += 1;
+      return {
+        addTo(targetMap) {
+          targetMap.layers.push(this);
+          return this;
+        },
+      };
     },
     featureGroup(initialLayers = []) {
       const group = createFeatureGroup(initialLayers);
@@ -169,11 +182,12 @@ function createRuntime() {
       if (url.endsWith("data/visited-boundaries.geojson") || url.endsWith("visited-boundaries.geojson")) {
         return Promise.resolve(mockResponse(localBoundaries));
       }
-      if (url.endsWith("100000_full.json")) return Promise.resolve(mockResponse({ features: baseFeatures }));
-
-      const code = url.match(/bound\/(\d+)_full\.json/)?.[1];
-      if (code && detailByCode[code]) return Promise.resolve(mockResponse(detailByCode[code]));
-
+      if (url.endsWith("data/context-boundaries.geojson") || url.endsWith("context-boundaries.geojson")) {
+        return Promise.resolve(mockResponse(contextBoundaries));
+      }
+      if (url.endsWith("data/context-city-boundaries.geojson") || url.endsWith("context-city-boundaries.geojson")) {
+        return Promise.resolve(mockResponse(cityContextBoundaries));
+      }
       return Promise.resolve(mockResponse({ features: [] }));
     },
     document: {
@@ -204,6 +218,9 @@ function createRuntime() {
     fetchUrls,
     get circleMarkerCalls() {
       return circleMarkerCalls;
+    },
+    get tileLayerCalls() {
+      return tileLayerCalls;
     },
     status,
     summary,
@@ -254,10 +271,6 @@ function flattenLayerLabels(layerGroup) {
     if (layer.layers) return flattenLayerLabels(layer);
     return [];
   });
-}
-
-function mockFeature(name, adcode) {
-  return { type: "Feature", properties: { name, adcode }, geometry: null };
 }
 
 function mockResponse(payload) {

@@ -1,16 +1,12 @@
-const CHINA_BASE = "https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json";
-const CHINA_DETAIL_BASE = "https://geo.datav.aliyun.com/areas_v3/bound";
 const LOCAL_BOUNDARIES = "data/visited-boundaries.geojson";
+const CONTEXT_BOUNDARIES = "data/context-boundaries.geojson";
+const CONTEXT_CITY_BOUNDARIES = "data/context-city-boundaries.geojson";
 
 const travelMapData = window.TRAVEL_MAP_DATA || {};
-const travelProvinceCodes = travelMapData.PROVINCE_CODES || {};
 const travelVisitedPlaces = travelMapData.VISITED_PLACES || [];
 const travelSummaryGroups = travelMapData.SUMMARY_GROUPS || [];
 
 const boundaryPlaces = travelVisitedPlaces.filter((place) => place.type === "boundary");
-const datavBoundaryPlaces = boundaryPlaces.filter((place) => place.source !== "local");
-const localBoundaryPlaces = boundaryPlaces.filter((place) => place.source === "local");
-const detailCodes = [...new Set(datavBoundaryPlaces.map((place) => travelProvinceCodes[place.province]).filter(Boolean))];
 const visitedNames = new Set(boundaryPlaces.flatMap((place) => place.names));
 const placeByName = new Map(boundaryPlaces.flatMap((place) => place.names.map((name) => [name, place])));
 
@@ -58,34 +54,24 @@ function renderTravelMap() {
   let redrawVisited = () => {};
 
   document.querySelector(".leaflet-map-tip").textContent =
-    "Loading administrative boundaries...";
+    "Loading local map boundaries...";
 
-  const detailRequests = detailCodes.map((code) =>
-    fetch(`${CHINA_DETAIL_BASE}/${code}_full.json`).then((response) => response.json()).catch(() => null)
-  );
-  const localRequest = localBoundaryPlaces.length
-    ? fetch(LOCAL_BOUNDARIES).then((response) => response.json()).catch(() => null)
-    : Promise.resolve(null);
+  const localRequest = fetch(LOCAL_BOUNDARIES).then((response) => response.json()).catch(() => null);
+  const contextRequest = fetch(CONTEXT_BOUNDARIES).then((response) => response.json()).catch(() => null);
+  const cityContextRequest = fetch(CONTEXT_CITY_BOUNDARIES).then((response) => response.json()).catch(() => null);
 
-  Promise.all([fetch(CHINA_BASE).then((response) => response.json()).catch(() => null), ...detailRequests, localRequest])
-    .then(([china, ...loaded]) => {
-      const local = loaded.pop();
-      const details = loaded;
-      const baseFeatures = china?.features || [];
-      const detailedProvinceCodes = new Set(detailCodes);
-      const contextFeatures = baseFeatures.filter(
-        (feature) => !detailedProvinceCodes.has(String(feature.properties?.adcode))
-      );
-      const detailFeatures = details.flatMap((item) => item?.features || []);
+  Promise.all([localRequest, contextRequest, cityContextRequest])
+    .then(([local, context, cityContext]) => {
       const localFeatures = local?.features || [];
-      const allBoundaryFeatures = [...contextFeatures, ...detailFeatures, ...localFeatures];
+      const cityContextFeatures = cityContext?.features || [];
+      const allBoundaryFeatures = uniqueFeaturesByName(localFeatures);
 
-      L.geoJSON(contextFeatures, {
-        style: neutralRegionStyle,
+      L.geoJSON(context?.features || [], {
+        style: contextRegionStyle,
         interactive: false,
       }).addTo(contextLayer);
 
-      L.geoJSON(detailFeatures, {
+      L.geoJSON(cityContextFeatures, {
         style: neutralRegionStyle,
         interactive: false,
       }).addTo(contextLayer);
@@ -143,7 +129,7 @@ function renderTravelMap() {
     })
     .catch(() => {
       document.querySelector(".leaflet-map-tip").textContent =
-        "Administrative boundaries could not be loaded. Please check the network connection and reload.";
+        "Local map boundaries could not be loaded. Please check the bundled GeoJSON files.";
     });
 
   document.querySelector("[data-reset-map]")?.addEventListener("click", () => {
@@ -159,12 +145,31 @@ function regionName(feature) {
   return feature.properties?.name || "";
 }
 
+function uniqueFeaturesByName(features) {
+  const seen = new Set();
+  return features.filter((feature) => {
+    const name = regionName(feature);
+    if (!name || seen.has(name)) return false;
+    seen.add(name);
+    return true;
+  });
+}
+
 function neutralRegionStyle() {
   return {
     color: "#aeb8c7",
     weight: 0.55,
     fillColor: "#f8fafc",
-    fillOpacity: 0.58,
+    fillOpacity: 0.42,
+  };
+}
+
+function contextRegionStyle() {
+  return {
+    color: "#94a3b8",
+    weight: 0.9,
+    fillColor: "#f8fafc",
+    fillOpacity: 0.84,
   };
 }
 
@@ -217,9 +222,6 @@ function validateVisitedPlaces() {
     if (place.type === "boundary") {
       if (!Array.isArray(place.names) || place.names.length === 0) {
         warnings.push(`${place.label || `VISITED_PLACES[${index}]`} boundary entry needs names.`);
-      }
-      if (place.province && !travelProvinceCodes[place.province]) {
-        warnings.push(`${place.label} uses unknown province "${place.province}". Add it to PROVINCE_CODES.`);
       }
     } else if (place.type === "marker") {
       warnings.push(`${place.label || `VISITED_PLACES[${index}]`} marker entries are not rendered. Use boundary polygons.`);

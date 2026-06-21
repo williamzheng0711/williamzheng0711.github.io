@@ -10,8 +10,8 @@
   --visited-2: #ff8a3d;
   --visited-3: #2fa84f;
   --visited-4: #8b5cf6;
-  --land: #f3f5f8;
-  --land-stroke: #aab3c0;
+  --land: #f8fafc;
+  --land-stroke: #9aa7b8;
 }
 
 * {
@@ -190,7 +190,7 @@ p {
 .china-map {
   position: relative;
   min-height: 580px;
-  background: #f8fafc;
+  background: #eef7fb;
 }
 
 .china-map .leaflet-container,
@@ -201,7 +201,7 @@ p {
 
 .leaflet-container {
   font: inherit;
-  background: #f8fafc;
+  background: #eef7fb;
 }
 
 .travel-region {
