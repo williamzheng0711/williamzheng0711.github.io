@@ -102,7 +102,8 @@ function renderTravelMap() {
         });
         const missingCount = visited.size - renderedFeatures.length;
         document.querySelector(".leaflet-map-tip").textContent = [
-          `Highlighted: ${labels.join(", ") || "none"}.`,
+          // `Highlighted: ${labels.join(", ") || "none"}.`,
+          `Move mouse over a colored region to see its name. `,
           missingCount > 0 ? `${missingCount} boundary data source${missingCount === 1 ? "" : "s"} unavailable.` : "",
           "Click a colored city to toggle it.",
         ].filter(Boolean).join(" ");
