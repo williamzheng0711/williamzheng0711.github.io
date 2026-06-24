@@ -13,6 +13,14 @@ const INITIAL_MAP_CENTER = [31.5, 121.8];
 const INITIAL_MAP_ZOOM = 4;
 const MIN_MAP_ZOOM = 2;
 const WORLD_LONGITUDE_OFFSETS = [-360, 0, 360];
+const DETAILED_CONTEXT_GROUPS = new Set([
+  "context-canada",
+  "context-japan",
+  "context-korea",
+  "context-malaysia",
+  "context-singapore",
+  "context-usa",
+]);
 
 const navLinks = [...document.querySelectorAll(".menu-item")];
 const sections = navLinks
@@ -195,10 +203,10 @@ function shiftCoordinatesLongitude(coordinates, offset) {
 }
 
 function neutralRegionStyle(feature) {
-  const isDetailedCountryContext = ["context-japan", "context-korea"].includes(feature?.properties?.group);
+  const isDetailedCountryContext = DETAILED_CONTEXT_GROUPS.has(feature?.properties?.group);
   return {
-    color: "#aeb8c7",
-    weight: 0.55,
+    color: isDetailedCountryContext ? "#8d9aad" : "#aeb8c7",
+    weight: isDetailedCountryContext ? 0.68 : 0.55,
     fillColor: "#f8fafc",
     fillOpacity: isDetailedCountryContext ? 0.84 : 0.42,
   };

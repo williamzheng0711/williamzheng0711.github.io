@@ -32,6 +32,14 @@ const contextDetailCounts = (cityContextBoundaries.features || []).reduce((count
   if (group) counts[group] = (counts[group] || 0) + 1;
   return counts;
 }, {});
+const detailedContextExpectations = {
+  "context-japan": 47,
+  "context-korea": 17,
+  "context-usa": 51,
+  "context-canada": 13,
+  "context-malaysia": 16,
+  "context-singapore": 1,
+};
 
 const success = await runMapRuntime();
 assertEqualSets(success.highlightedLabels, expectedBoundaryLabels, "highlighted boundary labels");
@@ -41,8 +49,13 @@ assertStyles(success.highlightedStyles, koreaLabels, "#C60C30", 0.44, "Korea");
 assertStyles(success.highlightedStyles, japanLabels, "#D66A35", 0.44, "Japan");
 assertStyles(success.highlightedStyles, usaLabels, "#00205B", 0.44, "United States");
 assertStyles(success.highlightedStyles, singaporeLabels, "#EF3340", 0.44, "Singapore");
-assertContextOpacity(success.contextStyles, "context-japan", 47, 0.84);
-assertContextOpacity(success.contextStyles, "context-korea", 17, 0.84);
+Object.entries(detailedContextExpectations).forEach(([group, expectedCount]) => {
+  assertContextStyle(success.contextStyles, group, expectedCount, {
+    color: "#8d9aad",
+    weight: 0.68,
+    fillOpacity: 0.84,
+  });
+});
 assertWorldCopies(success.highlightedLabels, expectedBoundaryLabels, 3, "highlighted visited regions");
 
 if (success.mapOptions.minZoom !== 2) {
@@ -84,28 +97,32 @@ if (success.remoteFetches.length) {
   throw new Error(`Expected no remote fetches, got: ${success.remoteFetches.join(", ")}`);
 }
 
-if (contextCountryNames.has("Japan") || contextCountryNames.has("South Korea")) {
-  throw new Error("Expected coarse Japan/South Korea country outlines to be replaced by detailed ADM1 context polygons.");
-}
+[
+  "Canada",
+  "Japan",
+  "Malaysia",
+  "Singapore",
+  "South Korea",
+  "United States of America",
+].forEach((countryName) => {
+  if (contextCountryNames.has(countryName) || contextCountryAdmins.has(countryName)) {
+    throw new Error(`Expected coarse ${countryName} country outline to be replaced by detailed context polygons.`);
+  }
+});
 
 if ((contextBoundaries.features || []).length < 170) {
   throw new Error(`Expected world context boundaries, got only ${contextBoundaries.features.length} country outlines.`);
 }
 
-["USA", "SGP", "BRA", "DEU", "ZAF", "AUS"].forEach((isoCode) => {
+["AUS", "BRA", "DEU", "IND", "MEX", "ZAF"].forEach((isoCode) => {
   if (!contextCountryIsoCodes.has(isoCode)) throw new Error(`Expected world context to include ISO ${isoCode}.`);
 });
 
-if (!contextCountryAdmins.has("United States of America") || !contextCountryAdmins.has("Singapore")) {
-  throw new Error("Expected world context to include United States and Singapore.");
-}
-
-if (contextDetailCounts["context-japan"] !== 47 || contextDetailCounts["context-korea"] !== 17) {
-  throw new Error(
-    `Expected detailed Japan/Korea context boundaries, got Japan=${contextDetailCounts["context-japan"] || 0}, ` +
-      `Korea=${contextDetailCounts["context-korea"] || 0}`
-  );
-}
+Object.entries(detailedContextExpectations).forEach(([group, expectedCount]) => {
+  if (contextDetailCounts[group] !== expectedCount) {
+    throw new Error(`Expected ${expectedCount} ${group} context boundaries, got ${contextDetailCounts[group] || 0}.`);
+  }
+});
 
 for (const name of forbiddenFeatureNames) {
   if (success.highlightedLabels.includes(name)) throw new Error(`Forbidden feature was highlighted: ${name}`);
@@ -396,7 +413,7 @@ function assertStyles(actual, labels, fillColor, fillOpacity, groupLabel) {
   });
 }
 
-function assertContextOpacity(actual, group, expectedCount, fillOpacity) {
+function assertContextStyle(actual, group, expectedCount, expectedStyle) {
   const styles = actual.filter((item) => item.group === group);
   const uniqueNames = new Set(styles.map((item) => item.name));
   if (uniqueNames.size !== expectedCount) {
@@ -406,8 +423,16 @@ function assertContextOpacity(actual, group, expectedCount, fillOpacity) {
     throw new Error(`Expected ${expectedCount * 3} ${group} copied context styles, got ${styles.length}`);
   }
   styles.forEach((item) => {
-    if (item.style.fillOpacity !== fillOpacity) {
-      throw new Error(`${group} opacity mismatch for ${item.name}: ${item.style.fillOpacity} !== ${fillOpacity}`);
+    if (String(item.style.color).toLowerCase() !== expectedStyle.color.toLowerCase()) {
+      throw new Error(`${group} border color mismatch for ${item.name}: ${item.style.color} !== ${expectedStyle.color}`);
+    }
+    if (item.style.weight !== expectedStyle.weight) {
+      throw new Error(`${group} border weight mismatch for ${item.name}: ${item.style.weight} !== ${expectedStyle.weight}`);
+    }
+    if (item.style.fillOpacity !== expectedStyle.fillOpacity) {
+      throw new Error(
+        `${group} opacity mismatch for ${item.name}: ${item.style.fillOpacity} !== ${expectedStyle.fillOpacity}`
+      );
     }
   });
 }
