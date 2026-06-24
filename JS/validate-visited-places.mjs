@@ -45,6 +45,10 @@ const requiredBoundaries = [
   "大津市",
   "名古屋市",
   "大阪市",
+  "Washington, D.C.",
+  "Montgomery County",
+  "New York City",
+  "Singapore",
 ];
 
 const errors = [];

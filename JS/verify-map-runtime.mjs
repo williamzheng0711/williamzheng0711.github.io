@@ -18,11 +18,15 @@ const bundledBoundaryLabels = (localBoundaries.features || []).map((feature) => 
 const forbiddenFeatureNames = ["东莞市", "江门市", "三明市", "龙岩市"];
 const expectedBoundaryLabels = boundaryPlaces.map((place) => place.label);
 const greaterChinaLabels = boundaryPlaces
-  .filter((place) => place.group !== "korea" && place.group !== "japan")
+  .filter((place) => !["korea", "japan", "usa", "singapore"].includes(place.group))
   .map((place) => place.label);
 const koreaLabels = boundaryPlaces.filter((place) => place.group === "korea").map((place) => place.label);
 const japanLabels = boundaryPlaces.filter((place) => place.group === "japan").map((place) => place.label);
+const usaLabels = boundaryPlaces.filter((place) => place.group === "usa").map((place) => place.label);
+const singaporeLabels = boundaryPlaces.filter((place) => place.group === "singapore").map((place) => place.label);
 const contextCountryNames = new Set((contextBoundaries.features || []).map((feature) => feature.properties?.name));
+const contextCountryAdmins = new Set((contextBoundaries.features || []).map((feature) => feature.properties?.admin));
+const contextCountryIsoCodes = new Set((contextBoundaries.features || []).map((feature) => feature.properties?.iso_a3));
 const contextDetailCounts = (cityContextBoundaries.features || []).reduce((counts, feature) => {
   const group = feature.properties?.group;
   if (group) counts[group] = (counts[group] || 0) + 1;
@@ -35,6 +39,8 @@ assertEqualSets(success.bundledHighlightedLabels, expectedBoundaryLabels, "bundl
 assertStyles(success.highlightedStyles, greaterChinaLabels, "#000095", 0.44, "Greater China");
 assertStyles(success.highlightedStyles, koreaLabels, "#C60C30", 0.44, "Korea");
 assertStyles(success.highlightedStyles, japanLabels, "#D66A35", 0.44, "Japan");
+assertStyles(success.highlightedStyles, usaLabels, "#00205B", 0.44, "United States");
+assertStyles(success.highlightedStyles, singaporeLabels, "#EF3340", 0.44, "Singapore");
 assertContextOpacity(success.contextStyles, "context-japan", 47, 0.84);
 assertContextOpacity(success.contextStyles, "context-korea", 17, 0.84);
 
@@ -64,6 +70,18 @@ if (success.remoteFetches.length) {
 
 if (contextCountryNames.has("Japan") || contextCountryNames.has("South Korea")) {
   throw new Error("Expected coarse Japan/South Korea country outlines to be replaced by detailed ADM1 context polygons.");
+}
+
+if ((contextBoundaries.features || []).length < 170) {
+  throw new Error(`Expected world context boundaries, got only ${contextBoundaries.features.length} country outlines.`);
+}
+
+["USA", "SGP", "BRA", "DEU", "ZAF", "AUS"].forEach((isoCode) => {
+  if (!contextCountryIsoCodes.has(isoCode)) throw new Error(`Expected world context to include ISO ${isoCode}.`);
+});
+
+if (!contextCountryAdmins.has("United States of America") || !contextCountryAdmins.has("Singapore")) {
+  throw new Error("Expected world context to include United States and Singapore.");
 }
 
 if (contextDetailCounts["context-japan"] !== 47 || contextDetailCounts["context-korea"] !== 17) {

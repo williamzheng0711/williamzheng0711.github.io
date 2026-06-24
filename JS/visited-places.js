@@ -52,6 +52,7 @@ const PLACE_TEMPLATES = {
   municipality: { type: "boundary", label: "北京市", names: ["北京市"], style: "municipality" },
   sar: { type: "boundary", label: "香港", names: ["香港特别行政区"], style: "sar" },
   localBoundary: { type: "boundary", label: "京都市", names: ["京都市"], source: "local", group: "japan" },
+  usBoundary: { type: "boundary", label: "New York City", names: ["New York City"], source: "local", group: "usa" },
 };
 
 const BOUNDARY_PRESETS = {
@@ -141,7 +142,8 @@ const BOUNDARY_PRESETS = {
 // - Mainland China and SAR entries use the Greater China color by default.
 //   For ordinary prefecture-level cities, include province, e.g.
 //   { type: "boundary", label: "蘇州市", names: ["苏州市"], province: "江蘇省" }
-// - Taiwan/Korea/Japan entries use source: "local" plus group: "taiwan" | "korea" | "japan".
+// - Non-mainland/SAR entries use source: "local" plus a group such as
+//   "taiwan", "korea", "japan", "usa", or "singapore".
 const VISITED_PLACES = [
   { type: "boundary", label: "上海市", names: ["上海市"], style: "municipality" },
   { type: "boundary", label: "重慶市", names: ["重庆市"], style: "municipality" },
@@ -195,6 +197,12 @@ const VISITED_PLACES = [
   // { type: "boundary", label: "松江市", names: ["松江市"], source: "local", group: "japan" },
   { type: "boundary", label: "白川村", names: ["白川村"], source: "local", group: "japan" },
   { type: "boundary", label: "大阪市", names: ["大阪市"], source: "local", group: "japan" },
+
+  { type: "boundary", label: "Washington, D.C.", names: ["Washington, D.C."], source: "local", group: "usa" },
+  { type: "boundary", label: "Montgomery County", names: ["Montgomery County"], source: "local", group: "usa" },
+  { type: "boundary", label: "New York City", names: ["New York City"], source: "local", group: "usa" },
+
+  { type: "boundary", label: "Singapore", names: ["Singapore"], source: "local", group: "singapore" },
 ];
 
 const SUMMARY_GROUPS = [
@@ -202,6 +210,8 @@ const SUMMARY_GROUPS = [
   { key: "taiwan", title: "Taiwan" },
   { key: "korea", title: "Korea" },
   { key: "japan", title: "Japan" },
+  { key: "usa", title: "United States" },
+  { key: "singapore", title: "Singapore" },
 ];
 
 window.TRAVEL_MAP_DATA = {
