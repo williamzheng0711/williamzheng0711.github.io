@@ -43,6 +43,22 @@ assertStyles(success.highlightedStyles, usaLabels, "#00205B", 0.44, "United Stat
 assertStyles(success.highlightedStyles, singaporeLabels, "#EF3340", 0.44, "Singapore");
 assertContextOpacity(success.contextStyles, "context-japan", 47, 0.84);
 assertContextOpacity(success.contextStyles, "context-korea", 17, 0.84);
+assertWorldCopies(success.highlightedLabels, expectedBoundaryLabels, 3, "highlighted visited regions");
+
+if (success.mapOptions.minZoom !== 2) {
+  throw new Error(`Expected minZoom 2 to prevent over-shrinking the world map, got ${success.mapOptions.minZoom}`);
+}
+
+if (success.mapOptions.worldCopyJump !== true) {
+  throw new Error("Expected worldCopyJump to be enabled for continuous horizontal panning.");
+}
+
+assertEastAsiaView(success.setViewCalls[0], "initial map view");
+assertEastAsiaView(success.setViewCalls.at(-1), "post-load map view");
+
+if (success.fitBoundsCalls.length !== 0) {
+  throw new Error("Expected initial view to stay in East Asia instead of fitting all worldwide visited regions.");
+}
 
 if (success.circleMarkerCalls !== 0) {
   throw new Error(`Expected zero point markers, got ${success.circleMarkerCalls}`);
@@ -104,8 +120,8 @@ if (success.status.includes("unavailable") || success.status.includes("could not
 }
 
 console.log(
-  `Map runtime verification passed: ${success.highlightedLabels.length} highlighted boundary regions, ` +
-    `${success.bundledHighlightedLabels.length} bundled polygons, ` +
+  `Map runtime verification passed: ${success.highlightedRegionCount} highlighted boundary regions, ` +
+    `${success.bundledRegionCount} bundled polygons, ` +
     `${contextBoundaries.features.length} country outlines, ${cityContextBoundaries.features.length} city/province outlines, ` +
     "0 point markers, 0 remote tile layers."
 );
@@ -129,9 +145,14 @@ async function runMapRuntime(options = {}) {
     highlightedLabels,
     highlightedStyles,
     contextStyles,
+    highlightedRegionCount: new Set(highlightedLabels).size,
+    bundledRegionCount: new Set(highlightedLabels.filter((label) => bundledLabels.has(label))).size,
     bundledHighlightedLabels: highlightedLabels.filter((label) => bundledLabels.has(label)),
     circleMarkerCalls: runtime.circleMarkerCalls,
     tileLayerCalls: runtime.tileLayerCalls,
+    mapOptions: runtime.map.options || {},
+    setViewCalls: runtime.map.setViewCalls,
+    fitBoundsCalls: runtime.map.fitBoundsCalls,
     localBoundariesRequested: runtime.fetchUrls.some((url) => url.endsWith("visited-boundaries.geojson")),
     contextRequested: runtime.fetchUrls.some((url) => url.endsWith("context-boundaries.geojson")),
     cityContextRequested: runtime.fetchUrls.some((url) => url.endsWith("context-city-boundaries.geojson")),
@@ -155,9 +176,12 @@ function createRuntime() {
     },
   };
   const map = {
+    options: {},
     layers: [],
     fitBoundsCalls: [],
-    setView() {
+    setViewCalls: [],
+    setView(center, zoom) {
+      this.setViewCalls.push({ center, zoom });
       return this;
     },
     fitBounds(bounds, options) {
@@ -189,7 +213,8 @@ function createRuntime() {
         },
       };
     },
-    map() {
+    map(_container, options = {}) {
+      map.options = options;
       return map;
     },
     tileLayer() {
@@ -264,6 +289,7 @@ function createRuntime() {
 
   return {
     context,
+    map,
     featureGroups,
     fetchUrls,
     get circleMarkerCalls() {
@@ -372,12 +398,36 @@ function assertStyles(actual, labels, fillColor, fillOpacity, groupLabel) {
 
 function assertContextOpacity(actual, group, expectedCount, fillOpacity) {
   const styles = actual.filter((item) => item.group === group);
-  if (styles.length !== expectedCount) {
-    throw new Error(`Expected ${expectedCount} ${group} context styles, got ${styles.length}`);
+  const uniqueNames = new Set(styles.map((item) => item.name));
+  if (uniqueNames.size !== expectedCount) {
+    throw new Error(`Expected ${expectedCount} unique ${group} context styles, got ${uniqueNames.size}`);
+  }
+  if (styles.length !== expectedCount * 3) {
+    throw new Error(`Expected ${expectedCount * 3} ${group} copied context styles, got ${styles.length}`);
   }
   styles.forEach((item) => {
     if (item.style.fillOpacity !== fillOpacity) {
       throw new Error(`${group} opacity mismatch for ${item.name}: ${item.style.fillOpacity} !== ${fillOpacity}`);
     }
   });
+}
+
+function assertWorldCopies(actualLabels, expectedLabels, expectedCopies, label) {
+  const counts = actualLabels.reduce((summary, item) => {
+    summary.set(item, (summary.get(item) || 0) + 1);
+    return summary;
+  }, new Map());
+  expectedLabels.forEach((item) => {
+    if (counts.get(item) !== expectedCopies) {
+      throw new Error(`Expected ${expectedCopies} world copies for ${label} "${item}", got ${counts.get(item) || 0}`);
+    }
+  });
+}
+
+function assertEastAsiaView(call, label) {
+  if (!call) throw new Error(`Missing ${label}.`);
+  const [lat, lng] = call.center || [];
+  if (lat !== 31.5 || lng !== 121.8 || call.zoom !== 4) {
+    throw new Error(`Expected ${label} to be East Asia [31.5, 121.8] zoom 4, got ${JSON.stringify(call)}`);
+  }
 }

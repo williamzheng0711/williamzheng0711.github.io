@@ -9,6 +9,10 @@ const travelSummaryGroups = travelMapData.SUMMARY_GROUPS || [];
 const boundaryPlaces = travelVisitedPlaces.filter((place) => place.type === "boundary");
 const visitedNames = new Set(boundaryPlaces.flatMap((place) => place.names));
 const placeByName = new Map(boundaryPlaces.flatMap((place) => place.names.map((name) => [name, place])));
+const INITIAL_MAP_CENTER = [31.5, 121.8];
+const INITIAL_MAP_ZOOM = 4;
+const MIN_MAP_ZOOM = 2;
+const WORLD_LONGITUDE_OFFSETS = [-360, 0, 360];
 
 const navLinks = [...document.querySelectorAll(".menu-item")];
 const sections = navLinks
@@ -38,7 +42,9 @@ function renderTravelMap() {
     attributionControl: false,
     zoomControl: true,
     scrollWheelZoom: true,
-  }).setView([31.5, 121.8], 4);
+    minZoom: MIN_MAP_ZOOM,
+    worldCopyJump: true,
+  }).setView(INITIAL_MAP_CENTER, INITIAL_MAP_ZOOM);
 
   const status = L.control({ position: "bottomleft" });
   status.onAdd = () => {
@@ -66,17 +72,17 @@ function renderTravelMap() {
       const cityContextFeatures = cityContext?.features || [];
       const allBoundaryFeatures = uniqueFeaturesByName(localFeatures);
 
-      L.geoJSON(context?.features || [], {
+      L.geoJSON(worldCopies(context?.features || []), {
         style: contextRegionStyle,
         interactive: false,
       }).addTo(contextLayer);
 
-      L.geoJSON(cityContextFeatures, {
+      L.geoJSON(worldCopies(cityContextFeatures), {
         style: neutralRegionStyle,
         interactive: false,
       }).addTo(contextLayer);
 
-      L.geoJSON(localFeatures, {
+      L.geoJSON(worldCopies(localFeatures), {
         style: neutralRegionStyle,
         interactive: false,
       }).addTo(contextLayer);
@@ -84,7 +90,7 @@ function renderTravelMap() {
       redrawVisited = function () {
         visitedLayer.clearLayers();
         const renderedFeatures = allBoundaryFeatures.filter((feature) => visited.has(regionName(feature)));
-        L.geoJSON(renderedFeatures, {
+        L.geoJSON(worldCopies(renderedFeatures), {
           style: (feature) => visitedRegionStyle(placeByName.get(regionName(feature))),
           onEachFeature: (feature, layer) => {
             const name = regionName(feature);
@@ -109,7 +115,7 @@ function renderTravelMap() {
         ].filter(Boolean).join(" ");
       };
 
-      allBoundaryFeatures.forEach((feature) => {
+      worldCopies(allBoundaryFeatures).forEach((feature) => {
         const name = regionName(feature);
         if (!name || !placeByName.has(name)) return;
         L.geoJSON(feature, {
@@ -125,8 +131,7 @@ function renderTravelMap() {
       });
 
       redrawVisited();
-      const bounds = visitedLayer.getBounds();
-      if (bounds.isValid()) map.fitBounds(bounds.pad(0.28), { maxZoom: 5 });
+      resetMapView(map);
     })
     .catch(() => {
       document.querySelector(".leaflet-map-tip").textContent =
@@ -137,9 +142,12 @@ function renderTravelMap() {
     visited.clear();
     visitedNames.forEach((name) => visited.add(name));
     redrawVisited();
-    const bounds = visitedLayer.getBounds();
-    if (bounds.isValid()) map.fitBounds(bounds.pad(0.28), { maxZoom: 5 });
+    resetMapView(map);
   });
+}
+
+function resetMapView(map) {
+  map.setView(INITIAL_MAP_CENTER, INITIAL_MAP_ZOOM);
 }
 
 function regionName(feature) {
@@ -154,6 +162,36 @@ function uniqueFeaturesByName(features) {
     seen.add(name);
     return true;
   });
+}
+
+function worldCopies(features) {
+  return features.flatMap((feature) =>
+    WORLD_LONGITUDE_OFFSETS.map((offset) => shiftFeatureLongitude(feature, offset))
+  );
+}
+
+function shiftFeatureLongitude(feature, offset) {
+  if (!offset || !feature?.geometry) return feature;
+  return {
+    ...feature,
+    properties: { ...feature.properties },
+    geometry: shiftGeometryLongitude(feature.geometry, offset),
+  };
+}
+
+function shiftGeometryLongitude(geometry, offset) {
+  return {
+    ...geometry,
+    coordinates: shiftCoordinatesLongitude(geometry.coordinates, offset),
+  };
+}
+
+function shiftCoordinatesLongitude(coordinates, offset) {
+  if (typeof coordinates?.[0] === "number") {
+    const [lng, lat, ...rest] = coordinates;
+    return [lng + offset, lat, ...rest];
+  }
+  return coordinates.map((child) => shiftCoordinatesLongitude(child, offset));
 }
 
 function neutralRegionStyle(feature) {
