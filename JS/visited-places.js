@@ -152,6 +152,8 @@ const VISITED_PLACES = [
   { type: "boundary", label: "香港", names: ["香港特别行政区"], style: "sar" },
   { type: "boundary", label: "澳門", names: ["澳门特别行政区"], style: "sar" },
 
+  { type: "boundary", label: "成都市", names: ["成都市"], province: "四川省" },
+
   { type: "boundary", label: "蘇州市", names: ["苏州市"], province: "江蘇省" },
   { type: "boundary", label: "南京市", names: ["南京市"], province: "江蘇省" },
 
