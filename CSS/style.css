@@ -43,7 +43,7 @@ a:hover {
 
 .page {
   display: grid;
-  grid-template-columns: 190px minmax(0, 900px);
+  grid-template-columns: 190px minmax(0, 1fr);
   min-height: 100vh;
 }
 
