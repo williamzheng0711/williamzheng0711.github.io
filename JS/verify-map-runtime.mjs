@@ -62,6 +62,14 @@ if (success.mapOptions.minZoom !== 2) {
   throw new Error(`Expected minZoom 2 to prevent over-shrinking the world map, got ${success.mapOptions.minZoom}`);
 }
 
+if (success.mapOptions.zoomDelta !== 0.5 || success.mapOptions.zoomSnap !== 0.5) {
+  throw new Error(`Expected half-step zoom controls, got zoomDelta=${success.mapOptions.zoomDelta}, zoomSnap=${success.mapOptions.zoomSnap}`);
+}
+
+if (success.mapOptions.wheelPxPerZoomLevel !== 120) {
+  throw new Error(`Expected gentler wheel zoom sensitivity, got wheelPxPerZoomLevel=${success.mapOptions.wheelPxPerZoomLevel}`);
+}
+
 if (success.mapOptions.worldCopyJump !== true) {
   throw new Error("Expected worldCopyJump to be enabled for continuous horizontal panning.");
 }

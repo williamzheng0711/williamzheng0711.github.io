@@ -50,6 +50,9 @@ function renderTravelMap() {
     attributionControl: false,
     zoomControl: true,
     scrollWheelZoom: true,
+    zoomDelta: 0.5,
+    zoomSnap: 0.5,
+    wheelPxPerZoomLevel: 120,
     minZoom: MIN_MAP_ZOOM,
     worldCopyJump: true,
   }).setView(INITIAL_MAP_CENTER, INITIAL_MAP_ZOOM);
