@@ -114,6 +114,9 @@ const BOUNDARY_PRESETS = {
   "南投": { label: "南投縣", names: ["南投縣"], source: "local", group: "taiwan" },
   "南投縣": { label: "南投縣", names: ["南投縣"], source: "local", group: "taiwan" },
   "台灣南投縣": { label: "南投縣", names: ["南投縣"], source: "local", group: "taiwan" },
+  "桃園": { label: "桃園市", names: ["桃園市"], source: "local", group: "taiwan" },
+  "桃園市": { label: "桃園市", names: ["桃園市"], source: "local", group: "taiwan" },
+  "台灣桃園市": { label: "桃園市", names: ["桃園市"], source: "local", group: "taiwan" },
   "釜山": { label: "釜山廣域市", names: ["부산광역시"], source: "local", group: "korea" },
   "釜山廣域市": { label: "釜山廣域市", names: ["부산광역시"], source: "local", group: "korea" },
   "韓國釜山廣域市": { label: "釜山廣域市", names: ["부산광역시"], source: "local", group: "korea" },
@@ -183,6 +186,7 @@ const VISITED_PLACES = [
   { type: "boundary", label: "台北市", names: ["臺北市"], source: "local", group: "taiwan" },
   { type: "boundary", label: "新北市", names: ["新北市"], source: "local", group: "taiwan" },
   { type: "boundary", label: "南投縣", names: ["南投縣"], source: "local", group: "taiwan" },
+  { type: "boundary", label: "桃園市", names: ["桃園市"], source: "local", group: "taiwan" },
 
   { type: "boundary", label: "釜山廣域市", names: ["부산광역시"], source: "local", group: "korea" },
   { type: "boundary", label: "首爾特別市", names: ["서울특별시"], source: "local", group: "korea" },

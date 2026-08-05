@@ -1,6 +1,7 @@
 const LOCAL_BOUNDARIES = "data/visited-boundaries.geojson";
 const CONTEXT_BOUNDARIES = "data/context-boundaries.geojson";
 const CONTEXT_CITY_BOUNDARIES = "data/context-city-boundaries.geojson";
+const REFINED_CONTEXT_BOUNDARIES = "data/refined-context-boundaries.geojson";
 
 const travelMapData = window.TRAVEL_MAP_DATA || {};
 const travelVisitedPlaces = travelMapData.VISITED_PLACES || [];
@@ -12,7 +13,7 @@ const placeByName = new Map(boundaryPlaces.flatMap((place) => place.names.map((n
 const INITIAL_MAP_CENTER = [31.5, 121.8];
 const INITIAL_MAP_ZOOM = 4;
 const MIN_MAP_ZOOM = 2;
-const WORLD_LONGITUDE_OFFSETS = [-360, 0, 360];
+const MAP_LATITUDE_LIMIT = 85.05112878;
 const DETAILED_CONTEXT_GROUPS = new Set([
   "context-canada",
   "context-japan",
@@ -21,6 +22,7 @@ const DETAILED_CONTEXT_GROUPS = new Set([
   "context-singapore",
   "context-usa",
 ]);
+const REFINED_COUNTRY_CODES = new Set(["CHN", "TWN"]);
 
 const navLinks = [...document.querySelectorAll(".menu-item")];
 const sections = navLinks
@@ -54,8 +56,25 @@ function renderTravelMap() {
     zoomSnap: 0.5,
     wheelPxPerZoomLevel: 120,
     minZoom: MIN_MAP_ZOOM,
-    worldCopyJump: true,
+    inertia: false,
   }).setView(INITIAL_MAP_CENTER, INITIAL_MAP_ZOOM);
+
+  const latitudeDraggable = map.dragging?._draggable;
+  if (latitudeDraggable?.on) {
+    latitudeDraggable.on("predrag", () => {
+      const centerPoint = map.getSize().divideBy(2);
+      const candidateLayerPoint = centerPoint.subtract(latitudeDraggable._newPos);
+      const candidateCenter = map.layerPointToLatLng(candidateLayerPoint);
+      const boundedLatitude = Math.max(
+        -MAP_LATITUDE_LIMIT,
+        Math.min(MAP_LATITUDE_LIMIT, candidateCenter.lat)
+      );
+      if (boundedLatitude === candidateCenter.lat) return;
+
+      const targetLayerPoint = map.latLngToLayerPoint([boundedLatitude, candidateCenter.lng]);
+      latitudeDraggable._newPos.y = centerPoint.y - targetLayerPoint.y;
+    });
+  }
 
   const status = L.control({ position: "bottomleft" });
   status.onAdd = () => {
@@ -68,7 +87,34 @@ function renderTravelMap() {
   const visitedLayer = L.featureGroup().addTo(map);
   const contextLayer = L.featureGroup().addTo(map);
   const visited = new Set(visitedNames);
+  let renderedAtLongitude = null;
+  let clampingLatitude = false;
+  let normalizingLongitude = false;
   let redrawVisited = () => {};
+  const clampMapLatitude = () => {
+    if (clampingLatitude) return false;
+    const center = map.getCenter();
+    const latitude = Math.max(-MAP_LATITUDE_LIMIT, Math.min(MAP_LATITUDE_LIMIT, center.lat));
+    if (latitude === center.lat) return false;
+
+    clampingLatitude = true;
+    map.setView([latitude, center.lng], map.getZoom(), { animate: false });
+    clampingLatitude = false;
+    return true;
+  };
+  const normalizeMapLongitude = () => {
+    if (normalizingLongitude) return false;
+    const center = map.getCenter();
+    let longitude = center.lng;
+    while (longitude > 180) longitude -= 360;
+    while (longitude < -180) longitude += 360;
+    if (longitude === center.lng) return false;
+
+    normalizingLongitude = true;
+    map.setView([center.lat, longitude], map.getZoom(), { animate: false });
+    normalizingLongitude = false;
+    return true;
+  };
 
   document.querySelector(".leaflet-map-tip").textContent =
     "Loading local map boundaries...";
@@ -76,32 +122,31 @@ function renderTravelMap() {
   const localRequest = fetch(LOCAL_BOUNDARIES).then((response) => response.json()).catch(() => null);
   const contextRequest = fetch(CONTEXT_BOUNDARIES).then((response) => response.json()).catch(() => null);
   const cityContextRequest = fetch(CONTEXT_CITY_BOUNDARIES).then((response) => response.json()).catch(() => null);
+  const refinedContextRequest = fetch(REFINED_CONTEXT_BOUNDARIES).then((response) => response.json()).catch(() => null);
 
-  Promise.all([localRequest, contextRequest, cityContextRequest])
-    .then(([local, context, cityContext]) => {
+  Promise.all([localRequest, contextRequest, cityContextRequest, refinedContextRequest])
+    .then(([local, context, cityContext, refinedContext]) => {
       const localFeatures = local?.features || [];
+      const contextFeatures = (context?.features || []).filter(
+        (feature) => !REFINED_COUNTRY_CODES.has(feature.properties?.iso_a3)
+      );
       const cityContextFeatures = cityContext?.features || [];
+      const refinedContextFeatures = refinedContext?.features || [];
+      const refinedCountryFeatures = refinedContextFeatures.filter(
+        (feature) => feature.properties?.kind === "country-coastline"
+      );
+      const taiwanAdminFeatures = refinedContextFeatures.filter(
+        (feature) => feature.properties?.kind === "taiwan-administration"
+      );
+      const greatLakeFeatures = refinedContextFeatures.filter(
+        (feature) => feature.properties?.kind === "great-lake"
+      );
       const allBoundaryFeatures = uniqueFeaturesByName(localFeatures);
-
-      L.geoJSON(worldCopies(context?.features || []), {
-        style: contextRegionStyle,
-        interactive: false,
-      }).addTo(contextLayer);
-
-      L.geoJSON(worldCopies(cityContextFeatures), {
-        style: neutralRegionStyle,
-        interactive: false,
-      }).addTo(contextLayer);
-
-      L.geoJSON(worldCopies(localFeatures), {
-        style: neutralRegionStyle,
-        interactive: false,
-      }).addTo(contextLayer);
 
       redrawVisited = function () {
         visitedLayer.clearLayers();
         const renderedFeatures = allBoundaryFeatures.filter((feature) => visited.has(regionName(feature)));
-        L.geoJSON(worldCopies(renderedFeatures), {
+        L.geoJSON(featuresNearLongitude(renderedFeatures, map.getCenter().lng), {
           style: (feature) => visitedRegionStyle(placeByName.get(regionName(feature))),
           onEachFeature: (feature, layer) => {
             const name = regionName(feature);
@@ -126,22 +171,71 @@ function renderTravelMap() {
         ].filter(Boolean).join(" ");
       };
 
-      worldCopies(allBoundaryFeatures).forEach((feature) => {
-        const name = regionName(feature);
-        if (!name || !placeByName.has(name)) return;
-        L.geoJSON(feature, {
-          style: { fillOpacity: 0, opacity: 0, weight: 0 },
-          onEachFeature: (_, layer) => {
-            layer.on("click", () => {
-              if (visited.has(name)) visited.delete(name);
-              else visited.add(name);
-              redrawVisited();
-            });
-          },
-        }).addTo(contextLayer);
-      });
+      const renderMapLayers = () => {
+        const mapLongitude = map.getCenter().lng;
+        renderedAtLongitude = mapLongitude;
+        contextLayer.clearLayers();
 
-      redrawVisited();
+        L.geoJSON(featuresNearLongitude(contextFeatures, mapLongitude), {
+          style: contextRegionStyle,
+          interactive: false,
+        }).addTo(contextLayer);
+
+        L.geoJSON(featuresNearLongitude(refinedCountryFeatures, mapLongitude), {
+          style: refinedCountryStyle,
+          interactive: false,
+        }).addTo(contextLayer);
+
+        L.geoJSON(featuresNearLongitude(cityContextFeatures, mapLongitude), {
+          style: neutralRegionStyle,
+          interactive: false,
+        }).addTo(contextLayer);
+
+        L.geoJSON(featuresNearLongitude(taiwanAdminFeatures, mapLongitude), {
+          style: taiwanAdminStyle,
+          interactive: false,
+        }).addTo(contextLayer);
+
+        L.geoJSON(featuresNearLongitude(greatLakeFeatures, mapLongitude), {
+          style: lakeStyle,
+          interactive: false,
+        }).addTo(contextLayer);
+
+        L.geoJSON(featuresNearLongitude(localFeatures, mapLongitude), {
+          style: neutralRegionStyle,
+          interactive: false,
+        }).addTo(contextLayer);
+
+        featuresNearLongitude(allBoundaryFeatures, mapLongitude).forEach((feature) => {
+          const name = regionName(feature);
+          if (!name || !placeByName.has(name)) return;
+          L.geoJSON(feature, {
+            style: { fillOpacity: 0, opacity: 0, weight: 0 },
+            onEachFeature: (_, layer) => {
+              layer.on("click", () => {
+                if (visited.has(name)) visited.delete(name);
+                else visited.add(name);
+                redrawVisited();
+              });
+            },
+          }).addTo(contextLayer);
+        });
+
+        redrawVisited();
+      };
+
+      map.on("move", () => {
+        if (clampingLatitude || normalizingLongitude) return;
+        clampMapLatitude();
+        const longitudeWasNormalized = normalizeMapLongitude();
+        if (renderedAtLongitude === null) return;
+        if (longitudeWasNormalized || Math.abs(map.getCenter().lng - renderedAtLongitude) > 180) {
+          renderMapLayers();
+        }
+      });
+      map.on("moveend", renderMapLayers);
+
+      renderMapLayers();
       resetMapView(map);
     })
     .catch(() => {
@@ -175,14 +269,41 @@ function uniqueFeaturesByName(features) {
   });
 }
 
-function worldCopies(features) {
-  return features.flatMap((feature) =>
-    WORLD_LONGITUDE_OFFSETS.map((offset) => shiftFeatureLongitude(feature, offset))
-  );
+const featureLongitudeAnchors = new WeakMap();
+
+function featuresNearLongitude(features, mapLongitude) {
+  return features.map((feature) => {
+    const anchor = featureLongitudeAnchor(feature);
+    const offset = Math.round((mapLongitude - anchor) / 360) * 360;
+    return offset ? shiftFeatureLongitude(feature, offset) : feature;
+  });
+}
+
+function featureLongitudeAnchor(feature) {
+  if (featureLongitudeAnchors.has(feature)) return featureLongitudeAnchors.get(feature);
+  let total = 0;
+  let count = 0;
+
+  visitCoordinateLongitudes(feature.geometry?.coordinates, (longitude) => {
+    total += longitude;
+    count += 1;
+  });
+
+  const anchor = count ? total / count : 0;
+  featureLongitudeAnchors.set(feature, anchor);
+  return anchor;
+}
+
+function visitCoordinateLongitudes(coordinates, visit) {
+  if (!Array.isArray(coordinates)) return;
+  if (typeof coordinates[0] === "number") {
+    visit(coordinates[0]);
+    return;
+  }
+  coordinates.forEach((child) => visitCoordinateLongitudes(child, visit));
 }
 
 function shiftFeatureLongitude(feature, offset) {
-  if (!offset || !feature?.geometry) return feature;
   return {
     ...feature,
     properties: { ...feature.properties },
@@ -199,8 +320,8 @@ function shiftGeometryLongitude(geometry, offset) {
 
 function shiftCoordinatesLongitude(coordinates, offset) {
   if (typeof coordinates?.[0] === "number") {
-    const [lng, lat, ...rest] = coordinates;
-    return [lng + offset, lat, ...rest];
+    const [longitude, latitude, ...rest] = coordinates;
+    return [longitude + offset, latitude, ...rest];
   }
   return coordinates.map((child) => shiftCoordinatesLongitude(child, offset));
 }
@@ -221,6 +342,33 @@ function contextRegionStyle() {
     weight: 0.9,
     fillColor: "#f8fafc",
     fillOpacity: 0.84,
+  };
+}
+
+function refinedCountryStyle() {
+  return {
+    color: "#7a889a",
+    weight: 0.9,
+    fillColor: "#f8fafc",
+    fillOpacity: 0.84,
+  };
+}
+
+function taiwanAdminStyle() {
+  return {
+    color: "#7c8999",
+    weight: 0.78,
+    fillColor: "#f8fafc",
+    fillOpacity: 0.88,
+  };
+}
+
+function lakeStyle() {
+  return {
+    color: "#7ca4bb",
+    weight: 0.72,
+    fillColor: "#eef7fb",
+    fillOpacity: 1,
   };
 }
 

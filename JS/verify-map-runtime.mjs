@@ -6,6 +6,7 @@ const siteSource = fs.readFileSync(new URL("./site.js", import.meta.url), "utf8"
 const localBoundaries = JSON.parse(fs.readFileSync(new URL("../data/visited-boundaries.geojson", import.meta.url), "utf8"));
 const contextBoundaries = JSON.parse(fs.readFileSync(new URL("../data/context-boundaries.geojson", import.meta.url), "utf8"));
 const cityContextBoundaries = JSON.parse(fs.readFileSync(new URL("../data/context-city-boundaries.geojson", import.meta.url), "utf8"));
+const refinedContextBoundaries = JSON.parse(fs.readFileSync(new URL("../data/refined-context-boundaries.geojson", import.meta.url), "utf8"));
 
 const dataContext = { window: {} };
 vm.createContext(dataContext);
@@ -40,6 +41,11 @@ const detailedContextExpectations = {
   "context-malaysia": 16,
   "context-singapore": 1,
 };
+const refinedContextExpectations = {
+  "context-china": [1, { color: "#7a889a", weight: 0.9, fillOpacity: 0.84 }],
+  "context-taiwan": [22, { color: "#7c8999", weight: 0.78, fillOpacity: 0.88 }],
+  "context-north-america": [5, { color: "#7ca4bb", weight: 0.72, fillOpacity: 1 }],
+};
 
 const success = await runMapRuntime();
 assertEqualSets(success.highlightedLabels, expectedBoundaryLabels, "highlighted boundary labels");
@@ -56,7 +62,10 @@ Object.entries(detailedContextExpectations).forEach(([group, expectedCount]) => 
     fillOpacity: 0.84,
   });
 });
-assertWorldCopies(success.highlightedLabels, expectedBoundaryLabels, 3, "highlighted visited regions");
+Object.entries(refinedContextExpectations).forEach(([group, [expectedCount, expectedStyle]]) => {
+  assertContextStyle(success.contextStyles, group, expectedCount, expectedStyle);
+});
+assertRenderedExactlyOnce(success.highlightedLabels, expectedBoundaryLabels, "highlighted visited regions");
 
 if (success.mapOptions.minZoom !== 2) {
   throw new Error(`Expected minZoom 2 to prevent over-shrinking the world map, got ${success.mapOptions.minZoom}`);
@@ -70,12 +79,31 @@ if (success.mapOptions.wheelPxPerZoomLevel !== 120) {
   throw new Error(`Expected gentler wheel zoom sensitivity, got wheelPxPerZoomLevel=${success.mapOptions.wheelPxPerZoomLevel}`);
 }
 
-if (success.mapOptions.worldCopyJump !== true) {
-  throw new Error("Expected worldCopyJump to be enabled for continuous horizontal panning.");
+if (success.mapOptions.inertia !== false) {
+  throw new Error("Expected map inertia to be disabled so polar drag limits cannot be overshot after mouseup.");
+}
+
+if (success.mapOptions.worldCopyJump === true) {
+  throw new Error("worldCopyJump must stay disabled; the renderer controls the horizontal wrap.");
+}
+
+if (success.mapOptions.maxBounds !== undefined || success.mapOptions.maxBoundsViscosity !== undefined) {
+  throw new Error("The map must leave horizontal bounds open; latitude and longitude are clamped by the move handler.");
+}
+
+if (siteSource.includes("WORLD_LONGITUDE_OFFSETS") || siteSource.includes("worldCopies(")) {
+  throw new Error("Map source must not clone GeoJSON features into multiple world copies.");
 }
 
 assertEastAsiaView(success.setViewCalls[0], "initial map view");
 assertEastAsiaView(success.setViewCalls.at(-1), "post-load map view");
+
+success.map.setView([100, 220], 4);
+success.map.events.move();
+const boundedCenter = success.map.center;
+if (boundedCenter[0] !== 85.05112878 || boundedCenter[1] !== -140) {
+  throw new Error(`Expected polar and horizontal drag normalization, got ${JSON.stringify(boundedCenter)}`);
+}
 
 if (success.fitBoundsCalls.length !== 0) {
   throw new Error("Expected initial view to stay in East Asia instead of fitting all worldwide visited regions.");
@@ -97,6 +125,10 @@ if (!success.cityContextRequested) {
   throw new Error("Expected local city context boundary data to be requested.");
 }
 
+if (!success.refinedContextRequested) {
+  throw new Error("Expected local refined context boundary data to be requested.");
+}
+
 if (!success.localBoundariesRequested) {
   throw new Error("Expected bundled visited boundary data to be requested.");
 }
@@ -107,6 +139,7 @@ if (success.remoteFetches.length) {
 
 [
   "Canada",
+  "China",
   "Japan",
   "Malaysia",
   "Singapore",
@@ -117,6 +150,10 @@ if (success.remoteFetches.length) {
     throw new Error(`Expected coarse ${countryName} country outline to be replaced by detailed context polygons.`);
   }
 });
+
+if (contextCountryNames.has("Taiwan") || contextCountryAdmins.has("Taiwan")) {
+  throw new Error("Expected coarse Taiwan country outline to be replaced by county/city boundaries.");
+}
 
 if ((contextBoundaries.features || []).length < 170) {
   throw new Error(`Expected world context boundaries, got only ${contextBoundaries.features.length} country outlines.`);
@@ -131,6 +168,41 @@ Object.entries(detailedContextExpectations).forEach(([group, expectedCount]) => 
     throw new Error(`Expected ${expectedCount} ${group} context boundaries, got ${contextDetailCounts[group] || 0}.`);
   }
 });
+
+const taiwanAdminFeatures = refinedContextBoundaries.features.filter(
+  (feature) => feature.properties?.kind === "taiwan-administration"
+);
+if (taiwanAdminFeatures.length !== 22) {
+  throw new Error(`Expected 22 Taiwan county/city boundaries, got ${taiwanAdminFeatures.length}.`);
+}
+
+if (!taiwanAdminFeatures.some((feature) => feature.properties?.name === "桃園市")) {
+  throw new Error("Expected 桃園市 in the Taiwan administrative boundaries.");
+}
+
+const greatLakeNames = new Set(
+  refinedContextBoundaries.features
+    .filter((feature) => feature.properties?.kind === "great-lake")
+    .map((feature) => feature.properties?.name)
+);
+["Lake Superior", "Lake Michigan", "Lake Huron", "Lake Erie", "Lake Ontario"].forEach((name) => {
+  if (!greatLakeNames.has(name)) throw new Error(`Expected Great Lake boundary for ${name}.`);
+});
+
+const northAmericaFeatures = cityContextBoundaries.features.filter(
+  (feature) => ["context-usa", "context-canada"].includes(feature.properties?.group)
+);
+if (!northAmericaFeatures.every((feature) => feature.properties?.source === "Natural Earth 10m Admin 1 States/Provinces (lakes)")) {
+  throw new Error("Expected United States and Canada boundaries to use Natural Earth 10m lake-aware geometry.");
+}
+
+const northAmericaCoordinateCount = northAmericaFeatures.reduce(
+  (total, feature) => total + countCoordinates(feature.geometry?.coordinates),
+  0
+);
+if (northAmericaCoordinateCount < 130000) {
+  throw new Error(`Expected detailed North America geometry, got only ${northAmericaCoordinateCount} coordinate pairs.`);
+}
 
 for (const name of forbiddenFeatureNames) {
   if (success.highlightedLabels.includes(name)) throw new Error(`Forbidden feature was highlighted: ${name}`);
@@ -148,6 +220,7 @@ console.log(
   `Map runtime verification passed: ${success.highlightedRegionCount} highlighted boundary regions, ` +
     `${success.bundledRegionCount} bundled polygons, ` +
     `${contextBoundaries.features.length} country outlines, ${cityContextBoundaries.features.length} city/province outlines, ` +
+    `${taiwanAdminFeatures.length} Taiwan county/city outlines, and ${greatLakeNames.size} Great Lakes; ` +
     "0 point markers, 0 remote tile layers."
 );
 
@@ -176,11 +249,13 @@ async function runMapRuntime(options = {}) {
     circleMarkerCalls: runtime.circleMarkerCalls,
     tileLayerCalls: runtime.tileLayerCalls,
     mapOptions: runtime.map.options || {},
+    map: runtime.map,
     setViewCalls: runtime.map.setViewCalls,
     fitBoundsCalls: runtime.map.fitBoundsCalls,
     localBoundariesRequested: runtime.fetchUrls.some((url) => url.endsWith("visited-boundaries.geojson")),
     contextRequested: runtime.fetchUrls.some((url) => url.endsWith("context-boundaries.geojson")),
     cityContextRequested: runtime.fetchUrls.some((url) => url.endsWith("context-city-boundaries.geojson")),
+    refinedContextRequested: runtime.fetchUrls.some((url) => url.endsWith("refined-context-boundaries.geojson")),
     remoteFetches: runtime.fetchUrls.filter((url) => /^https?:\/\//.test(url)),
     status: runtime.status.textContent,
     summary: runtime.summary.innerHTML,
@@ -203,10 +278,25 @@ function createRuntime() {
   const map = {
     options: {},
     layers: [],
+    center: [0, 0],
+    zoom: 0,
+    events: {},
     fitBoundsCalls: [],
     setViewCalls: [],
     setView(center, zoom) {
+      this.center = center;
+      if (zoom !== undefined) this.zoom = zoom;
       this.setViewCalls.push({ center, zoom });
+      return this;
+    },
+    getCenter() {
+      return { lat: this.center[0], lng: this.center[1] };
+    },
+    getZoom() {
+      return this.zoom;
+    },
+    on(event, listener) {
+      this.events[event] = listener;
       return this;
     },
     fitBounds(bounds, options) {
@@ -279,6 +369,9 @@ function createRuntime() {
     console,
     fetch(url) {
       fetchUrls.push(url);
+      if (url.endsWith("data/refined-context-boundaries.geojson") || url.endsWith("refined-context-boundaries.geojson")) {
+        return Promise.resolve(mockResponse(refinedContextBoundaries));
+      }
       if (url.endsWith("data/visited-boundaries.geojson") || url.endsWith("visited-boundaries.geojson")) {
         return Promise.resolve(mockResponse(localBoundaries));
       }
@@ -427,8 +520,8 @@ function assertContextStyle(actual, group, expectedCount, expectedStyle) {
   if (uniqueNames.size !== expectedCount) {
     throw new Error(`Expected ${expectedCount} unique ${group} context styles, got ${uniqueNames.size}`);
   }
-  if (styles.length !== expectedCount * 3) {
-    throw new Error(`Expected ${expectedCount * 3} ${group} copied context styles, got ${styles.length}`);
+  if (styles.length !== expectedCount) {
+    throw new Error(`Expected ${expectedCount} ${group} context styles, got ${styles.length}`);
   }
   styles.forEach((item) => {
     if (String(item.style.color).toLowerCase() !== expectedStyle.color.toLowerCase()) {
@@ -445,14 +538,14 @@ function assertContextStyle(actual, group, expectedCount, expectedStyle) {
   });
 }
 
-function assertWorldCopies(actualLabels, expectedLabels, expectedCopies, label) {
+function assertRenderedExactlyOnce(actualLabels, expectedLabels, label) {
   const counts = actualLabels.reduce((summary, item) => {
     summary.set(item, (summary.get(item) || 0) + 1);
     return summary;
   }, new Map());
   expectedLabels.forEach((item) => {
-    if (counts.get(item) !== expectedCopies) {
-      throw new Error(`Expected ${expectedCopies} world copies for ${label} "${item}", got ${counts.get(item) || 0}`);
+    if (counts.get(item) !== 1) {
+      throw new Error(`Expected one rendered copy for ${label} "${item}", got ${counts.get(item) || 0}`);
     }
   });
 }
@@ -463,4 +556,10 @@ function assertEastAsiaView(call, label) {
   if (lat !== 31.5 || lng !== 121.8 || call.zoom !== 4) {
     throw new Error(`Expected ${label} to be East Asia [31.5, 121.8] zoom 4, got ${JSON.stringify(call)}`);
   }
+}
+
+function countCoordinates(value) {
+  if (!Array.isArray(value)) return 0;
+  if (typeof value[0] === "number") return 1;
+  return value.reduce((total, item) => total + countCoordinates(item), 0);
 }

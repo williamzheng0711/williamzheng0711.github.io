@@ -19,3 +19,18 @@ The visible list is `VISITED_PLACES`. The map is polygon-only: every entry must 
 - Add a boundary manually with `node JS/add-boundary.mjs --label=蘇州市 --name=苏州市 --province=江蘇省`.
 - Run `node JS/validate-visited-places.mjs` after editing the list.
 - Run `node JS/verify-map-runtime.mjs` to check that all configured places render as boundary fills without point markers or remote map tiles.
+
+### Detailed basemap layers
+
+The travel map keeps all geometry local and does not use remote map tiles.
+
+- `data/refined-context-boundaries.geojson` contains the China 10m coastline, all 22 Taiwan county/city boundaries, and the five Great Lakes.
+- North American state/province boundaries in `data/context-city-boundaries.geojson` use the lake-aware Natural Earth 10m source, so the United States–Canada boundary and Great Lakes remain legible when zooming.
+- `data/visited-boundaries.geojson` includes the high-resolution Taiwan polygons for the visited locations, including 桃園市.
+- The renderer draws at most one translated copy of each feature in the current viewport, so a place cannot be duplicated at world-wrap edges; horizontal dragging remains continuous, while vertical dragging is clamped to the Web Mercator poles.
+
+To regenerate these data files, download Natural Earth's `ne_10m_admin_0_countries_lakes.geojson`, `ne_10m_lakes.geojson`, and `ne_10m_admin_1_states_provinces_lakes.geojson`, plus GADM's `gadm41_TWN_2.json.zip`, into one directory; then run:
+
+```sh
+node JS/build-refined-map-data.mjs --source-dir=/absolute/path/to/downloaded-map-sources
+```
