@@ -67,6 +67,22 @@ Object.entries(refinedContextExpectations).forEach(([group, [expectedCount, expe
 });
 assertRenderedExactlyOnce(success.highlightedLabels, expectedBoundaryLabels, "highlighted visited regions");
 
+const russiaExtent = longitudeExtent(success.russiaFeature?.geometry?.coordinates);
+if (russiaExtent.min < 0 || russiaExtent.max <= 180) {
+  throw new Error(`Expected dateline-adjacent Russian parts to stay together, got ${JSON.stringify(russiaExtent)}`);
+}
+if (datelineSeamEdgeCount(success.russiaFeature?.geometry?.coordinates) !== 0) {
+  throw new Error("Expected Russia to render without an explicit 180 degree seam edge.");
+}
+const russiaEastExtent = longitudeExtent(success.russiaEastFeature?.geometry?.coordinates);
+if (russiaEastExtent.min < 0 || russiaEastExtent.max <= 180) {
+  throw new Error(`Expected the east-facing Russian copy to stay contiguous, got ${JSON.stringify(russiaEastExtent)}`);
+}
+const russiaWestExtent = longitudeExtent(success.russiaWestFeature?.geometry?.coordinates);
+if (russiaWestExtent.max > 0 || russiaWestExtent.min >= -180) {
+  throw new Error(`Expected the west-facing Russian copy to stay contiguous, got ${JSON.stringify(russiaWestExtent)}`);
+}
+
 if (success.mapOptions.minZoom !== 2) {
   throw new Error(`Expected minZoom 2 to prevent over-shrinking the world map, got ${success.mapOptions.minZoom}`);
 }
@@ -91,6 +107,27 @@ if (success.mapOptions.maxBounds !== undefined || success.mapOptions.maxBoundsVi
   throw new Error("The map must leave horizontal bounds open; latitude and longitude are clamped by the move handler.");
 }
 
+const viewportClamp = success.clampMapCenterToViewport({
+  getZoom: () => 2,
+  getPixelWorldBounds: () => ({ min: { y: 0 }, max: { y: 1024 } }),
+  getSize: () => ({ y: 580 }),
+  project: (center) => ({ x: center.lng, y: 512 - center.lat * 4 }),
+  unproject: (point) => ({ lat: (512 - point[1]) / 4, lng: point[0] }),
+}, { lat: 100, lng: 12 });
+if (viewportClamp.lat > 55.5 || viewportClamp.lat < -55.5 || viewportClamp.lng !== 12) {
+  throw new Error(`Expected the full viewport to stay inside the projected world, got ${JSON.stringify(viewportClamp)}`);
+}
+
+const predrag = success.map.dragging?._draggable?.events?.predrag;
+if (typeof predrag !== "function") {
+  throw new Error("Expected a predrag latitude guard to be attached to Leaflet's draggable handler.");
+}
+success.map.dragging._draggable._newPos = { x: 0, y: 1000 };
+predrag();
+if (success.map.dragging._draggable._newPos.y >= 1000) {
+  throw new Error("Expected predrag to cap the candidate latitude before Leaflet moves the map.");
+}
+
 if (siteSource.includes("WORLD_LONGITUDE_OFFSETS") || siteSource.includes("worldCopies(")) {
   throw new Error("Map source must not clone GeoJSON features into multiple world copies.");
 }
@@ -99,10 +136,29 @@ assertEastAsiaView(success.setViewCalls[0], "initial map view");
 assertEastAsiaView(success.setViewCalls.at(-1), "post-load map view");
 
 success.map.setView([100, 220], 4);
+const activeGroupsBeforeMove = success.map.layers.filter((layer) => layer?._target === success.map);
 success.map.events.move();
 const boundedCenter = success.map.center;
-if (boundedCenter[0] !== 85.05112878 || boundedCenter[1] !== -140) {
-  throw new Error(`Expected polar and horizontal drag normalization, got ${JSON.stringify(boundedCenter)}`);
+if (boundedCenter[0] !== 85.05112878 || boundedCenter[1] !== 220) {
+  throw new Error(`Expected latitude to clamp without interrupting horizontal drag, got ${JSON.stringify(boundedCenter)}`);
+}
+const activeGroupsAfterMove = success.map.layers.filter((layer) => layer?._target === success.map);
+if (
+  activeGroupsAfterMove.length !== activeGroupsBeforeMove.length ||
+  activeGroupsAfterMove.some((layer, index) => layer !== activeGroupsBeforeMove[index])
+) {
+  throw new Error("Expected horizontal move events to keep the current map layers intact until moveend.");
+}
+success.map.events.moveend();
+if (success.map.center[0] !== 85.05112878 || success.map.center[1] !== -140) {
+  throw new Error(`Expected horizontal normalization at moveend, got ${JSON.stringify(success.map.center)}`);
+}
+const activeGroupsAfterMoveend = success.map.layers.filter((layer) => layer?._target === success.map);
+if (
+  activeGroupsAfterMoveend.length !== activeGroupsAfterMove.length ||
+  activeGroupsAfterMoveend.every((layer, index) => layer === activeGroupsAfterMove[index])
+) {
+  throw new Error("Expected moveend to replace the map layers as one complete bundle.");
 }
 
 if (success.fitBoundsCalls.length !== 0) {
@@ -233,16 +289,26 @@ async function runMapRuntime(options = {}) {
   await runtime.fireLoad();
   await new Promise((resolve) => setTimeout(resolve, 0));
 
-  const [visitedLayer, contextLayer] = runtime.featureGroups;
+  const activeGroups = runtime.featureGroups.filter((group) => group._target === runtime.map);
+  const visitedLayer = activeGroups.find((group) => flattenLayerLabels(group).length > 0);
+  const contextLayer = activeGroups.find((group) => flattenFeatureStyles(group).length > 0);
+  if (!visitedLayer || !contextLayer) {
+    throw new Error(`Expected active visited/context layer groups, got ${activeGroups.length}.`);
+  }
   const highlightedLabels = flattenLayerLabels(visitedLayer);
   const highlightedStyles = flattenLayerStyles(visitedLayer);
   const contextStyles = flattenFeatureStyles(contextLayer);
   const bundledLabels = new Set(bundledBoundaryLabels);
+  const shiftFeatures = runtime.context.featuresNearLongitude;
+  const russiaSourceFeature = contextBoundaries.features.find((feature) => feature.properties?.iso_a3 === "RUS");
 
   return {
     highlightedLabels,
     highlightedStyles,
     contextStyles,
+    russiaFeature: contextStyles.find((item) => item.name === "Russia")?.feature || null,
+    russiaEastFeature: shiftFeatures([russiaSourceFeature], 180)[0],
+    russiaWestFeature: shiftFeatures([russiaSourceFeature], -180)[0],
     highlightedRegionCount: new Set(highlightedLabels).size,
     bundledRegionCount: new Set(highlightedLabels.filter((label) => bundledLabels.has(label))).size,
     bundledHighlightedLabels: highlightedLabels.filter((label) => bundledLabels.has(label)),
@@ -250,6 +316,7 @@ async function runMapRuntime(options = {}) {
     tileLayerCalls: runtime.tileLayerCalls,
     mapOptions: runtime.map.options || {},
     map: runtime.map,
+    clampMapCenterToViewport: runtime.context.clampMapCenterToViewport,
     setViewCalls: runtime.map.setViewCalls,
     fitBoundsCalls: runtime.map.fitBoundsCalls,
     localBoundariesRequested: runtime.fetchUrls.some((url) => url.endsWith("visited-boundaries.geojson")),
@@ -280,6 +347,19 @@ function createRuntime() {
     layers: [],
     center: [0, 0],
     zoom: 0,
+    dragging: {
+      _draggable: {
+        events: {},
+        _newPos: { x: 0, y: 0 },
+        on(event, listener) {
+          this.events[event] = listener;
+          return this;
+        },
+        moving() {
+          return false;
+        },
+      },
+    },
     events: {},
     fitBoundsCalls: [],
     setViewCalls: [],
@@ -294,6 +374,27 @@ function createRuntime() {
     },
     getZoom() {
       return this.zoom;
+    },
+    getSize() {
+      return {
+        y: 580,
+        divideBy() {
+          return {
+            x: 512,
+            y: 290,
+            subtract(point) {
+              return { x: this.x - point.x, y: this.y - point.y };
+            },
+          };
+        },
+      };
+    },
+    layerPointToLatLng(point) {
+      return { lat: 100 - point.y * 0.01, lng: 0 };
+    },
+    latLngToLayerPoint(center) {
+      const latitude = Array.isArray(center) ? center[0] : center.lat;
+      return { y: (100 - latitude) * 10 };
     },
     on(event, listener) {
       this.events[event] = listener;
@@ -427,12 +528,35 @@ function createRuntime() {
 function createFeatureGroup(initialLayers = []) {
   return {
     layers: [...initialLayers],
+    _target: null,
     addTo(target) {
-      target.layers.push(this);
+      this._target = target;
+      if (!target.layers.includes(this)) target.layers.push(this);
+      return this;
+    },
+    remove() {
+      if (this._target?.layers) {
+        this._target.layers = this._target.layers.filter((layer) => layer !== this);
+      }
+      this._target = null;
       return this;
     },
     clearLayers() {
       this.layers = [];
+    },
+    eachLayer(callback) {
+      this.layers.forEach(callback);
+      return this;
+    },
+    addLayer(layer) {
+      if (!this.layers.includes(layer)) this.layers.push(layer);
+      if (layer && typeof layer === "object") layer._target = this;
+      return this;
+    },
+    removeLayer(layer) {
+      this.layers = this.layers.filter((candidate) => candidate !== layer);
+      if (layer?._target === this) layer._target = null;
+      return this;
     },
     getBounds() {
       return {
@@ -479,7 +603,12 @@ function flattenLayerStyles(layerGroup) {
 function flattenFeatureStyles(layerGroup) {
   return layerGroup.layers.flatMap((layer) => {
     if (layer.feature) {
-      return [{ group: layer.feature.properties?.group, name: layer.feature.properties?.name, style: layer.style || {} }];
+      return [{
+        feature: layer.feature,
+        group: layer.feature.properties?.group,
+        name: layer.feature.properties?.name,
+        style: layer.style || {},
+      }];
     }
     if (layer.layers) return flattenFeatureStyles(layer);
     return [];
@@ -562,4 +691,45 @@ function countCoordinates(value) {
   if (!Array.isArray(value)) return 0;
   if (typeof value[0] === "number") return 1;
   return value.reduce((total, item) => total + countCoordinates(item), 0);
+}
+
+function longitudeExtent(value) {
+  let min = Infinity;
+  let max = -Infinity;
+  const visit = (coordinates) => {
+    if (!Array.isArray(coordinates)) return;
+    if (typeof coordinates[0] === "number") {
+      min = Math.min(min, coordinates[0]);
+      max = Math.max(max, coordinates[0]);
+      return;
+    }
+    coordinates.forEach(visit);
+  };
+  visit(value);
+  return min === Infinity ? { min: 0, max: 0 } : { min, max };
+}
+
+function datelineSeamEdgeCount(value) {
+  let count = 0;
+  const visit = (coordinates) => {
+    if (!Array.isArray(coordinates)) return;
+    if (coordinates.length > 1 && Array.isArray(coordinates[0]) && typeof coordinates[0][0] === "number") {
+      for (let index = 0; index < coordinates.length - 1; index += 1) {
+        const first = coordinates[index];
+        const second = coordinates[index + 1];
+        if (
+          Math.abs(Math.abs(first[0]) - 180) < 1e-6 &&
+          Math.abs(Math.abs(second[0]) - 180) < 1e-6 &&
+          Math.abs(first[0] - second[0]) < 1e-6 &&
+          Math.abs(first[1] - second[1]) > 1e-6
+        ) {
+          count += 1;
+        }
+      }
+      return;
+    }
+    coordinates.forEach(visit);
+  };
+  visit(value);
+  return count;
 }

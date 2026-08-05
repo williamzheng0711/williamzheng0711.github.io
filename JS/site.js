@@ -62,16 +62,14 @@ function renderTravelMap() {
   const latitudeDraggable = map.dragging?._draggable;
   if (latitudeDraggable?.on) {
     latitudeDraggable.on("predrag", () => {
+      wrapMapDragLongitude(map, latitudeDraggable);
       const centerPoint = map.getSize().divideBy(2);
       const candidateLayerPoint = centerPoint.subtract(latitudeDraggable._newPos);
       const candidateCenter = map.layerPointToLatLng(candidateLayerPoint);
-      const boundedLatitude = Math.max(
-        -MAP_LATITUDE_LIMIT,
-        Math.min(MAP_LATITUDE_LIMIT, candidateCenter.lat)
-      );
-      if (boundedLatitude === candidateCenter.lat) return;
+      const boundedCenter = clampMapCenterToViewport(map, candidateCenter);
+      if (Math.abs(boundedCenter.lat - candidateCenter.lat) < 1e-8) return;
 
-      const targetLayerPoint = map.latLngToLayerPoint([boundedLatitude, candidateCenter.lng]);
+      const targetLayerPoint = map.latLngToLayerPoint([boundedCenter.lat, candidateCenter.lng]);
       latitudeDraggable._newPos.y = centerPoint.y - targetLayerPoint.y;
     });
   }
@@ -84,26 +82,25 @@ function renderTravelMap() {
   };
   status.addTo(map);
 
-  const visitedLayer = L.featureGroup().addTo(map);
-  const contextLayer = L.featureGroup().addTo(map);
+  let visitedLayer = L.featureGroup().addTo(map);
+  let contextLayer = L.featureGroup().addTo(map);
   const visited = new Set(visitedNames);
-  let renderedAtLongitude = null;
   let clampingLatitude = false;
   let normalizingLongitude = false;
   let redrawVisited = () => {};
   const clampMapLatitude = () => {
     if (clampingLatitude) return false;
     const center = map.getCenter();
-    const latitude = Math.max(-MAP_LATITUDE_LIMIT, Math.min(MAP_LATITUDE_LIMIT, center.lat));
-    if (latitude === center.lat) return false;
+    const boundedCenter = clampMapCenterToViewport(map, center);
+    if (Math.abs(boundedCenter.lat - center.lat) < 1e-8) return false;
 
     clampingLatitude = true;
-    map.setView([latitude, center.lng], map.getZoom(), { animate: false });
+    map.setView([boundedCenter.lat, center.lng], map.getZoom(), { animate: false });
     clampingLatitude = false;
     return true;
   };
   const normalizeMapLongitude = () => {
-    if (normalizingLongitude) return false;
+    if (normalizingLongitude || map.dragging?.moving?.()) return false;
     const center = map.getCenter();
     let longitude = center.lng;
     while (longitude > 180) longitude -= 360;
@@ -115,7 +112,6 @@ function renderTravelMap() {
     normalizingLongitude = false;
     return true;
   };
-
   document.querySelector(".leaflet-map-tip").textContent =
     "Loading local map boundaries...";
 
@@ -143,21 +139,7 @@ function renderTravelMap() {
       );
       const allBoundaryFeatures = uniqueFeaturesByName(localFeatures);
 
-      redrawVisited = function () {
-        visitedLayer.clearLayers();
-        const renderedFeatures = allBoundaryFeatures.filter((feature) => visited.has(regionName(feature)));
-        L.geoJSON(featuresNearLongitude(renderedFeatures, map.getCenter().lng), {
-          style: (feature) => visitedRegionStyle(placeByName.get(regionName(feature))),
-          onEachFeature: (feature, layer) => {
-            const name = regionName(feature);
-            layer.bindTooltip(placeByName.get(name)?.label || name);
-            layer.on("click", () => {
-              visited.delete(name);
-              redrawVisited();
-            });
-          },
-        }).addTo(visitedLayer);
-
+      const updateMapStatus = (renderedFeatures) => {
         const labels = renderedFeatures.map((feature) => {
           const name = regionName(feature);
           return placeByName.get(name)?.label || name;
@@ -171,40 +153,63 @@ function renderTravelMap() {
         ].filter(Boolean).join(" ");
       };
 
-      const renderMapLayers = () => {
-        const mapLongitude = map.getCenter().lng;
-        renderedAtLongitude = mapLongitude;
-        contextLayer.clearLayers();
+      const buildVisitedLayer = (mapLongitude) => {
+        const nextVisitedLayer = L.featureGroup();
+        const renderedFeatures = allBoundaryFeatures.filter((feature) => visited.has(regionName(feature)));
+        L.geoJSON(featuresNearLongitude(renderedFeatures, mapLongitude), {
+          style: (feature) => visitedRegionStyle(placeByName.get(regionName(feature))),
+          onEachFeature: (feature, layer) => {
+            const name = regionName(feature);
+            layer.bindTooltip(placeByName.get(name)?.label || name);
+            layer.on("click", () => {
+              visited.delete(name);
+              redrawVisited();
+            });
+          },
+        }).addTo(nextVisitedLayer);
+        updateMapStatus(renderedFeatures);
+        return nextVisitedLayer;
+      };
+
+      redrawVisited = function () {
+        const nextVisitedLayer = buildVisitedLayer(map.getCenter().lng);
+        nextVisitedLayer.addTo(map);
+        visitedLayer.remove();
+        visitedLayer = nextVisitedLayer;
+      };
+
+      const buildContextLayer = (mapLongitude) => {
+        const nextContextLayer = L.featureGroup();
 
         L.geoJSON(featuresNearLongitude(contextFeatures, mapLongitude), {
           style: contextRegionStyle,
           interactive: false,
-        }).addTo(contextLayer);
+        }).addTo(nextContextLayer);
 
         L.geoJSON(featuresNearLongitude(refinedCountryFeatures, mapLongitude), {
           style: refinedCountryStyle,
           interactive: false,
-        }).addTo(contextLayer);
+        }).addTo(nextContextLayer);
 
         L.geoJSON(featuresNearLongitude(cityContextFeatures, mapLongitude), {
           style: neutralRegionStyle,
           interactive: false,
-        }).addTo(contextLayer);
+        }).addTo(nextContextLayer);
 
         L.geoJSON(featuresNearLongitude(taiwanAdminFeatures, mapLongitude), {
           style: taiwanAdminStyle,
           interactive: false,
-        }).addTo(contextLayer);
+        }).addTo(nextContextLayer);
 
         L.geoJSON(featuresNearLongitude(greatLakeFeatures, mapLongitude), {
           style: lakeStyle,
           interactive: false,
-        }).addTo(contextLayer);
+        }).addTo(nextContextLayer);
 
         L.geoJSON(featuresNearLongitude(localFeatures, mapLongitude), {
           style: neutralRegionStyle,
           interactive: false,
-        }).addTo(contextLayer);
+        }).addTo(nextContextLayer);
 
         featuresNearLongitude(allBoundaryFeatures, mapLongitude).forEach((feature) => {
           const name = regionName(feature);
@@ -218,22 +223,53 @@ function renderTravelMap() {
                 redrawVisited();
               });
             },
-          }).addTo(contextLayer);
+          }).addTo(nextContextLayer);
         });
 
-        redrawVisited();
+        return nextContextLayer;
+      };
+
+      const renderMapLayers = () => {
+        const mapLongitude = map.getCenter().lng;
+        // Build both groups away from the map first. The old groups stay visible
+        // until this complete bundle is ready, so a drag never exposes a clear
+        // or partially rebuilt map.
+        const nextContextLayer = buildContextLayer(mapLongitude);
+        const nextVisitedLayer = buildVisitedLayer(mapLongitude);
+
+        nextContextLayer.addTo(map);
+        nextVisitedLayer.addTo(map);
+        contextLayer.remove();
+        visitedLayer.remove();
+        contextLayer = nextContextLayer;
+        visitedLayer = nextVisitedLayer;
+      };
+
+      let renderFrame = null;
+      const scheduleMapRender = () => {
+        if (renderFrame !== null) return;
+        const render = () => {
+          renderFrame = null;
+          renderMapLayers();
+        };
+        if (typeof window.requestAnimationFrame === "function") {
+          renderFrame = window.requestAnimationFrame(render);
+        } else {
+          render();
+        }
       };
 
       map.on("move", () => {
-        if (clampingLatitude || normalizingLongitude) return;
-        clampMapLatitude();
-        const longitudeWasNormalized = normalizeMapLongitude();
-        if (renderedAtLongitude === null) return;
-        if (longitudeWasNormalized || Math.abs(map.getCenter().lng - renderedAtLongitude) > 180) {
-          renderMapLayers();
-        }
+        if (clampingLatitude) return;
+        // The draggable predrag hook clamps before Leaflet projects the move.
+        // Calling setView from inside an active drag would reset SVG paths and
+        // make the map appear briefly unloaded at the pole.
+        if (!map.dragging?.moving?.()) clampMapLatitude();
       });
-      map.on("moveend", renderMapLayers);
+      map.on("moveend", () => {
+        normalizeMapLongitude();
+        scheduleMapRender();
+      });
 
       renderMapLayers();
       resetMapView(map);
@@ -255,6 +291,93 @@ function resetMapView(map) {
   map.setView(INITIAL_MAP_CENTER, INITIAL_MAP_ZOOM);
 }
 
+function wrapMapDragLongitude(map, draggable) {
+  if (
+    !draggable?._newPos ||
+    typeof map?.getPixelWorldBounds !== "function" ||
+    typeof map?.getSize !== "function" ||
+    typeof map?.latLngToLayerPoint !== "function"
+  ) {
+    return;
+  }
+
+  const worldBounds = map.getPixelWorldBounds(map.getZoom());
+  const worldWidth = worldBounds?.max?.x - worldBounds?.min?.x;
+  if (!Number.isFinite(worldWidth) || worldWidth <= 0) return;
+
+  const centerPoint = map.getSize().divideBy(2);
+  const worldCenterPoint = map.latLngToLayerPoint([0, 0]);
+  const initialWorldOffset = worldCenterPoint.x - centerPoint.x;
+  const halfWorldWidth = Math.round(worldWidth / 2);
+  const x = draggable._newPos.x;
+  const positiveModulo = (value) => ((value % worldWidth) + worldWidth) % worldWidth;
+  const firstCandidate = positiveModulo(x - halfWorldWidth + initialWorldOffset) +
+    halfWorldWidth - initialWorldOffset;
+  const secondCandidate = positiveModulo(x + halfWorldWidth + initialWorldOffset) -
+    halfWorldWidth - initialWorldOffset;
+  draggable._newPos.x =
+    Math.abs(firstCandidate + initialWorldOffset) < Math.abs(secondCandidate + initialWorldOffset)
+      ? firstCandidate
+      : secondCandidate;
+}
+
+function clampMapCenterToViewport(map, center) {
+  const fallbackLatitude = Math.max(
+    -MAP_LATITUDE_LIMIT,
+    Math.min(MAP_LATITUDE_LIMIT, center.lat)
+  );
+  if (
+    fallbackLatitude !== center.lat &&
+    typeof map?.getPixelWorldBounds !== "function"
+  ) {
+    return { lat: fallbackLatitude, lng: center.lng };
+  }
+
+  if (
+    typeof map?.getPixelWorldBounds !== "function" ||
+    typeof map?.project !== "function" ||
+    typeof map?.unproject !== "function" ||
+    typeof map?.getSize !== "function"
+  ) {
+    return { lat: fallbackLatitude, lng: center.lng };
+  }
+
+  const zoom = map.getZoom();
+  const worldBounds = map.getPixelWorldBounds(zoom);
+  const mapSize = map.getSize();
+  if (
+    !worldBounds?.min ||
+    !worldBounds?.max ||
+    !Number.isFinite(worldBounds.min.y) ||
+    !Number.isFinite(worldBounds.max.y) ||
+    !Number.isFinite(mapSize?.y)
+  ) {
+    return { lat: fallbackLatitude, lng: center.lng };
+  }
+
+  const halfViewportHeight = mapSize.y / 2;
+  const minimumProjectedY = worldBounds.min.y + halfViewportHeight;
+  const maximumProjectedY = worldBounds.max.y - halfViewportHeight;
+  if (minimumProjectedY > maximumProjectedY) {
+    return { lat: 0, lng: center.lng };
+  }
+
+  const projectedCenter = map.project(center, zoom);
+  const boundedProjectedY = Math.max(
+    minimumProjectedY,
+    Math.min(maximumProjectedY, projectedCenter.y)
+  );
+  if (Math.abs(boundedProjectedY - projectedCenter.y) < 1e-8) {
+    return { lat: center.lat, lng: center.lng };
+  }
+
+  const boundedLatitude = map.unproject(
+    [projectedCenter.x, boundedProjectedY],
+    zoom
+  ).lat;
+  return { lat: boundedLatitude, lng: center.lng };
+}
+
 function regionName(feature) {
   return feature.properties?.name || "";
 }
@@ -270,13 +393,39 @@ function uniqueFeaturesByName(features) {
 }
 
 const featureLongitudeAnchors = new WeakMap();
+const featureLongitudeRanges = new WeakMap();
+const mergedDatelineGeometries = new WeakMap();
 
 function featuresNearLongitude(features, mapLongitude) {
   return features.map((feature) => {
+    if (featureCrossesDateline(feature)) {
+      return shiftFeaturePartsNearLongitude(feature, mapLongitude);
+    }
+
     const anchor = featureLongitudeAnchor(feature);
     const offset = Math.round((mapLongitude - anchor) / 360) * 360;
     return offset ? shiftFeatureLongitude(feature, offset) : feature;
   });
+}
+
+function featureCrossesDateline(feature) {
+  const { min, max } = featureLongitudeRange(feature);
+  return max - min > 180;
+}
+
+function featureLongitudeRange(feature) {
+  if (featureLongitudeRanges.has(feature)) return featureLongitudeRanges.get(feature);
+  let min = Infinity;
+  let max = -Infinity;
+
+  visitCoordinateLongitudes(feature.geometry?.coordinates, (longitude) => {
+    min = Math.min(min, longitude);
+    max = Math.max(max, longitude);
+  });
+
+  const range = min === Infinity ? { min: 0, max: 0 } : { min, max };
+  featureLongitudeRanges.set(feature, range);
+  return range;
 }
 
 function featureLongitudeAnchor(feature) {
@@ -309,6 +458,187 @@ function shiftFeatureLongitude(feature, offset) {
     properties: { ...feature.properties },
     geometry: shiftGeometryLongitude(feature.geometry, offset),
   };
+}
+
+function shiftFeaturePartsNearLongitude(feature, mapLongitude) {
+  const geometry = mergedDatelineGeometry(feature.geometry);
+  return {
+    ...feature,
+    properties: { ...feature.properties },
+    geometry: shiftGeometryPartsNearLongitude(geometry, mapLongitude),
+  };
+}
+
+function mergedDatelineGeometry(geometry) {
+  if (!geometry || geometry.type !== "MultiPolygon") return geometry;
+  if (mergedDatelineGeometries.has(geometry)) return mergedDatelineGeometries.get(geometry);
+
+  const polygons = geometry.coordinates || [];
+  const mergedPolygons = [];
+  const consumed = new Set();
+
+  polygons.forEach((polygon, index) => {
+    if (consumed.has(index)) return;
+    const edge = datelineEdge(polygon?.[0]);
+    if (!edge) {
+      mergedPolygons.push(polygon);
+      return;
+    }
+
+    const partnerIndex = polygons.findIndex((candidate, candidateIndex) => {
+      if (candidateIndex === index || consumed.has(candidateIndex)) return false;
+      const candidateEdge = datelineEdge(candidate?.[0]);
+      return candidateEdge && edge.sign !== candidateEdge.sign && matchingDatelineSpan(edge, candidateEdge);
+    });
+
+    if (partnerIndex === -1) {
+      mergedPolygons.push(polygon);
+      return;
+    }
+
+    const partner = polygons[partnerIndex];
+    const merged = mergeDatelinePolygons(polygon, edge, partner, datelineEdge(partner[0]));
+    if (!merged) {
+      mergedPolygons.push(polygon);
+      return;
+    }
+
+    consumed.add(index);
+    consumed.add(partnerIndex);
+    mergedPolygons.push(merged);
+  });
+
+  const result = { ...geometry, coordinates: mergedPolygons };
+  mergedDatelineGeometries.set(geometry, result);
+  return result;
+}
+
+function datelineEdge(ring) {
+  if (!Array.isArray(ring)) return null;
+  for (let index = 0; index < ring.length - 1; index += 1) {
+    const start = ring[index];
+    const end = ring[index + 1];
+    if (
+      isDatelineLongitude(start?.[0]) &&
+      isDatelineLongitude(end?.[0]) &&
+      Math.abs(start[0] - end[0]) < 1e-6 &&
+      Math.abs(start[1] - end[1]) > 1e-6
+    ) {
+      return { index, start, end, sign: start[0] > 0 ? 1 : -1 };
+    }
+  }
+  return null;
+}
+
+function isDatelineLongitude(longitude) {
+  return typeof longitude === "number" && Math.abs(Math.abs(longitude) - 180) < 1e-6;
+}
+
+function matchingDatelineSpan(first, second) {
+  const firstLatitudes = [first.start[1], first.end[1]].sort((a, b) => a - b);
+  const secondLatitudes = [second.start[1], second.end[1]].sort((a, b) => a - b);
+  return firstLatitudes.every((latitude, index) => Math.abs(latitude - secondLatitudes[index]) < 1e-5);
+}
+
+function mergeDatelinePolygons(firstPolygon, firstEdge, secondPolygon, secondEdge) {
+  let positivePolygon = firstPolygon;
+  let positiveEdge = firstEdge;
+  let negativePolygon = secondPolygon;
+  let negativeEdge = secondEdge;
+  if (positiveEdge.sign < 0) {
+    positivePolygon = secondPolygon;
+    positiveEdge = secondEdge;
+    negativePolygon = firstPolygon;
+    negativeEdge = firstEdge;
+  }
+
+  const shiftedNegativePolygon = shiftCoordinatesLongitude(negativePolygon, 360);
+  const positivePath = pathWithoutDatelineEdge(positivePolygon[0], positiveEdge);
+  const negativePath = pathWithoutDatelineEdge(shiftedNegativePolygon[0], negativeEdge);
+  const outerRing = concatenateDatelinePaths(positivePath, negativePath);
+  if (!outerRing) return null;
+
+  return [
+    outerRing,
+    ...positivePolygon.slice(1),
+    ...shiftedNegativePolygon.slice(1),
+  ];
+}
+
+function pathWithoutDatelineEdge(ring, edge) {
+  const ringLength = ring.length - 1;
+  const path = [];
+  for (let step = 0; step < ringLength; step += 1) {
+    path.push(ring[(edge.index + 1 + step) % ringLength]);
+  }
+  return path;
+}
+
+function concatenateDatelinePaths(firstPath, secondPath) {
+  let continuation = secondPath;
+  if (!sameCoordinate(firstPath.at(-1), continuation[0])) {
+    continuation = [...continuation].reverse();
+  }
+  if (!sameCoordinate(firstPath.at(-1), continuation[0])) return null;
+
+  const ring = [...firstPath, ...continuation.slice(1)];
+  if (!sameCoordinate(ring[0], ring.at(-1))) ring.push([...ring[0]]);
+  return ring;
+}
+
+function sameCoordinate(first, second) {
+  return (
+    Array.isArray(first) &&
+    Array.isArray(second) &&
+    Math.abs(first[0] - second[0]) < 1e-6 &&
+    Math.abs(first[1] - second[1]) < 1e-6
+  );
+}
+
+function shiftGeometryPartsNearLongitude(geometry, mapLongitude) {
+  if (!geometry) return geometry;
+  if (geometry.type === "GeometryCollection") {
+    return {
+      ...geometry,
+      geometries: geometry.geometries.map((child) =>
+        shiftGeometryPartsNearLongitude(child, mapLongitude)
+      ),
+    };
+  }
+
+  const multiGeometry = ["MultiPolygon", "MultiLineString", "MultiPoint"].includes(geometry.type);
+  if (!multiGeometry) {
+    const offset = longitudeOffset(coordinatePartLongitudeAnchor(geometry.coordinates), mapLongitude);
+    return shiftGeometryLongitude(geometry, offset);
+  }
+
+  return {
+    ...geometry,
+    coordinates: geometry.coordinates.map((part) => {
+      const offset = longitudeOffset(coordinatePartLongitudeAnchor(part), mapLongitude);
+      return shiftCoordinatesLongitude(part, offset);
+    }),
+  };
+}
+
+function longitudeOffset(anchor, mapLongitude) {
+  return Math.round((mapLongitude - anchor) / 360) * 360;
+}
+
+function coordinatePartLongitudeAnchor(coordinates) {
+  const longitudes = [];
+  visitCoordinateLongitudes(coordinates, (longitude) => longitudes.push(longitude));
+  if (!longitudes.length) return 0;
+
+  const reference = longitudes[0];
+  let total = 0;
+  longitudes.forEach((longitude) => {
+    let unwrapped = longitude;
+    while (unwrapped - reference > 180) unwrapped -= 360;
+    while (unwrapped - reference < -180) unwrapped += 360;
+    total += unwrapped;
+  });
+  return total / longitudes.length;
 }
 
 function shiftGeometryLongitude(geometry, offset) {
