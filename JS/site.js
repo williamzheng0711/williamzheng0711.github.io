@@ -13,6 +13,7 @@ const placeByName = new Map(boundaryPlaces.flatMap((place) => place.names.map((n
 const INITIAL_MAP_CENTER = [31.5, 121.8];
 const INITIAL_MAP_ZOOM = 4;
 const MIN_MAP_ZOOM = 2;
+const WORLD_COVERAGE_MARGIN = 1.2;
 const MAP_LATITUDE_LIMIT = 85.05112878;
 const DETAILED_CONTEXT_GROUPS = new Set([
   "context-canada",
@@ -55,14 +56,25 @@ function renderTravelMap() {
     zoomDelta: 0.5,
     zoomSnap: 0.5,
     wheelPxPerZoomLevel: 120,
-    minZoom: MIN_MAP_ZOOM,
+    minZoom: viewportMinimumZoom(container),
     inertia: false,
   }).setView(INITIAL_MAP_CENTER, INITIAL_MAP_ZOOM);
+
+  const updateViewportMinimumZoom = () => {
+    const minimumZoom = viewportMinimumZoom(container);
+    const currentMinimumZoom = typeof map.getMinZoom === "function"
+      ? map.getMinZoom()
+      : map.options.minZoom;
+    if (minimumZoom === currentMinimumZoom) return;
+    if (typeof map.setMinZoom === "function") map.setMinZoom(minimumZoom);
+    else map.options.minZoom = minimumZoom;
+    if (map.getZoom() < minimumZoom) map.setZoom(minimumZoom, { animate: false });
+  };
+  window.addEventListener("resize", updateViewportMinimumZoom);
 
   const latitudeDraggable = map.dragging?._draggable;
   if (latitudeDraggable?.on) {
     latitudeDraggable.on("predrag", () => {
-      wrapMapDragLongitude(map, latitudeDraggable);
       const centerPoint = map.getSize().divideBy(2);
       const candidateLayerPoint = centerPoint.subtract(latitudeDraggable._newPos);
       const candidateCenter = map.layerPointToLatLng(candidateLayerPoint);
@@ -156,7 +168,7 @@ function renderTravelMap() {
       const buildVisitedLayer = (mapLongitude) => {
         const nextVisitedLayer = L.featureGroup();
         const renderedFeatures = allBoundaryFeatures.filter((feature) => visited.has(regionName(feature)));
-        L.geoJSON(featuresNearLongitude(renderedFeatures, mapLongitude), {
+        L.geoJSON(featuresNearLongitudeCopies(renderedFeatures, mapLongitude), {
           style: (feature) => visitedRegionStyle(placeByName.get(regionName(feature))),
           onEachFeature: (feature, layer) => {
             const name = regionName(feature);
@@ -181,37 +193,37 @@ function renderTravelMap() {
       const buildContextLayer = (mapLongitude) => {
         const nextContextLayer = L.featureGroup();
 
-        L.geoJSON(featuresNearLongitude(contextFeatures, mapLongitude), {
+        L.geoJSON(featuresNearLongitudeCopies(contextFeatures, mapLongitude), {
           style: contextRegionStyle,
           interactive: false,
         }).addTo(nextContextLayer);
 
-        L.geoJSON(featuresNearLongitude(refinedCountryFeatures, mapLongitude), {
+        L.geoJSON(featuresNearLongitudeCopies(refinedCountryFeatures, mapLongitude), {
           style: refinedCountryStyle,
           interactive: false,
         }).addTo(nextContextLayer);
 
-        L.geoJSON(featuresNearLongitude(cityContextFeatures, mapLongitude), {
+        L.geoJSON(featuresNearLongitudeCopies(cityContextFeatures, mapLongitude), {
           style: neutralRegionStyle,
           interactive: false,
         }).addTo(nextContextLayer);
 
-        L.geoJSON(featuresNearLongitude(taiwanAdminFeatures, mapLongitude), {
+        L.geoJSON(featuresNearLongitudeCopies(taiwanAdminFeatures, mapLongitude), {
           style: taiwanAdminStyle,
           interactive: false,
         }).addTo(nextContextLayer);
 
-        L.geoJSON(featuresNearLongitude(greatLakeFeatures, mapLongitude), {
+        L.geoJSON(featuresNearLongitudeCopies(greatLakeFeatures, mapLongitude), {
           style: lakeStyle,
           interactive: false,
         }).addTo(nextContextLayer);
 
-        L.geoJSON(featuresNearLongitude(localFeatures, mapLongitude), {
+        L.geoJSON(featuresNearLongitudeCopies(localFeatures, mapLongitude), {
           style: neutralRegionStyle,
           interactive: false,
         }).addTo(nextContextLayer);
 
-        featuresNearLongitude(allBoundaryFeatures, mapLongitude).forEach((feature) => {
+        featuresNearLongitudeCopies(allBoundaryFeatures, mapLongitude).forEach((feature) => {
           const name = regionName(feature);
           if (!name || !placeByName.has(name)) return;
           L.geoJSON(feature, {
@@ -291,34 +303,13 @@ function resetMapView(map) {
   map.setView(INITIAL_MAP_CENTER, INITIAL_MAP_ZOOM);
 }
 
-function wrapMapDragLongitude(map, draggable) {
-  if (
-    !draggable?._newPos ||
-    typeof map?.getPixelWorldBounds !== "function" ||
-    typeof map?.getSize !== "function" ||
-    typeof map?.latLngToLayerPoint !== "function"
-  ) {
-    return;
-  }
+function viewportMinimumZoom(container) {
+  const width = Number(container?.clientWidth) || 0;
+  if (width <= 0) return MIN_MAP_ZOOM;
 
-  const worldBounds = map.getPixelWorldBounds(map.getZoom());
-  const worldWidth = worldBounds?.max?.x - worldBounds?.min?.x;
-  if (!Number.isFinite(worldWidth) || worldWidth <= 0) return;
-
-  const centerPoint = map.getSize().divideBy(2);
-  const worldCenterPoint = map.latLngToLayerPoint([0, 0]);
-  const initialWorldOffset = worldCenterPoint.x - centerPoint.x;
-  const halfWorldWidth = Math.round(worldWidth / 2);
-  const x = draggable._newPos.x;
-  const positiveModulo = (value) => ((value % worldWidth) + worldWidth) % worldWidth;
-  const firstCandidate = positiveModulo(x - halfWorldWidth + initialWorldOffset) +
-    halfWorldWidth - initialWorldOffset;
-  const secondCandidate = positiveModulo(x + halfWorldWidth + initialWorldOffset) -
-    halfWorldWidth - initialWorldOffset;
-  draggable._newPos.x =
-    Math.abs(firstCandidate + initialWorldOffset) < Math.abs(secondCandidate + initialWorldOffset)
-      ? firstCandidate
-      : secondCandidate;
+  const requiredWorldWidth = Math.max(256 * (2 ** MIN_MAP_ZOOM), width * WORLD_COVERAGE_MARGIN);
+  const zoom = Math.log2(requiredWorldWidth / 256);
+  return Math.max(MIN_MAP_ZOOM, Math.ceil(zoom * 2) / 2);
 }
 
 function clampMapCenterToViewport(map, center) {
@@ -406,6 +397,24 @@ function featuresNearLongitude(features, mapLongitude) {
     const offset = Math.round((mapLongitude - anchor) / 360) * 360;
     return offset ? shiftFeatureLongitude(feature, offset) : feature;
   });
+}
+
+function featuresNearLongitudeCopies(features, mapLongitude) {
+  // Keep one neighboring copy on each side so the active SVG never runs out
+  // of geometry while the pane is being dragged across the date line.
+  return featuresNearLongitude(features, mapLongitude).flatMap((feature) => [
+    markWorldCopy(feature, 0),
+    markWorldCopy(feature, -360),
+    markWorldCopy(feature, 360),
+  ]);
+}
+
+function markWorldCopy(feature, offset) {
+  return {
+    ...feature,
+    properties: { ...feature.properties, __worldCopyOffset: offset },
+    geometry: offset ? shiftGeometryLongitude(feature.geometry, offset) : feature.geometry,
+  };
 }
 
 function featureCrossesDateline(feature) {

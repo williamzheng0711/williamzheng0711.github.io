@@ -67,6 +67,14 @@ Object.entries(refinedContextExpectations).forEach(([group, [expectedCount, expe
 });
 assertRenderedExactlyOnce(success.highlightedLabels, expectedBoundaryLabels, "highlighted visited regions");
 
+const worldCopyOffsetCounts = success.worldCopyOffsets.reduce((counts, offset) => {
+  counts.set(offset, (counts.get(offset) || 0) + 1);
+  return counts;
+}, new Map());
+if (worldCopyOffsetCounts.get(0) !== worldCopyOffsetCounts.get(-360) || worldCopyOffsetCounts.get(0) !== worldCopyOffsetCounts.get(360)) {
+  throw new Error(`Expected balanced adjacent world copies, got ${JSON.stringify(Object.fromEntries(worldCopyOffsetCounts))}`);
+}
+
 const russiaExtent = longitudeExtent(success.russiaFeature?.geometry?.coordinates);
 if (russiaExtent.min < 0 || russiaExtent.max <= 180) {
   throw new Error(`Expected dateline-adjacent Russian parts to stay together, got ${JSON.stringify(russiaExtent)}`);
@@ -107,6 +115,13 @@ if (success.mapOptions.maxBounds !== undefined || success.mapOptions.maxBoundsVi
   throw new Error("The map must leave horizontal bounds open; latitude and longitude are clamped by the move handler.");
 }
 
+if (success.viewportMinimumZoom({ clientWidth: 1024 }) !== 2.5) {
+  throw new Error("Expected a 1024px map to reserve horizontal coverage at zoom 2.5.");
+}
+if (success.viewportMinimumZoom({ clientWidth: 1570 }) !== 3) {
+  throw new Error("Expected a wide map to raise its minimum zoom so one world covers the viewport.");
+}
+
 const viewportClamp = success.clampMapCenterToViewport({
   getZoom: () => 2,
   getPixelWorldBounds: () => ({ min: { y: 0 }, max: { y: 1024 } }),
@@ -129,25 +144,37 @@ if (success.map.dragging._draggable._newPos.y >= 1000) {
 }
 
 if (siteSource.includes("WORLD_LONGITUDE_OFFSETS") || siteSource.includes("worldCopies(")) {
-  throw new Error("Map source must not clone GeoJSON features into multiple world copies.");
+  throw new Error("Map source must not enable uncontrolled Leaflet world copies.");
 }
 
 assertEastAsiaView(success.setViewCalls[0], "initial map view");
 assertEastAsiaView(success.setViewCalls.at(-1), "post-load map view");
 
-success.map.setView([100, 220], 4);
+success.map.setView([40, 140], 4);
 const activeGroupsBeforeMove = success.map.layers.filter((layer) => layer?._target === success.map);
 success.map.events.move();
-const boundedCenter = success.map.center;
-if (boundedCenter[0] !== 85.05112878 || boundedCenter[1] !== 220) {
-  throw new Error(`Expected latitude to clamp without interrupting horizontal drag, got ${JSON.stringify(boundedCenter)}`);
+if (success.map.center[0] !== 40 || success.map.center[1] !== 140) {
+  throw new Error(`Expected a small horizontal move to stay smooth, got ${JSON.stringify(success.map.center)}`);
 }
 const activeGroupsAfterMove = success.map.layers.filter((layer) => layer?._target === success.map);
 if (
   activeGroupsAfterMove.length !== activeGroupsBeforeMove.length ||
   activeGroupsAfterMove.some((layer, index) => layer !== activeGroupsBeforeMove[index])
 ) {
-  throw new Error("Expected horizontal move events to keep the current map layers intact until moveend.");
+  throw new Error("Expected small horizontal move events to keep the current map layers intact.");
+}
+success.map.setView([100, 220], 4);
+success.map.events.move();
+const boundedCenter = success.map.center;
+if (boundedCenter[0] !== 85.05112878 || boundedCenter[1] !== 220) {
+  throw new Error(`Expected latitude to clamp without interrupting horizontal drag, got ${JSON.stringify(boundedCenter)}`);
+}
+const activeGroupsAfterLargeMove = success.map.layers.filter((layer) => layer?._target === success.map);
+if (
+  activeGroupsAfterLargeMove.length !== activeGroupsAfterMove.length ||
+  activeGroupsAfterLargeMove.some((layer, index) => layer !== activeGroupsAfterMove[index])
+) {
+  throw new Error("Expected the adjacent world copies to keep the current bundle intact during a long drag.");
 }
 success.map.events.moveend();
 if (success.map.center[0] !== 85.05112878 || success.map.center[1] !== -140) {
@@ -155,8 +182,8 @@ if (success.map.center[0] !== 85.05112878 || success.map.center[1] !== -140) {
 }
 const activeGroupsAfterMoveend = success.map.layers.filter((layer) => layer?._target === success.map);
 if (
-  activeGroupsAfterMoveend.length !== activeGroupsAfterMove.length ||
-  activeGroupsAfterMoveend.every((layer, index) => layer === activeGroupsAfterMove[index])
+  activeGroupsAfterMoveend.length !== activeGroupsAfterLargeMove.length ||
+  activeGroupsAfterMoveend.every((layer, index) => layer === activeGroupsAfterLargeMove[index])
 ) {
   throw new Error("Expected moveend to replace the map layers as one complete bundle.");
 }
@@ -306,6 +333,7 @@ async function runMapRuntime(options = {}) {
     highlightedLabels,
     highlightedStyles,
     contextStyles,
+    worldCopyOffsets: flattenWorldCopyOffsets(contextLayer),
     russiaFeature: contextStyles.find((item) => item.name === "Russia")?.feature || null,
     russiaEastFeature: shiftFeatures([russiaSourceFeature], 180)[0],
     russiaWestFeature: shiftFeatures([russiaSourceFeature], -180)[0],
@@ -317,6 +345,7 @@ async function runMapRuntime(options = {}) {
     mapOptions: runtime.map.options || {},
     map: runtime.map,
     clampMapCenterToViewport: runtime.context.clampMapCenterToViewport,
+    viewportMinimumZoom: runtime.context.viewportMinimumZoom,
     setViewCalls: runtime.map.setViewCalls,
     fitBoundsCalls: runtime.map.fitBoundsCalls,
     localBoundariesRequested: runtime.fetchUrls.some((url) => url.endsWith("visited-boundaries.geojson")),
@@ -586,6 +615,9 @@ function createLayer(feature, style) {
 
 function flattenLayerLabels(layerGroup) {
   return layerGroup.layers.flatMap((layer) => {
+    if (layer.feature?.properties?.__worldCopyOffset !== undefined && layer.feature.properties.__worldCopyOffset !== 0) {
+      return [];
+    }
     if (layer.tooltip?.text) return [layer.tooltip.text];
     if (layer.layers) return flattenLayerLabels(layer);
     return [];
@@ -594,6 +626,9 @@ function flattenLayerLabels(layerGroup) {
 
 function flattenLayerStyles(layerGroup) {
   return layerGroup.layers.flatMap((layer) => {
+    if (layer.feature?.properties?.__worldCopyOffset !== undefined && layer.feature.properties.__worldCopyOffset !== 0) {
+      return [];
+    }
     if (layer.tooltip?.text) return [{ label: layer.tooltip.text, style: layer.style || {} }];
     if (layer.layers) return flattenLayerStyles(layer);
     return [];
@@ -602,6 +637,9 @@ function flattenLayerStyles(layerGroup) {
 
 function flattenFeatureStyles(layerGroup) {
   return layerGroup.layers.flatMap((layer) => {
+    if (layer.feature?.properties?.__worldCopyOffset !== undefined && layer.feature.properties.__worldCopyOffset !== 0) {
+      return [];
+    }
     if (layer.feature) {
       return [{
         feature: layer.feature,
@@ -611,6 +649,14 @@ function flattenFeatureStyles(layerGroup) {
       }];
     }
     if (layer.layers) return flattenFeatureStyles(layer);
+    return [];
+  });
+}
+
+function flattenWorldCopyOffsets(layerGroup) {
+  return layerGroup.layers.flatMap((layer) => {
+    if (layer.feature) return [layer.feature.properties?.__worldCopyOffset];
+    if (layer.layers) return flattenWorldCopyOffsets(layer);
     return [];
   });
 }
