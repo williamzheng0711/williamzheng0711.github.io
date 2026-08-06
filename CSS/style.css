@@ -204,6 +204,10 @@ p {
   background: #eef7fb;
 }
 
+#china-map.leaflet-container:focus {
+  outline: none;
+}
+
 .travel-region {
   fill: var(--land);
   stroke: var(--land-stroke);

@@ -14,6 +14,7 @@ const INITIAL_MAP_CENTER = [31.5, 121.8];
 const INITIAL_MAP_ZOOM = 4;
 const MIN_MAP_ZOOM = 2;
 const WORLD_COVERAGE_MARGIN = 1.2;
+const CANVAS_RENDERER_PADDING = 1;
 const MAP_LATITUDE_LIMIT = 85.05112878;
 const DETAILED_CONTEXT_GROUPS = new Set([
   "context-canada",
@@ -49,16 +50,21 @@ function renderTravelMap() {
   if (!container || !window.L) return;
 
   container.innerHTML = "";
-  const map = L.map(container, {
+  const mapOptions = {
     attributionControl: false,
     zoomControl: true,
     scrollWheelZoom: true,
+    preferCanvas: true,
     zoomDelta: 0.5,
     zoomSnap: 0.5,
     wheelPxPerZoomLevel: 120,
     minZoom: viewportMinimumZoom(container),
     inertia: false,
-  }).setView(INITIAL_MAP_CENTER, INITIAL_MAP_ZOOM);
+  };
+  if (typeof L.canvas === "function") {
+    mapOptions.renderer = L.canvas({ padding: CANVAS_RENDERER_PADDING });
+  }
+  const map = L.map(container, mapOptions).setView(INITIAL_MAP_CENTER, INITIAL_MAP_ZOOM);
 
   const updateViewportMinimumZoom = () => {
     const minimumZoom = viewportMinimumZoom(container);
@@ -400,12 +406,11 @@ function featuresNearLongitude(features, mapLongitude) {
 }
 
 function featuresNearLongitudeCopies(features, mapLongitude) {
-  // Keep one neighboring copy on each side so the active SVG never runs out
-  // of geometry while the pane is being dragged across the date line.
+  // Keep one neighboring copy ready so Canvas always has geometry available
+  // when the pane is dragged across the date line without tripling redraw cost.
   return featuresNearLongitude(features, mapLongitude).flatMap((feature) => [
     markWorldCopy(feature, 0),
     markWorldCopy(feature, -360),
-    markWorldCopy(feature, 360),
   ]);
 }
 

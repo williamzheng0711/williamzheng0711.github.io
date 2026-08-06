@@ -71,8 +71,12 @@ const worldCopyOffsetCounts = success.worldCopyOffsets.reduce((counts, offset) =
   counts.set(offset, (counts.get(offset) || 0) + 1);
   return counts;
 }, new Map());
-if (worldCopyOffsetCounts.get(0) !== worldCopyOffsetCounts.get(-360) || worldCopyOffsetCounts.get(0) !== worldCopyOffsetCounts.get(360)) {
-  throw new Error(`Expected balanced adjacent world copies, got ${JSON.stringify(Object.fromEntries(worldCopyOffsetCounts))}`);
+if (
+  worldCopyOffsetCounts.get(0) !== worldCopyOffsetCounts.get(-360) ||
+  worldCopyOffsetCounts.has(360) ||
+  [...worldCopyOffsetCounts.keys()].some((offset) => ![0, -360].includes(offset))
+) {
+  throw new Error(`Expected balanced current and one adjacent world copy, got ${JSON.stringify(Object.fromEntries(worldCopyOffsetCounts))}`);
 }
 
 const russiaExtent = longitudeExtent(success.russiaFeature?.geometry?.coordinates);
@@ -101,6 +105,13 @@ if (success.mapOptions.zoomDelta !== 0.5 || success.mapOptions.zoomSnap !== 0.5)
 
 if (success.mapOptions.wheelPxPerZoomLevel !== 120) {
   throw new Error(`Expected gentler wheel zoom sensitivity, got wheelPxPerZoomLevel=${success.mapOptions.wheelPxPerZoomLevel}`);
+}
+
+if (success.mapOptions.preferCanvas !== true) {
+  throw new Error("Expected Canvas rendering so newly exposed regions are redrawn during an active drag.");
+}
+if (success.mapOptions.renderer?.options?.padding !== 1) {
+  throw new Error(`Expected a full-viewport Canvas drag buffer, got ${JSON.stringify(success.mapOptions.renderer)}`);
 }
 
 if (success.mapOptions.inertia !== false) {
@@ -461,6 +472,9 @@ function createRuntime() {
     map(_container, options = {}) {
       map.options = options;
       return map;
+    },
+    canvas(options = {}) {
+      return { options };
     },
     tileLayer() {
       tileLayerCalls += 1;
