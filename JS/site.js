@@ -722,9 +722,10 @@ function visitedRegionStyle(place) {
     korea: ["#C60C30", "#8d0922"],
     japan: ["#D66A35", "#9b4a24"],
     usa: ["#00205B", "#00153d"],
+    canada: ["#EF3340", "#aa1f2a"],
     singapore: ["#EF3340", "#aa1f2a"],
   };
-  const key = ["korea", "japan", "usa", "singapore"].includes(place?.group) ? place.group : "greaterChina";
+  const key = ["korea", "japan", "usa", "canada", "singapore"].includes(place?.group) ? place.group : "greaterChina";
   const [fillColor, color] = palette[key];
   return {
     color,

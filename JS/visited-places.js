@@ -53,6 +53,7 @@ const PLACE_TEMPLATES = {
   sar: { type: "boundary", label: "香港", names: ["香港特别行政区"], style: "sar" },
   localBoundary: { type: "boundary", label: "京都市", names: ["京都市"], source: "local", group: "japan" },
   usBoundary: { type: "boundary", label: "New York City", names: ["New York City"], source: "local", group: "usa" },
+  canadaBoundary: { type: "boundary", label: "多倫多市", names: ["City of Toronto"], source: "local", group: "canada" },
 };
 
 const BOUNDARY_PRESETS = {
@@ -138,6 +139,10 @@ const BOUNDARY_PRESETS = {
   "大阪": { label: "大阪市", names: ["大阪市"], source: "local", group: "japan" },
   "大阪市": { label: "大阪市", names: ["大阪市"], source: "local", group: "japan" },
   "日本大阪府大阪市": { label: "大阪市", names: ["大阪市"], source: "local", group: "japan" },
+  "多倫多": { label: "多倫多市", names: ["City of Toronto"], source: "local", group: "canada" },
+  "多倫多市": { label: "多倫多市", names: ["City of Toronto"], source: "local", group: "canada" },
+  "Toronto": { label: "多倫多市", names: ["City of Toronto"], source: "local", group: "canada" },
+  "City of Toronto": { label: "多倫多市", names: ["City of Toronto"], source: "local", group: "canada" },
 };
 
 // Add new trips here.
@@ -208,6 +213,8 @@ const VISITED_PLACES = [
   { type: "boundary", label: "Montgomery County", names: ["Montgomery County"], source: "local", group: "usa" },
   { type: "boundary", label: "New York City", names: ["New York City"], source: "local", group: "usa" },
 
+  { type: "boundary", label: "多倫多市", names: ["City of Toronto"], source: "local", group: "canada" },
+
   { type: "boundary", label: "Singapore", names: ["Singapore"], source: "local", group: "singapore" },
 ];
 
@@ -217,6 +224,7 @@ const SUMMARY_GROUPS = [
   { key: "korea", title: "Korea" },
   { key: "japan", title: "Japan" },
   { key: "usa", title: "United States" },
+  { key: "canada", title: "Canada" },
   { key: "singapore", title: "Singapore" },
 ];
 

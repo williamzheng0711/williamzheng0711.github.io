@@ -12,6 +12,7 @@ The visible list is `VISITED_PLACES`. The map is polygon-only: every entry must 
 - Korea entries use `source: "local", group: "korea"` and render as `#C60C30`.
 - Japan entries use `source: "local", group: "japan"` and render as `#D66A35`.
 - United States entries use `source: "local", group: "usa"` and render as `#00205B`.
+- Canada entries use `source: "local", group: "canada"` and render in Pantone 032 (`#EF3340`).
 - Singapore entries use `source: "local", group: "singapore"` and render as `#EF3340`.
 - If the city is not already in `data/visited-boundaries.geojson`, add a GeoJSON Feature first. Its `properties.name` must exactly match one of the strings in `names`.
 - List known presets with `node JS/add-boundary.mjs --list-presets`.

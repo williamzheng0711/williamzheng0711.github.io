@@ -49,6 +49,7 @@ const requiredBoundaries = [
   "Washington, D.C.",
   "Montgomery County",
   "New York City",
+  "多倫多市",
   "Singapore",
 ];
 

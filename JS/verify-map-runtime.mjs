@@ -19,11 +19,12 @@ const bundledBoundaryLabels = (localBoundaries.features || []).map((feature) => 
 const forbiddenFeatureNames = ["东莞市", "江门市", "三明市", "龙岩市"];
 const expectedBoundaryLabels = boundaryPlaces.map((place) => place.label);
 const greaterChinaLabels = boundaryPlaces
-  .filter((place) => !["korea", "japan", "usa", "singapore"].includes(place.group))
+  .filter((place) => !["korea", "japan", "usa", "canada", "singapore"].includes(place.group))
   .map((place) => place.label);
 const koreaLabels = boundaryPlaces.filter((place) => place.group === "korea").map((place) => place.label);
 const japanLabels = boundaryPlaces.filter((place) => place.group === "japan").map((place) => place.label);
 const usaLabels = boundaryPlaces.filter((place) => place.group === "usa").map((place) => place.label);
+const canadaLabels = boundaryPlaces.filter((place) => place.group === "canada").map((place) => place.label);
 const singaporeLabels = boundaryPlaces.filter((place) => place.group === "singapore").map((place) => place.label);
 const contextCountryNames = new Set((contextBoundaries.features || []).map((feature) => feature.properties?.name));
 const contextCountryAdmins = new Set((contextBoundaries.features || []).map((feature) => feature.properties?.admin));
@@ -54,6 +55,7 @@ assertStyles(success.highlightedStyles, greaterChinaLabels, "#000095", 0.44, "Gr
 assertStyles(success.highlightedStyles, koreaLabels, "#C60C30", 0.44, "Korea");
 assertStyles(success.highlightedStyles, japanLabels, "#D66A35", 0.44, "Japan");
 assertStyles(success.highlightedStyles, usaLabels, "#00205B", 0.44, "United States");
+assertStyles(success.highlightedStyles, canadaLabels, "#EF3340", 0.44, "Canada");
 assertStyles(success.highlightedStyles, singaporeLabels, "#EF3340", 0.44, "Singapore");
 Object.entries(detailedContextExpectations).forEach(([group, expectedCount]) => {
   assertContextStyle(success.contextStyles, group, expectedCount, {
