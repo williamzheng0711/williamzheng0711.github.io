@@ -49,7 +49,10 @@ const requiredBoundaries = [
   "Washington, D.C.",
   "Montgomery County",
   "New York City",
+  "Suffolk County",
+  "Middlesex County",
   "多倫多市",
+  "Regional Municipality of Niagara",
   "Singapore",
 ];
 

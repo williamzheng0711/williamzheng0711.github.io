@@ -212,8 +212,12 @@ const VISITED_PLACES = [
   { type: "boundary", label: "Washington, D.C.", names: ["Washington, D.C."], source: "local", group: "usa" },
   { type: "boundary", label: "Montgomery County", names: ["Montgomery County"], source: "local", group: "usa" },
   { type: "boundary", label: "New York City", names: ["New York City"], source: "local", group: "usa" },
+  // Massachusetts counties (Boston and the surrounding area).
+  { type: "boundary", label: "Suffolk County", names: ["Suffolk County"], source: "local", group: "usa" },
+  { type: "boundary", label: "Middlesex County", names: ["Middlesex County"], source: "local", group: "usa" },
 
   { type: "boundary", label: "多倫多市", names: ["City of Toronto"], source: "local", group: "canada" },
+  { type: "boundary", label: "Regional Municipality of Niagara", names: ["Regional Municipality of Niagara"], source: "local", group: "canada" },
 
   { type: "boundary", label: "Singapore", names: ["Singapore"], source: "local", group: "singapore" },
 ];
