@@ -1,0 +1,4395 @@
+{
+  "ABW": {
+    "color": "#3399CC",
+    "rationale": "Aruba national flag: flag-derived blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#3399CC",
+        "rationale": "Aruba national flag: flag-derived blue."
+      },
+      {
+        "color": "#FFFF00",
+        "rationale": "Aruba national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#99CCCC",
+        "rationale": "Aruba national flag: alternative teal for neighbor contrast."
+      }
+    ]
+  },
+  "AFG": {
+    "color": "#009900",
+    "rationale": "Afghanistan national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#009900",
+        "rationale": "Afghanistan national flag: flag-derived green."
+      },
+      {
+        "color": "#BF0000",
+        "rationale": "Afghanistan national flag: alternative deep red for neighbor contrast."
+      },
+      {
+        "color": "#BD6B00",
+        "rationale": "Afghanistan national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "AGO": {
+    "color": "#FF0000",
+    "rationale": "Angola national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFEC00",
+        "rationale": "Angola national flag: flag-derived gold."
+      },
+      {
+        "color": "#FFEE00",
+        "rationale": "Angola national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "Angola national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "AIA": {
+    "color": "#FF9900",
+    "rationale": "Anguilla national flag: flag-derived orange.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FF9900",
+        "rationale": "Anguilla national flag: flag-derived orange."
+      },
+      {
+        "color": "#012169",
+        "rationale": "Anguilla national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#C8102E",
+        "rationale": "Anguilla national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "ALA": {
+    "color": "#0053A5",
+    "rationale": "Åland national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0053A5",
+        "rationale": "Åland national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#FFCE00",
+        "rationale": "Åland national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#D21034",
+        "rationale": "Åland national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "ALB": {
+    "color": "#FF0000",
+    "rationale": "Albania national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FF0000",
+        "rationale": "Albania national flag: flag-derived red."
+      },
+      {
+        "color": "#B80000",
+        "rationale": "Albania national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "AND": {
+    "color": "#D0103A",
+    "rationale": "Andorra national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#D0103A",
+        "rationale": "Andorra national flag: flag-derived red."
+      },
+      {
+        "color": "#FEDF00",
+        "rationale": "Andorra national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#0018A8",
+        "rationale": "Andorra national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "ARE": {
+    "color": "#00732F",
+    "rationale": "United Arab Emirates national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00732F",
+        "rationale": "United Arab Emirates national flag: flag-derived green."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "United Arab Emirates national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "ARG": {
+    "color": "#85340A",
+    "rationale": "Argentina national flag: alternative orange for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#74ACDF",
+        "rationale": "Argentina national flag: flag-derived blue."
+      },
+      {
+        "color": "#F6B40E",
+        "rationale": "Argentina national flag: alternative orange for neighbor contrast."
+      },
+      {
+        "color": "#85340A",
+        "rationale": "Argentina national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "ARM": {
+    "color": "#0033A0",
+    "rationale": "Armenia national flag: alternative deep blue for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#D90012",
+        "rationale": "Armenia national flag: flag-derived red."
+      },
+      {
+        "color": "#0033A0",
+        "rationale": "Armenia national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#F2A800",
+        "rationale": "Armenia national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "ASM": {
+    "color": "#000066",
+    "rationale": "American Samoa national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000066",
+        "rationale": "American Samoa national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#BD1021",
+        "rationale": "American Samoa national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#FFC221",
+        "rationale": "American Samoa national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "ATA": {
+    "color": "#3A7DCE",
+    "rationale": "Antarctica national flag: flag-derived blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#3A7DCE",
+        "rationale": "Antarctica national flag: flag-derived blue."
+      },
+      {
+        "color": "#2A5A94",
+        "rationale": "Antarctica national flag: display variant of its blue for neighbor contrast."
+      }
+    ]
+  },
+  "ATF": {
+    "color": "#002395",
+    "rationale": "French Southern and Antarctic Lands national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#002395",
+        "rationale": "French Southern and Antarctic Lands national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#ED2939",
+        "rationale": "French Southern and Antarctic Lands national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "ATG": {
+    "color": "#0072C6",
+    "rationale": "Antigua and Barbuda national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0072C6",
+        "rationale": "Antigua and Barbuda national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#CE1126",
+        "rationale": "Antigua and Barbuda national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#FCD116",
+        "rationale": "Antigua and Barbuda national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "AUS": {
+    "color": "#00008B",
+    "rationale": "Australia national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00008B",
+        "rationale": "Australia national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "Australia national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "AUT": {
+    "color": "#900C21",
+    "rationale": "Austria national flag: display variant of its red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#C8102E",
+        "rationale": "Austria national flag: flag-derived red."
+      },
+      {
+        "color": "#900C21",
+        "rationale": "Austria national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "AZE": {
+    "color": "#00B9E4",
+    "rationale": "Azerbaijan national flag: alternative teal for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#3F9C35",
+        "rationale": "Azerbaijan national flag: flag-derived green."
+      },
+      {
+        "color": "#ED2939",
+        "rationale": "Azerbaijan national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#00B9E4",
+        "rationale": "Azerbaijan national flag: alternative teal for neighbor contrast."
+      }
+    ]
+  },
+  "BDI": {
+    "color": "#CF0921",
+    "rationale": "Burundi national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#18B637",
+        "rationale": "Burundi national flag: flag-derived green."
+      },
+      {
+        "color": "#CF0921",
+        "rationale": "Burundi national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "BEL": {
+    "color": "#F31830",
+    "rationale": "Belgium national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFD90C",
+        "rationale": "Belgium national flag: flag-derived gold."
+      },
+      {
+        "color": "#F31830",
+        "rationale": "Belgium national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "BEN": {
+    "color": "#319400",
+    "rationale": "Benin national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#319400",
+        "rationale": "Benin national flag: flag-derived green."
+      },
+      {
+        "color": "#FFD600",
+        "rationale": "Benin national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#DE2110",
+        "rationale": "Benin national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "BES": {
+    "color": "#21468B",
+    "rationale": "Dutch flag blue, reflecting the Caribbean Netherlands' constitutional link.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#21468B",
+        "rationale": "Dutch flag blue, reflecting the Caribbean Netherlands' constitutional link."
+      },
+      {
+        "color": "#AE1C28",
+        "rationale": "Dutch flag red as an alternative for neighbor contrast."
+      }
+    ]
+  },
+  "BFA": {
+    "color": "#FFF300",
+    "rationale": "Burkina Faso national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#DE0000",
+        "rationale": "Burkina Faso national flag: flag-derived red."
+      },
+      {
+        "color": "#35A100",
+        "rationale": "Burkina Faso national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#FFF300",
+        "rationale": "Burkina Faso national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "BGD": {
+    "color": "#006A4E",
+    "rationale": "Bangladesh national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#006A4E",
+        "rationale": "Bangladesh national flag: flag-derived green."
+      },
+      {
+        "color": "#F42A41",
+        "rationale": "Bangladesh national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "BGR": {
+    "color": "#00966E",
+    "rationale": "Bulgaria national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00966E",
+        "rationale": "Bulgaria national flag: flag-derived green."
+      },
+      {
+        "color": "#D62612",
+        "rationale": "Bulgaria national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "BHR": {
+    "color": "#CE1126",
+    "rationale": "Bahrain national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#CE1126",
+        "rationale": "Bahrain national flag: flag-derived red."
+      },
+      {
+        "color": "#940C1B",
+        "rationale": "Bahrain national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "BHS": {
+    "color": "#FFE900",
+    "rationale": "The Bahamas national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFE900",
+        "rationale": "The Bahamas national flag: flag-derived gold."
+      },
+      {
+        "color": "#08CED6",
+        "rationale": "The Bahamas national flag: alternative teal for neighbor contrast."
+      }
+    ]
+  },
+  "BIH": {
+    "color": "#000099",
+    "rationale": "Bosnia and Herzegovina national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000099",
+        "rationale": "Bosnia and Herzegovina national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#FFCC00",
+        "rationale": "Bosnia and Herzegovina national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "BJN": {
+    "color": "#FFE800",
+    "rationale": "Colombian claimant flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFE800",
+        "rationale": "Colombian claimant flag: flag-derived gold."
+      },
+      {
+        "color": "#00148E",
+        "rationale": "Colombian claimant flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#DA0010",
+        "rationale": "Colombian claimant flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "BLM": {
+    "color": "#000091",
+    "rationale": "Saint Barthélemy national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000091",
+        "rationale": "Saint Barthélemy national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#E1000F",
+        "rationale": "Saint Barthélemy national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "BLR": {
+    "color": "#007C30",
+    "rationale": "Belarus national flag: alternative green for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#CE1720",
+        "rationale": "Belarus national flag: flag-derived red."
+      },
+      {
+        "color": "#007C30",
+        "rationale": "Belarus national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "BLZ": {
+    "color": "#FFEF5D",
+    "rationale": "Belize national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFEF5D",
+        "rationale": "Belize national flag: flag-derived gold."
+      },
+      {
+        "color": "#EA5700",
+        "rationale": "Belize national flag: alternative orange for neighbor contrast."
+      },
+      {
+        "color": "#952D1A",
+        "rationale": "Belize national flag: alternative deep red for neighbor contrast."
+      }
+    ]
+  },
+  "BMU": {
+    "color": "#CF142B",
+    "rationale": "Bermuda national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#CF142B",
+        "rationale": "Bermuda national flag: flag-derived red."
+      },
+      {
+        "color": "#2F8F22",
+        "rationale": "Bermuda national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#D40000",
+        "rationale": "Bermuda national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "BOL": {
+    "color": "#FFE000",
+    "rationale": "Bolivia national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#007934",
+        "rationale": "Bolivia national flag: flag-derived green."
+      },
+      {
+        "color": "#FFE000",
+        "rationale": "Bolivia national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#D52B1E",
+        "rationale": "Bolivia national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "BRA": {
+    "color": "#229E45",
+    "rationale": "Brazil national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#229E45",
+        "rationale": "Brazil national flag: flag-derived green."
+      },
+      {
+        "color": "#F8E509",
+        "rationale": "Brazil national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#2B49A3",
+        "rationale": "Brazil national flag: alternative blue for neighbor contrast."
+      }
+    ]
+  },
+  "BRB": {
+    "color": "#00267F",
+    "rationale": "Barbados national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00267F",
+        "rationale": "Barbados national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#FFC726",
+        "rationale": "Barbados national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "BRN": {
+    "color": "#F7E017",
+    "rationale": "Brunei national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#F7E017",
+        "rationale": "Brunei national flag: flag-derived gold."
+      },
+      {
+        "color": "#CF1126",
+        "rationale": "Brunei national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "BRT": {
+    "color": "#2E6F95",
+    "rationale": "Nile blue associated with the wider Egypt–Sudan region.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#C9975B",
+        "rationale": "Sahara sand associated with the Bir Tawil landscape."
+      },
+      {
+        "color": "#2E6F95",
+        "rationale": "Nile blue associated with the wider Egypt–Sudan region."
+      }
+    ]
+  },
+  "BTN": {
+    "color": "#FFD520",
+    "rationale": "Bhutan national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFD520",
+        "rationale": "Bhutan national flag: flag-derived gold."
+      },
+      {
+        "color": "#FF4E12",
+        "rationale": "Bhutan national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "BWA": {
+    "color": "#00CBFF",
+    "rationale": "Botswana national flag: flag-derived teal.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00CBFF",
+        "rationale": "Botswana national flag: flag-derived teal."
+      },
+      {
+        "color": "#0092B8",
+        "rationale": "Botswana national flag: display variant of its teal for neighbor contrast."
+      }
+    ]
+  },
+  "CAF": {
+    "color": "#FFFF00",
+    "rationale": "Central African Republic national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0000FF",
+        "rationale": "Central African Republic national flag: flag-derived blue."
+      },
+      {
+        "color": "#FFFF00",
+        "rationale": "Central African Republic national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#009A00",
+        "rationale": "Central African Republic national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "CAN": {
+    "color": "#EF3340",
+    "rationale": "Maple-leaf red from the Canadian flag, locked by JourneySphere design.",
+    "locked": true,
+    "candidates": [
+      {
+        "color": "#EF3340",
+        "rationale": "Maple-leaf red from the Canadian flag, locked by JourneySphere design."
+      },
+      {
+        "color": "#D52B1E",
+        "rationale": "Canada national flag: flag-derived red."
+      },
+      {
+        "color": "#991F16",
+        "rationale": "Canada national flag: alternative deep red for neighbor contrast."
+      }
+    ]
+  },
+  "CHE": {
+    "color": "#FF0000",
+    "rationale": "Switzerland national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FF0000",
+        "rationale": "Switzerland national flag: flag-derived red."
+      },
+      {
+        "color": "#B80000",
+        "rationale": "Switzerland national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "CHL": {
+    "color": "#0039A6",
+    "rationale": "Chile national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0039A6",
+        "rationale": "Chile national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#D52B1E",
+        "rationale": "Chile national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "CHN": {
+    "color": "#000095",
+    "rationale": "Blue Sky with a White Sun blue, locked by JourneySphere design.",
+    "locked": true,
+    "candidates": [
+      {
+        "color": "#000095",
+        "rationale": "Blue Sky with a White Sun blue, locked by JourneySphere design."
+      },
+      {
+        "color": "#FFFF00",
+        "rationale": "People's Republic of China national flag: flag-derived gold."
+      },
+      {
+        "color": "#EE1C25",
+        "rationale": "People's Republic of China national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "CIV": {
+    "color": "#FF9A00",
+    "rationale": "Ivory Coast national flag: alternative orange for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00CD00",
+        "rationale": "Ivory Coast national flag: flag-derived green."
+      },
+      {
+        "color": "#FF9A00",
+        "rationale": "Ivory Coast national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "CMR": {
+    "color": "#CE1126",
+    "rationale": "Cameroon national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#007A5E",
+        "rationale": "Cameroon national flag: flag-derived teal."
+      },
+      {
+        "color": "#CE1126",
+        "rationale": "Cameroon national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#FCD116",
+        "rationale": "Cameroon national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "CNM": {
+    "color": "#4B92DB",
+    "rationale": "United Nations emblem: flag-derived blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#4B92DB",
+        "rationale": "United Nations emblem: flag-derived blue."
+      },
+      {
+        "color": "#36699E",
+        "rationale": "United Nations emblem: display variant of its blue for neighbor contrast."
+      }
+    ]
+  },
+  "COD": {
+    "color": "#007FFF",
+    "rationale": "Democratic Republic of the Congo national flag: flag-derived blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#007FFF",
+        "rationale": "Democratic Republic of the Congo national flag: flag-derived blue."
+      },
+      {
+        "color": "#F7D618",
+        "rationale": "Democratic Republic of the Congo national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#CE1021",
+        "rationale": "Democratic Republic of the Congo national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "COG": {
+    "color": "#00CA00",
+    "rationale": "Republic of the Congo national flag: alternative green for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFFF00",
+        "rationale": "Republic of the Congo national flag: flag-derived gold."
+      },
+      {
+        "color": "#00CA00",
+        "rationale": "Republic of the Congo national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "Republic of the Congo national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "COK": {
+    "color": "#000066",
+    "rationale": "Cook Islands national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000066",
+        "rationale": "Cook Islands national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#C8102E",
+        "rationale": "Cook Islands national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "COL": {
+    "color": "#00148E",
+    "rationale": "Colombia national flag: alternative deep blue for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFE800",
+        "rationale": "Colombia national flag: flag-derived gold."
+      },
+      {
+        "color": "#00148E",
+        "rationale": "Colombia national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#DA0010",
+        "rationale": "Colombia national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "COM": {
+    "color": "#FFFF00",
+    "rationale": "Comoros national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFFF00",
+        "rationale": "Comoros national flag: flag-derived gold."
+      },
+      {
+        "color": "#BE0027",
+        "rationale": "Comoros national flag: alternative deep red for neighbor contrast."
+      },
+      {
+        "color": "#3B5AA3",
+        "rationale": "Comoros national flag: alternative blue for neighbor contrast."
+      }
+    ]
+  },
+  "CPV": {
+    "color": "#081873",
+    "rationale": "Cape Verde national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#081873",
+        "rationale": "Cape Verde national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#DE3929",
+        "rationale": "Cape Verde national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#FFCE08",
+        "rationale": "Cape Verde national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "CRI": {
+    "color": "#0000B4",
+    "rationale": "Costa Rica national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0000B4",
+        "rationale": "Costa Rica national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#D90000",
+        "rationale": "Costa Rica national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "CUB": {
+    "color": "#002A8F",
+    "rationale": "Cuba national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#002A8F",
+        "rationale": "Cuba national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#CB1515",
+        "rationale": "Cuba national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "CUW": {
+    "color": "#002B7F",
+    "rationale": "Curaçao national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#002B7F",
+        "rationale": "Curaçao national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#F9E814",
+        "rationale": "Curaçao national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "CYM": {
+    "color": "#000066",
+    "rationale": "Cayman Islands national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000066",
+        "rationale": "Cayman Islands national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#012169",
+        "rationale": "Cayman Islands national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#C8102E",
+        "rationale": "Cayman Islands national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "CYN": {
+    "color": "#A30711",
+    "rationale": "Turkish Cypriot flag: display variant of its red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#E30A17",
+        "rationale": "Turkish Cypriot flag: flag-derived red."
+      },
+      {
+        "color": "#A30711",
+        "rationale": "Turkish Cypriot flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "CYP": {
+    "color": "#435125",
+    "rationale": "Cyprus national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#435125",
+        "rationale": "Cyprus national flag: flag-derived green."
+      },
+      {
+        "color": "#D47600",
+        "rationale": "Cyprus national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "CZE": {
+    "color": "#11457E",
+    "rationale": "Czech Republic national flag: alternative deep blue for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#D7141A",
+        "rationale": "Czech Republic national flag: flag-derived red."
+      },
+      {
+        "color": "#11457E",
+        "rationale": "Czech Republic national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "DEU": {
+    "color": "#FFCC00",
+    "rationale": "Germany national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFCC00",
+        "rationale": "Germany national flag: flag-derived gold."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "Germany national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "DJI": {
+    "color": "#FF0000",
+    "rationale": "Djibouti national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00CC00",
+        "rationale": "Djibouti national flag: flag-derived green."
+      },
+      {
+        "color": "#6699FF",
+        "rationale": "Djibouti national flag: alternative blue for neighbor contrast."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "Djibouti national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "DMA": {
+    "color": "#108C00",
+    "rationale": "Dominica national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#108C00",
+        "rationale": "Dominica national flag: flag-derived green."
+      },
+      {
+        "color": "#FFD600",
+        "rationale": "Dominica national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#E72910",
+        "rationale": "Dominica national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "DNK": {
+    "color": "#C8102E",
+    "rationale": "Denmark national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#C8102E",
+        "rationale": "Denmark national flag: flag-derived red."
+      },
+      {
+        "color": "#900C21",
+        "rationale": "Denmark national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "DOM": {
+    "color": "#002D62",
+    "rationale": "Dominican Republic national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#002D62",
+        "rationale": "Dominican Republic national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#CE1126",
+        "rationale": "Dominican Republic national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#EAC102",
+        "rationale": "Dominican Republic national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "DZA": {
+    "color": "#006233",
+    "rationale": "Algeria national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#006233",
+        "rationale": "Algeria national flag: flag-derived green."
+      },
+      {
+        "color": "#D21034",
+        "rationale": "Algeria national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "ECU": {
+    "color": "#FFE800",
+    "rationale": "Ecuador national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFE800",
+        "rationale": "Ecuador national flag: flag-derived gold."
+      },
+      {
+        "color": "#00148E",
+        "rationale": "Ecuador national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#DA0010",
+        "rationale": "Ecuador national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "EGY": {
+    "color": "#C09300",
+    "rationale": "Egypt national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#CE1126",
+        "rationale": "Egypt national flag: flag-derived red."
+      },
+      {
+        "color": "#C09300",
+        "rationale": "Egypt national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "ERI": {
+    "color": "#239E46",
+    "rationale": "Eritrea national flag: alternative green for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#BE0027",
+        "rationale": "Eritrea national flag: flag-derived deep red."
+      },
+      {
+        "color": "#239E46",
+        "rationale": "Eritrea national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#F3E295",
+        "rationale": "Eritrea national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "ESB": {
+    "color": "#C8102E",
+    "rationale": "British flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#012169",
+        "rationale": "British flag: flag-derived deep blue."
+      },
+      {
+        "color": "#C8102E",
+        "rationale": "British flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "ESH": {
+    "color": "#007A3D",
+    "rationale": "Western Sahara national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#007A3D",
+        "rationale": "Western Sahara national flag: flag-derived green."
+      },
+      {
+        "color": "#C4111B",
+        "rationale": "Western Sahara national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "ESP": {
+    "color": "#F1BF00",
+    "rationale": "Spain national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#AA151B",
+        "rationale": "Spain national flag: flag-derived deep red."
+      },
+      {
+        "color": "#F1BF00",
+        "rationale": "Spain national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#AD1519",
+        "rationale": "Spain national flag: alternative deep red for neighbor contrast."
+      }
+    ]
+  },
+  "EST": {
+    "color": "#1791FF",
+    "rationale": "Estonia national flag: flag-derived blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#1791FF",
+        "rationale": "Estonia national flag: flag-derived blue."
+      },
+      {
+        "color": "#1168B8",
+        "rationale": "Estonia national flag: display variant of its blue for neighbor contrast."
+      }
+    ]
+  },
+  "ETH": {
+    "color": "#FFC621",
+    "rationale": "Ethiopia national flag: flag-derived orange.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFC621",
+        "rationale": "Ethiopia national flag: flag-derived orange."
+      },
+      {
+        "color": "#EF2118",
+        "rationale": "Ethiopia national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#298C08",
+        "rationale": "Ethiopia national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "FIN": {
+    "color": "#002F6C",
+    "rationale": "Finland national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#002F6C",
+        "rationale": "Finland national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#3D618F",
+        "rationale": "Finland national flag: display variant of its deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "FJI": {
+    "color": "#68BFE5",
+    "rationale": "Fiji national flag: flag-derived blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#68BFE5",
+        "rationale": "Fiji national flag: flag-derived blue."
+      },
+      {
+        "color": "#D21034",
+        "rationale": "Fiji national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#FFD100",
+        "rationale": "Fiji national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "FLK": {
+    "color": "#A43907",
+    "rationale": "Falkland Islands national flag: flag-derived orange.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#A43907",
+        "rationale": "Falkland Islands national flag: flag-derived orange."
+      },
+      {
+        "color": "#012169",
+        "rationale": "Falkland Islands national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#0072C4",
+        "rationale": "Falkland Islands national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "FRA": {
+    "color": "#000091",
+    "rationale": "French national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000091",
+        "rationale": "French national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#E1000F",
+        "rationale": "French national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "FRO": {
+    "color": "#003897",
+    "rationale": "Faroe Islands national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#003897",
+        "rationale": "Faroe Islands national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#D72828",
+        "rationale": "Faroe Islands national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "FSM": {
+    "color": "#6797D6",
+    "rationale": "Federated States of Micronesia national flag: flag-derived blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#6797D6",
+        "rationale": "Federated States of Micronesia national flag: flag-derived blue."
+      },
+      {
+        "color": "#4A6D9A",
+        "rationale": "Federated States of Micronesia national flag: display variant of its blue for neighbor contrast."
+      }
+    ]
+  },
+  "GAB": {
+    "color": "#006DBC",
+    "rationale": "Gabon national flag: alternative deep blue for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFE700",
+        "rationale": "Gabon national flag: flag-derived gold."
+      },
+      {
+        "color": "#36A100",
+        "rationale": "Gabon national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#006DBC",
+        "rationale": "Gabon national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "GBR": {
+    "color": "#012169",
+    "rationale": "United Kingdom national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#012169",
+        "rationale": "United Kingdom national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#C8102E",
+        "rationale": "United Kingdom national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "GEO": {
+    "color": "#B80000",
+    "rationale": "Georgia national flag: display variant of its red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FF0000",
+        "rationale": "Georgia national flag: flag-derived red."
+      },
+      {
+        "color": "#B80000",
+        "rationale": "Georgia national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "GGY": {
+    "color": "#E8112D",
+    "rationale": "Guernsey national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#E8112D",
+        "rationale": "Guernsey national flag: flag-derived red."
+      },
+      {
+        "color": "#F9DD16",
+        "rationale": "Guernsey national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "GHA": {
+    "color": "#006B3F",
+    "rationale": "Ghana national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#006B3F",
+        "rationale": "Ghana national flag: flag-derived green."
+      },
+      {
+        "color": "#FCD116",
+        "rationale": "Ghana national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#CE1126",
+        "rationale": "Ghana national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "GIB": {
+    "color": "#DA000C",
+    "rationale": "Gibraltar national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#DA000C",
+        "rationale": "Gibraltar national flag: flag-derived red."
+      },
+      {
+        "color": "#F8D80E",
+        "rationale": "Gibraltar national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "GIN": {
+    "color": "#FFFF00",
+    "rationale": "Guinea national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFFF00",
+        "rationale": "Guinea national flag: flag-derived gold."
+      },
+      {
+        "color": "#009900",
+        "rationale": "Guinea national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "Guinea national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "GLP": {
+    "color": "#E1000F",
+    "rationale": "French tricolour red as an alternative for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000091",
+        "rationale": "French tricolour blue, reflecting Guadeloupe's constitutional link."
+      },
+      {
+        "color": "#E1000F",
+        "rationale": "French tricolour red as an alternative for neighbor contrast."
+      }
+    ]
+  },
+  "GMB": {
+    "color": "#000099",
+    "rationale": "The Gambia national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000099",
+        "rationale": "The Gambia national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#009900",
+        "rationale": "The Gambia national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "The Gambia national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "GNB": {
+    "color": "#009E49",
+    "rationale": "Guinea-Bissau national flag: alternative green for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#CE1126",
+        "rationale": "Guinea-Bissau national flag: flag-derived red."
+      },
+      {
+        "color": "#FCD116",
+        "rationale": "Guinea-Bissau national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#009E49",
+        "rationale": "Guinea-Bissau national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "GNQ": {
+    "color": "#3E9A00",
+    "rationale": "Equatorial Guinea national flag: alternative green for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#E32118",
+        "rationale": "Equatorial Guinea national flag: flag-derived red."
+      },
+      {
+        "color": "#3E9A00",
+        "rationale": "Equatorial Guinea national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#0073CE",
+        "rationale": "Equatorial Guinea national flag: alternative blue for neighbor contrast."
+      }
+    ]
+  },
+  "GRC": {
+    "color": "#0D5EAF",
+    "rationale": "Greece national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0D5EAF",
+        "rationale": "Greece national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#4785C2",
+        "rationale": "Greece national flag: display variant of its deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "GRD": {
+    "color": "#FCD116",
+    "rationale": "Grenada national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FCD116",
+        "rationale": "Grenada national flag: flag-derived gold."
+      },
+      {
+        "color": "#CE1126",
+        "rationale": "Grenada national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#007A5E",
+        "rationale": "Grenada national flag: alternative teal for neighbor contrast."
+      }
+    ]
+  },
+  "GRL": {
+    "color": "#D00C33",
+    "rationale": "Greenland national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#D00C33",
+        "rationale": "Greenland national flag: flag-derived red."
+      },
+      {
+        "color": "#960925",
+        "rationale": "Greenland national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "GTM": {
+    "color": "#B07E09",
+    "rationale": "Guatemala national flag: flag-derived orange.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#B07E09",
+        "rationale": "Guatemala national flag: flag-derived orange."
+      },
+      {
+        "color": "#A50A0A",
+        "rationale": "Guatemala national flag: alternative deep red for neighbor contrast."
+      },
+      {
+        "color": "#4997D0",
+        "rationale": "Guatemala national flag: alternative blue for neighbor contrast."
+      }
+    ]
+  },
+  "GUF": {
+    "color": "#000091",
+    "rationale": "French tricolour blue, reflecting French Guiana's constitutional link.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000091",
+        "rationale": "French tricolour blue, reflecting French Guiana's constitutional link."
+      },
+      {
+        "color": "#E1000F",
+        "rationale": "French tricolour red as an alternative for neighbor contrast."
+      }
+    ]
+  },
+  "GUM": {
+    "color": "#BE0027",
+    "rationale": "Guam national flag: flag-derived deep red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#BE0027",
+        "rationale": "Guam national flag: flag-derived deep red."
+      },
+      {
+        "color": "#3B5AA3",
+        "rationale": "Guam national flag: alternative blue for neighbor contrast."
+      },
+      {
+        "color": "#ADD2D9",
+        "rationale": "Guam national flag: alternative teal for neighbor contrast."
+      }
+    ]
+  },
+  "GUY": {
+    "color": "#DE2110",
+    "rationale": "Guyana national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#399408",
+        "rationale": "Guyana national flag: flag-derived green."
+      },
+      {
+        "color": "#FFDE08",
+        "rationale": "Guyana national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#DE2110",
+        "rationale": "Guyana national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "HKG": {
+    "color": "#000095",
+    "rationale": "Blue Sky with a White Sun blue, locked by JourneySphere design.",
+    "locked": true,
+    "candidates": [
+      {
+        "color": "#000095",
+        "rationale": "Blue Sky with a White Sun blue, locked by JourneySphere design."
+      },
+      {
+        "color": "#EC1B2E",
+        "rationale": "Hong Kong national flag: flag-derived red."
+      },
+      {
+        "color": "#AA1321",
+        "rationale": "Hong Kong national flag: alternative deep red for neighbor contrast."
+      }
+    ]
+  },
+  "HMD": {
+    "color": "#00008B",
+    "rationale": "Heard Island and McDonald Islands national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00008B",
+        "rationale": "Heard Island and McDonald Islands national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "Heard Island and McDonald Islands national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "HND": {
+    "color": "#18C3DF",
+    "rationale": "Honduras national flag: flag-derived teal.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#18C3DF",
+        "rationale": "Honduras national flag: flag-derived teal."
+      },
+      {
+        "color": "#118CA1",
+        "rationale": "Honduras national flag: display variant of its teal for neighbor contrast."
+      }
+    ]
+  },
+  "HRV": {
+    "color": "#F7DB17",
+    "rationale": "Croatia national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#171796",
+        "rationale": "Croatia national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#0093DD",
+        "rationale": "Croatia national flag: alternative blue for neighbor contrast."
+      },
+      {
+        "color": "#F7DB17",
+        "rationale": "Croatia national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "HTI": {
+    "color": "#F1B517",
+    "rationale": "Haiti national flag: alternative orange for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#D21034",
+        "rationale": "Haiti national flag: flag-derived red."
+      },
+      {
+        "color": "#00209F",
+        "rationale": "Haiti national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#F1B517",
+        "rationale": "Haiti national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "HUN": {
+    "color": "#D43516",
+    "rationale": "Hungary national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#D43516",
+        "rationale": "Hungary national flag: flag-derived red."
+      },
+      {
+        "color": "#388D00",
+        "rationale": "Hungary national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "IDN": {
+    "color": "#E70011",
+    "rationale": "Indonesia national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#E70011",
+        "rationale": "Indonesia national flag: flag-derived red."
+      },
+      {
+        "color": "#A6000C",
+        "rationale": "Indonesia national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "IMN": {
+    "color": "#BA0000",
+    "rationale": "Isle of Man national flag: flag-derived deep red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#BA0000",
+        "rationale": "Isle of Man national flag: flag-derived deep red."
+      },
+      {
+        "color": "#FFEF00",
+        "rationale": "Isle of Man national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#FFEC00",
+        "rationale": "Isle of Man national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "IND": {
+    "color": "#FF9933",
+    "rationale": "India national flag: flag-derived orange.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FF9933",
+        "rationale": "India national flag: flag-derived orange."
+      },
+      {
+        "color": "#128807",
+        "rationale": "India national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#000088",
+        "rationale": "India national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "IOT": {
+    "color": "#000063",
+    "rationale": "British Indian Ocean Territory national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000063",
+        "rationale": "British Indian Ocean Territory national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#A24300",
+        "rationale": "British Indian Ocean Territory national flag: alternative orange for neighbor contrast."
+      },
+      {
+        "color": "#006D00",
+        "rationale": "British Indian Ocean Territory national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "IRL": {
+    "color": "#FF7900",
+    "rationale": "Ireland national flag: alternative orange for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#009A49",
+        "rationale": "Ireland national flag: flag-derived green."
+      },
+      {
+        "color": "#FF7900",
+        "rationale": "Ireland national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "IRN": {
+    "color": "#239F40",
+    "rationale": "Iran national flag: alternative green for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#DA0000",
+        "rationale": "Iran national flag: flag-derived red."
+      },
+      {
+        "color": "#239F40",
+        "rationale": "Iran national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#D90000",
+        "rationale": "Iran national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "IRQ": {
+    "color": "#007A3D",
+    "rationale": "Iraq national flag: alternative green for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#CE1126",
+        "rationale": "Iraq national flag: flag-derived red."
+      },
+      {
+        "color": "#007A3D",
+        "rationale": "Iraq national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "ISL": {
+    "color": "#003897",
+    "rationale": "Iceland national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#003897",
+        "rationale": "Iceland national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#D72828",
+        "rationale": "Iceland national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "ISR": {
+    "color": "#0038B8",
+    "rationale": "Israel national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0038B8",
+        "rationale": "Israel national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#3D68C9",
+        "rationale": "Israel national flag: display variant of its deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "ITA": {
+    "color": "#009246",
+    "rationale": "Italy national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#009246",
+        "rationale": "Italy national flag: flag-derived green."
+      },
+      {
+        "color": "#CE2B37",
+        "rationale": "Italy national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "JAM": {
+    "color": "#009900",
+    "rationale": "Jamaica national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#009900",
+        "rationale": "Jamaica national flag: flag-derived green."
+      },
+      {
+        "color": "#FFCC00",
+        "rationale": "Jamaica national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "JEY": {
+    "color": "#CF142B",
+    "rationale": "Jersey national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#CF142B",
+        "rationale": "Jersey national flag: flag-derived red."
+      },
+      {
+        "color": "#806600",
+        "rationale": "Jersey national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#377BC8",
+        "rationale": "Jersey national flag: alternative blue for neighbor contrast."
+      }
+    ]
+  },
+  "JOR": {
+    "color": "#FF0000",
+    "rationale": "Jordan national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#009900",
+        "rationale": "Jordan national flag: flag-derived green."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "Jordan national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "JPN": {
+    "color": "#D4AF37",
+    "rationale": "Gold of the Imperial chrysanthemum emblem, locked by JourneySphere design.",
+    "locked": true,
+    "candidates": [
+      {
+        "color": "#D4AF37",
+        "rationale": "Gold of the Imperial chrysanthemum emblem, locked by JourneySphere design."
+      },
+      {
+        "color": "#BC002D",
+        "rationale": "Japan national flag: flag-derived deep red."
+      },
+      {
+        "color": "#CC3D5F",
+        "rationale": "Japan national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "KAS": {
+    "color": "#FF9933",
+    "rationale": "Indian claimant flag: flag-derived orange.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FF9933",
+        "rationale": "Indian claimant flag: flag-derived orange."
+      },
+      {
+        "color": "#128807",
+        "rationale": "Indian claimant flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#000088",
+        "rationale": "Indian claimant flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "KAZ": {
+    "color": "#FFEC2D",
+    "rationale": "Kazakhstan national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00ABC2",
+        "rationale": "Kazakhstan national flag: flag-derived teal."
+      },
+      {
+        "color": "#FFEC2D",
+        "rationale": "Kazakhstan national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "KEN": {
+    "color": "#BB0000",
+    "rationale": "Kenya national flag: alternative deep red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#006600",
+        "rationale": "Kenya national flag: flag-derived green."
+      },
+      {
+        "color": "#BB0000",
+        "rationale": "Kenya national flag: alternative deep red for neighbor contrast."
+      }
+    ]
+  },
+  "KGZ": {
+    "color": "#FF0000",
+    "rationale": "Kyrgyzstan national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFFF00",
+        "rationale": "Kyrgyzstan national flag: flag-derived gold."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "Kyrgyzstan national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "KHM": {
+    "color": "#032EA1",
+    "rationale": "Cambodia national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#032EA1",
+        "rationale": "Cambodia national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#E00025",
+        "rationale": "Cambodia national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "KIR": {
+    "color": "#E73E2D",
+    "rationale": "Kiribati national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#E73E2D",
+        "rationale": "Kiribati national flag: flag-derived red."
+      },
+      {
+        "color": "#FEC74A",
+        "rationale": "Kiribati national flag: alternative orange for neighbor contrast."
+      },
+      {
+        "color": "#D8AA3F",
+        "rationale": "Kiribati national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "KNA": {
+    "color": "#FFE900",
+    "rationale": "Saint Kitts and Nevis national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFE900",
+        "rationale": "Saint Kitts and Nevis national flag: flag-derived gold."
+      },
+      {
+        "color": "#35A100",
+        "rationale": "Saint Kitts and Nevis national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#C70000",
+        "rationale": "Saint Kitts and Nevis national flag: alternative deep red for neighbor contrast."
+      }
+    ]
+  },
+  "KOR": {
+    "color": "#C60C30",
+    "rationale": "Taegeuk red from the South Korean flag, locked by JourneySphere design.",
+    "locked": true,
+    "candidates": [
+      {
+        "color": "#C60C30",
+        "rationale": "Taegeuk red from the South Korean flag, locked by JourneySphere design."
+      },
+      {
+        "color": "#CD2E3A",
+        "rationale": "South Korea national flag: flag-derived red."
+      },
+      {
+        "color": "#0047A0",
+        "rationale": "South Korea national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "KWT": {
+    "color": "#F31830",
+    "rationale": "Kuwait national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#F31830",
+        "rationale": "Kuwait national flag: flag-derived red."
+      },
+      {
+        "color": "#00D941",
+        "rationale": "Kuwait national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "LAO": {
+    "color": "#CE1126",
+    "rationale": "Laos national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#CE1126",
+        "rationale": "Laos national flag: flag-derived red."
+      },
+      {
+        "color": "#002868",
+        "rationale": "Laos national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "LBN": {
+    "color": "#00A850",
+    "rationale": "Lebanon national flag: alternative green for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#EE161F",
+        "rationale": "Lebanon national flag: flag-derived red."
+      },
+      {
+        "color": "#00A850",
+        "rationale": "Lebanon national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "LBR": {
+    "color": "#000066",
+    "rationale": "Liberia national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000066",
+        "rationale": "Liberia national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#CC0000",
+        "rationale": "Liberia national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "LBY": {
+    "color": "#239E46",
+    "rationale": "Libya national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#239E46",
+        "rationale": "Libya national flag: flag-derived green."
+      },
+      {
+        "color": "#E70013",
+        "rationale": "Libya national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "LCA": {
+    "color": "#65CFFF",
+    "rationale": "Saint Lucia national flag: flag-derived blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#65CFFF",
+        "rationale": "Saint Lucia national flag: flag-derived blue."
+      },
+      {
+        "color": "#FFCE00",
+        "rationale": "Saint Lucia national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "LIE": {
+    "color": "#002B7F",
+    "rationale": "Liechtenstein national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#002B7F",
+        "rationale": "Liechtenstein national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#CE1126",
+        "rationale": "Liechtenstein national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#FFD83D",
+        "rationale": "Liechtenstein national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "LKA": {
+    "color": "#FFB700",
+    "rationale": "Sri Lanka national flag: flag-derived orange.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFB700",
+        "rationale": "Sri Lanka national flag: flag-derived orange."
+      },
+      {
+        "color": "#FF5B00",
+        "rationale": "Sri Lanka national flag: alternative orange for neighbor contrast."
+      },
+      {
+        "color": "#8D2029",
+        "rationale": "Sri Lanka national flag: alternative deep red for neighbor contrast."
+      }
+    ]
+  },
+  "LSO": {
+    "color": "#009543",
+    "rationale": "Lesotho national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#009543",
+        "rationale": "Lesotho national flag: flag-derived green."
+      },
+      {
+        "color": "#00209F",
+        "rationale": "Lesotho national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "LTU": {
+    "color": "#FDB913",
+    "rationale": "Lithuania national flag: alternative orange for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#006A44",
+        "rationale": "Lithuania national flag: flag-derived green."
+      },
+      {
+        "color": "#C1272D",
+        "rationale": "Lithuania national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#FDB913",
+        "rationale": "Lithuania national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "LUX": {
+    "color": "#00A1DE",
+    "rationale": "Luxembourg national flag: alternative blue for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#ED2939",
+        "rationale": "Luxembourg national flag: flag-derived red."
+      },
+      {
+        "color": "#00A1DE",
+        "rationale": "Luxembourg national flag: alternative blue for neighbor contrast."
+      }
+    ]
+  },
+  "LVA": {
+    "color": "#981E32",
+    "rationale": "Latvia national flag: flag-derived deep red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#981E32",
+        "rationale": "Latvia national flag: flag-derived deep red."
+      },
+      {
+        "color": "#B15463",
+        "rationale": "Latvia national flag: display variant of its deep red for neighbor contrast."
+      }
+    ]
+  },
+  "MAC": {
+    "color": "#000095",
+    "rationale": "Blue Sky with a White Sun blue, locked by JourneySphere design.",
+    "locked": true,
+    "candidates": [
+      {
+        "color": "#000095",
+        "rationale": "Blue Sky with a White Sun blue, locked by JourneySphere design."
+      },
+      {
+        "color": "#FBD116",
+        "rationale": "Macau national flag: flag-derived gold."
+      },
+      {
+        "color": "#00785E",
+        "rationale": "Macau national flag: alternative teal for neighbor contrast."
+      }
+    ]
+  },
+  "MAF": {
+    "color": "#000091",
+    "rationale": "Saint Martin national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000091",
+        "rationale": "Saint Martin national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#E1000F",
+        "rationale": "Saint Martin national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "MAR": {
+    "color": "#C1272D",
+    "rationale": "Morocco national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#C1272D",
+        "rationale": "Morocco national flag: flag-derived red."
+      },
+      {
+        "color": "#006233",
+        "rationale": "Morocco national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "MCO": {
+    "color": "#F31830",
+    "rationale": "Monaco national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#F31830",
+        "rationale": "Monaco national flag: flag-derived red."
+      },
+      {
+        "color": "#AF1123",
+        "rationale": "Monaco national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "MDA": {
+    "color": "#DE2110",
+    "rationale": "Moldova national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00319C",
+        "rationale": "Moldova national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#FFDE00",
+        "rationale": "Moldova national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#DE2110",
+        "rationale": "Moldova national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "MDG": {
+    "color": "#FC3D32",
+    "rationale": "Madagascar national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FC3D32",
+        "rationale": "Madagascar national flag: flag-derived red."
+      },
+      {
+        "color": "#007E3A",
+        "rationale": "Madagascar national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "MDV": {
+    "color": "#D21034",
+    "rationale": "Maldives national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#D21034",
+        "rationale": "Maldives national flag: flag-derived red."
+      },
+      {
+        "color": "#007E3A",
+        "rationale": "Maldives national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "MEX": {
+    "color": "#006847",
+    "rationale": "Mexico national flag: alternative green for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#F15770",
+        "rationale": "Mexico national flag: flag-derived red."
+      },
+      {
+        "color": "#CE1126",
+        "rationale": "Mexico national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#006847",
+        "rationale": "Mexico national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "MHL": {
+    "color": "#3B5AA3",
+    "rationale": "Marshall Islands national flag: flag-derived blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#3B5AA3",
+        "rationale": "Marshall Islands national flag: flag-derived blue."
+      },
+      {
+        "color": "#E2AE57",
+        "rationale": "Marshall Islands national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "MKD": {
+    "color": "#FFE600",
+    "rationale": "North Macedonia national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#D20000",
+        "rationale": "North Macedonia national flag: flag-derived red."
+      },
+      {
+        "color": "#FFE600",
+        "rationale": "North Macedonia national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "MLI": {
+    "color": "#009A00",
+    "rationale": "Mali national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#009A00",
+        "rationale": "Mali national flag: flag-derived green."
+      },
+      {
+        "color": "#FFFF00",
+        "rationale": "Mali national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "Mali national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "MLT": {
+    "color": "#CF142B",
+    "rationale": "Malta national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#CF142B",
+        "rationale": "Malta national flag: flag-derived red."
+      },
+      {
+        "color": "#950E1F",
+        "rationale": "Malta national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "MMR": {
+    "color": "#34B233",
+    "rationale": "Myanmar national flag: alternative green for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FECB00",
+        "rationale": "Myanmar national flag: flag-derived gold."
+      },
+      {
+        "color": "#34B233",
+        "rationale": "Myanmar national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#EA2839",
+        "rationale": "Myanmar national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "MNE": {
+    "color": "#C40308",
+    "rationale": "Montenegro national flag: alternative deep red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#D3AE3B",
+        "rationale": "Montenegro national flag: flag-derived gold."
+      },
+      {
+        "color": "#C40308",
+        "rationale": "Montenegro national flag: alternative deep red for neighbor contrast."
+      },
+      {
+        "color": "#B96B29",
+        "rationale": "Montenegro national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "MNG": {
+    "color": "#FFD900",
+    "rationale": "Mongolia national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFD900",
+        "rationale": "Mongolia national flag: flag-derived gold."
+      },
+      {
+        "color": "#DA2032",
+        "rationale": "Mongolia national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#0066B3",
+        "rationale": "Mongolia national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "MNP": {
+    "color": "#0071BC",
+    "rationale": "Northern Mariana Islands national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0071BC",
+        "rationale": "Northern Mariana Islands national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#217900",
+        "rationale": "Northern Mariana Islands national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#FFD200",
+        "rationale": "Northern Mariana Islands national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "MOZ": {
+    "color": "#FF0000",
+    "rationale": "Mozambique national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#009A00",
+        "rationale": "Mozambique national flag: flag-derived green."
+      },
+      {
+        "color": "#FFCA00",
+        "rationale": "Mozambique national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "Mozambique national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "MRT": {
+    "color": "#FFC400",
+    "rationale": "Mauritania national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#CD2A3E",
+        "rationale": "Mauritania national flag: flag-derived red."
+      },
+      {
+        "color": "#006233",
+        "rationale": "Mauritania national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#FFC400",
+        "rationale": "Mauritania national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "MSR": {
+    "color": "#012169",
+    "rationale": "Montserrat national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#012169",
+        "rationale": "Montserrat national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#00A2BD",
+        "rationale": "Montserrat national flag: alternative teal for neighbor contrast."
+      },
+      {
+        "color": "#A53D08",
+        "rationale": "Montserrat national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "MTQ": {
+    "color": "#00A650",
+    "rationale": "Green from Martinique's Ipséité flag.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00A650",
+        "rationale": "Green from Martinique's Ipséité flag."
+      },
+      {
+        "color": "#EF1923",
+        "rationale": "Red from Martinique's Ipséité flag as an alternative for neighbor contrast."
+      }
+    ]
+  },
+  "MUS": {
+    "color": "#00A04D",
+    "rationale": "Mauritius national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00A04D",
+        "rationale": "Mauritius national flag: flag-derived green."
+      },
+      {
+        "color": "#151F6D",
+        "rationale": "Mauritius national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#EE2737",
+        "rationale": "Mauritius national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "MWI": {
+    "color": "#21873B",
+    "rationale": "Malawi national flag: alternative green for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#F41408",
+        "rationale": "Malawi national flag: flag-derived red."
+      },
+      {
+        "color": "#21873B",
+        "rationale": "Malawi national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#F31509",
+        "rationale": "Malawi national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "MYS": {
+    "color": "#000066",
+    "rationale": "Malaysia national flag: alternative deep blue for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#CC0000",
+        "rationale": "Malaysia national flag: flag-derived red."
+      },
+      {
+        "color": "#000066",
+        "rationale": "Malaysia national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#FFCC00",
+        "rationale": "Malaysia national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "MYT": {
+    "color": "#000091",
+    "rationale": "French tricolour blue, reflecting Mayotte's constitutional link.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000091",
+        "rationale": "French tricolour blue, reflecting Mayotte's constitutional link."
+      },
+      {
+        "color": "#E1000F",
+        "rationale": "French tricolour red as an alternative for neighbor contrast."
+      }
+    ]
+  },
+  "NAM": {
+    "color": "#38A100",
+    "rationale": "Namibia national flag: alternative green for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#3662A2",
+        "rationale": "Namibia national flag: flag-derived blue."
+      },
+      {
+        "color": "#38A100",
+        "rationale": "Namibia national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#C70000",
+        "rationale": "Namibia national flag: alternative deep red for neighbor contrast."
+      }
+    ]
+  },
+  "NCL": {
+    "color": "#009543",
+    "rationale": "New Caledonia national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#009543",
+        "rationale": "New Caledonia national flag: flag-derived green."
+      },
+      {
+        "color": "#ED4135",
+        "rationale": "New Caledonia national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#0035AD",
+        "rationale": "New Caledonia national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "NER": {
+    "color": "#E05206",
+    "rationale": "Niger national flag: alternative orange for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0DB02B",
+        "rationale": "Niger national flag: flag-derived green."
+      },
+      {
+        "color": "#E05206",
+        "rationale": "Niger national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "NFK": {
+    "color": "#198200",
+    "rationale": "Norfolk Island national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#198200",
+        "rationale": "Norfolk Island national flag: flag-derived green."
+      },
+      {
+        "color": "#50A03D",
+        "rationale": "Norfolk Island national flag: display variant of its green for neighbor contrast."
+      }
+    ]
+  },
+  "NGA": {
+    "color": "#3DA47C",
+    "rationale": "Nigeria national flag: display variant of its green for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#008753",
+        "rationale": "Nigeria national flag: flag-derived green."
+      },
+      {
+        "color": "#3DA47C",
+        "rationale": "Nigeria national flag: display variant of its green for neighbor contrast."
+      }
+    ]
+  },
+  "NIC": {
+    "color": "#AA0000",
+    "rationale": "Nicaragua national flag: alternative deep red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#8A0000",
+        "rationale": "Nicaragua national flag: flag-derived deep red."
+      },
+      {
+        "color": "#AA0000",
+        "rationale": "Nicaragua national flag: alternative deep red for neighbor contrast."
+      },
+      {
+        "color": "#FF2A2A",
+        "rationale": "Nicaragua national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "NIU": {
+    "color": "#FEDD00",
+    "rationale": "Niue national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FEDD00",
+        "rationale": "Niue national flag: flag-derived gold."
+      },
+      {
+        "color": "#012169",
+        "rationale": "Niue national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#C8102E",
+        "rationale": "Niue national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "NLD": {
+    "color": "#21468B",
+    "rationale": "Netherlands national flag: alternative deep blue for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#AE1C28",
+        "rationale": "Netherlands national flag: flag-derived deep red."
+      },
+      {
+        "color": "#21468B",
+        "rationale": "Netherlands national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "NOR": {
+    "color": "#ED2939",
+    "rationale": "Norwegian national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#ED2939",
+        "rationale": "Norwegian national flag: flag-derived red."
+      },
+      {
+        "color": "#002664",
+        "rationale": "Norwegian national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "NPL": {
+    "color": "#CE0000",
+    "rationale": "Nepal national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#CE0000",
+        "rationale": "Nepal national flag: flag-derived red."
+      },
+      {
+        "color": "#000063",
+        "rationale": "Nepal national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "NRU": {
+    "color": "#002170",
+    "rationale": "Nauru national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#002170",
+        "rationale": "Nauru national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#FFB20D",
+        "rationale": "Nauru national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "NZL": {
+    "color": "#00247D",
+    "rationale": "New Zealand national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00247D",
+        "rationale": "New Zealand national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#CC142B",
+        "rationale": "New Zealand national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#012169",
+        "rationale": "New Zealand national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "OMN": {
+    "color": "#EF2D29",
+    "rationale": "Oman national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#EF2D29",
+        "rationale": "Oman national flag: flag-derived red."
+      },
+      {
+        "color": "#009025",
+        "rationale": "Oman national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#EF2D28",
+        "rationale": "Oman national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "PAK": {
+    "color": "#0C590B",
+    "rationale": "Pakistan national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0C590B",
+        "rationale": "Pakistan national flag: flag-derived green."
+      },
+      {
+        "color": "#468146",
+        "rationale": "Pakistan national flag: display variant of its green for neighbor contrast."
+      }
+    ]
+  },
+  "PAN": {
+    "color": "#DB0000",
+    "rationale": "Panama national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#DB0000",
+        "rationale": "Panama national flag: flag-derived red."
+      },
+      {
+        "color": "#0000AB",
+        "rationale": "Panama national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#D80000",
+        "rationale": "Panama national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "PCN": {
+    "color": "#00247D",
+    "rationale": "Pitcairn Islands national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00247D",
+        "rationale": "Pitcairn Islands national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#012169",
+        "rationale": "Pitcairn Islands national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#C8102E",
+        "rationale": "Pitcairn Islands national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "PER": {
+    "color": "#D91023",
+    "rationale": "Peru national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#D91023",
+        "rationale": "Peru national flag: flag-derived red."
+      },
+      {
+        "color": "#9C0C19",
+        "rationale": "Peru national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "PGA": {
+    "color": "#BD3D44",
+    "rationale": "United States flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#BD3D44",
+        "rationale": "United States flag: flag-derived red."
+      },
+      {
+        "color": "#192F5D",
+        "rationale": "United States flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "PHL": {
+    "color": "#0038A8",
+    "rationale": "Philippines national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0038A8",
+        "rationale": "Philippines national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#CE1126",
+        "rationale": "Philippines national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#FCD116",
+        "rationale": "Philippines national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "PLW": {
+    "color": "#4AADD6",
+    "rationale": "Palau national flag: flag-derived blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#4AADD6",
+        "rationale": "Palau national flag: flag-derived blue."
+      },
+      {
+        "color": "#FFDE00",
+        "rationale": "Palau national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "PNG": {
+    "color": "#FFCC00",
+    "rationale": "Papua New Guinea national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFCC00",
+        "rationale": "Papua New Guinea national flag: flag-derived gold."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "Papua New Guinea national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "POL": {
+    "color": "#DC143C",
+    "rationale": "Poland national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#DC143C",
+        "rationale": "Poland national flag: flag-derived red."
+      },
+      {
+        "color": "#9E0E2B",
+        "rationale": "Poland national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "PRI": {
+    "color": "#ED0000",
+    "rationale": "Puerto Rico national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#ED0000",
+        "rationale": "Puerto Rico national flag: flag-derived red."
+      },
+      {
+        "color": "#0050F0",
+        "rationale": "Puerto Rico national flag: alternative blue for neighbor contrast."
+      }
+    ]
+  },
+  "PRK": {
+    "color": "#3E5698",
+    "rationale": "North Korea national flag: flag-derived blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#3E5698",
+        "rationale": "North Korea national flag: flag-derived blue."
+      },
+      {
+        "color": "#C60000",
+        "rationale": "North Korea national flag: alternative deep red for neighbor contrast."
+      },
+      {
+        "color": "#C40000",
+        "rationale": "North Korea national flag: alternative deep red for neighbor contrast."
+      }
+    ]
+  },
+  "PRT": {
+    "color": "#003399",
+    "rationale": "Portugal national flag: alternative deep blue for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#006600",
+        "rationale": "Portugal national flag: flag-derived green."
+      },
+      {
+        "color": "#FFFF00",
+        "rationale": "Portugal national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#003399",
+        "rationale": "Portugal national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "PRY": {
+    "color": "#0038A8",
+    "rationale": "Paraguay national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0038A8",
+        "rationale": "Paraguay national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#D52B1E",
+        "rationale": "Paraguay national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#009B3A",
+        "rationale": "Paraguay national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "PSE": {
+    "color": "#ED2E38",
+    "rationale": "Palestine national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#009639",
+        "rationale": "Palestine national flag: flag-derived green."
+      },
+      {
+        "color": "#ED2E38",
+        "rationale": "Palestine national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "PYF": {
+    "color": "#083D9C",
+    "rationale": "French Polynesia national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#083D9C",
+        "rationale": "French Polynesia national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#EF7D08",
+        "rationale": "French Polynesia national flag: alternative orange for neighbor contrast."
+      },
+      {
+        "color": "#DE2010",
+        "rationale": "French Polynesia national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "QAT": {
+    "color": "#A8526C",
+    "rationale": "Qatar national flag: display variant of its violet for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#8D1B3D",
+        "rationale": "Qatar national flag: flag-derived violet."
+      },
+      {
+        "color": "#A8526C",
+        "rationale": "Qatar national flag: display variant of its violet for neighbor contrast."
+      }
+    ]
+  },
+  "REU": {
+    "color": "#000091",
+    "rationale": "French tricolour blue, reflecting Réunion's constitutional link.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000091",
+        "rationale": "French tricolour blue, reflecting Réunion's constitutional link."
+      },
+      {
+        "color": "#E1000F",
+        "rationale": "French tricolour red as an alternative for neighbor contrast."
+      }
+    ]
+  },
+  "ROU": {
+    "color": "#00319C",
+    "rationale": "Romania national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00319C",
+        "rationale": "Romania national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#FFDE00",
+        "rationale": "Romania national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#DE2110",
+        "rationale": "Romania national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "RUS": {
+    "color": "#D52B1E",
+    "rationale": "Russia national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0039A6",
+        "rationale": "Russia national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#D52B1E",
+        "rationale": "Russia national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "RWA": {
+    "color": "#20603D",
+    "rationale": "Rwanda national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#20603D",
+        "rationale": "Rwanda national flag: flag-derived green."
+      },
+      {
+        "color": "#FAD201",
+        "rationale": "Rwanda national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#00A1DE",
+        "rationale": "Rwanda national flag: alternative blue for neighbor contrast."
+      }
+    ]
+  },
+  "SAU": {
+    "color": "#165D31",
+    "rationale": "Saudi Arabia national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#165D31",
+        "rationale": "Saudi Arabia national flag: flag-derived green."
+      },
+      {
+        "color": "#4E8462",
+        "rationale": "Saudi Arabia national flag: display variant of its green for neighbor contrast."
+      }
+    ]
+  },
+  "SCR": {
+    "color": "#0038A8",
+    "rationale": "Philippine claimant flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0038A8",
+        "rationale": "Philippine claimant flag: flag-derived deep blue."
+      },
+      {
+        "color": "#CE1126",
+        "rationale": "Philippine claimant flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#FCD116",
+        "rationale": "Philippine claimant flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "SDN": {
+    "color": "#FF0000",
+    "rationale": "Sudan national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#009A00",
+        "rationale": "Sudan national flag: flag-derived green."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "Sudan national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "SEN": {
+    "color": "#BC0000",
+    "rationale": "Senegal national flag: alternative deep red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0B7226",
+        "rationale": "Senegal national flag: flag-derived green."
+      },
+      {
+        "color": "#FFFF00",
+        "rationale": "Senegal national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#BC0000",
+        "rationale": "Senegal national flag: alternative deep red for neighbor contrast."
+      }
+    ]
+  },
+  "SER": {
+    "color": "#FFE800",
+    "rationale": "Colombian claimant flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFE800",
+        "rationale": "Colombian claimant flag: flag-derived gold."
+      },
+      {
+        "color": "#00148E",
+        "rationale": "Colombian claimant flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#DA0010",
+        "rationale": "Colombian claimant flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "SGP": {
+    "color": "#DF0000",
+    "rationale": "Singapore national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#DF0000",
+        "rationale": "Singapore national flag: flag-derived red."
+      },
+      {
+        "color": "#A10000",
+        "rationale": "Singapore national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "SGS": {
+    "color": "#FF5500",
+    "rationale": "South Georgia and the South Sandwich Islands national flag: flag-derived orange.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FF5500",
+        "rationale": "South Georgia and the South Sandwich Islands national flag: flag-derived orange."
+      },
+      {
+        "color": "#B50000",
+        "rationale": "South Georgia and the South Sandwich Islands national flag: alternative deep red for neighbor contrast."
+      },
+      {
+        "color": "#FFC500",
+        "rationale": "South Georgia and the South Sandwich Islands national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "SHN": {
+    "color": "#012169",
+    "rationale": "Saint Helena national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#012169",
+        "rationale": "Saint Helena national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#C8102E",
+        "rationale": "Saint Helena national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "SLB": {
+    "color": "#0000D6",
+    "rationale": "Solomon Islands national flag: flag-derived blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0000D6",
+        "rationale": "Solomon Islands national flag: flag-derived blue."
+      },
+      {
+        "color": "#006000",
+        "rationale": "Solomon Islands national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#FFCC00",
+        "rationale": "Solomon Islands national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "SLE": {
+    "color": "#00CD00",
+    "rationale": "Sierra Leone national flag: alternative green for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0000CD",
+        "rationale": "Sierra Leone national flag: flag-derived blue."
+      },
+      {
+        "color": "#00CD00",
+        "rationale": "Sierra Leone national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "SLV": {
+    "color": "#0F47AF",
+    "rationale": "El Salvador national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0F47AF",
+        "rationale": "El Salvador national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#E60000",
+        "rationale": "El Salvador national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#1F601A",
+        "rationale": "El Salvador national flag: alternative green for neighbor contrast."
+      }
+    ]
+  },
+  "SMR": {
+    "color": "#19B6EF",
+    "rationale": "San Marino national flag: flag-derived blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#19B6EF",
+        "rationale": "San Marino national flag: flag-derived blue."
+      },
+      {
+        "color": "#FFDD00",
+        "rationale": "San Marino national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#7D6C00",
+        "rationale": "San Marino national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "SOL": {
+    "color": "#D21034",
+    "rationale": "Red stripe from the Somaliland flag.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#1EB53A",
+        "rationale": "Green field from the Somaliland flag."
+      },
+      {
+        "color": "#D21034",
+        "rationale": "Red stripe from the Somaliland flag."
+      }
+    ]
+  },
+  "SOM": {
+    "color": "#40A6FF",
+    "rationale": "Somalia national flag: flag-derived blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#40A6FF",
+        "rationale": "Somalia national flag: flag-derived blue."
+      },
+      {
+        "color": "#2E78B8",
+        "rationale": "Somalia national flag: display variant of its blue for neighbor contrast."
+      }
+    ]
+  },
+  "SPI": {
+    "color": "#F6B40E",
+    "rationale": "Argentine claimant flag: alternative orange for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#74ACDF",
+        "rationale": "Argentine claimant flag: flag-derived blue."
+      },
+      {
+        "color": "#F6B40E",
+        "rationale": "Argentine claimant flag: alternative orange for neighbor contrast."
+      },
+      {
+        "color": "#85340A",
+        "rationale": "Argentine claimant flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "SPM": {
+    "color": "#000091",
+    "rationale": "Saint Pierre and Miquelon national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000091",
+        "rationale": "Saint Pierre and Miquelon national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#E1000F",
+        "rationale": "Saint Pierre and Miquelon national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "SRB": {
+    "color": "#0C4076",
+    "rationale": "Serbia national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0C4076",
+        "rationale": "Serbia national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#C6363C",
+        "rationale": "Serbia national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#EDB92E",
+        "rationale": "Serbia national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "SSD": {
+    "color": "#078930",
+    "rationale": "South Sudan national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#078930",
+        "rationale": "South Sudan national flag: flag-derived green."
+      },
+      {
+        "color": "#DA121A",
+        "rationale": "South Sudan national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#0F47AF",
+        "rationale": "South Sudan national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "STP": {
+    "color": "#12AD2B",
+    "rationale": "São Tomé and Príncipe national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#12AD2B",
+        "rationale": "São Tomé and Príncipe national flag: flag-derived green."
+      },
+      {
+        "color": "#FFCE00",
+        "rationale": "São Tomé and Príncipe national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#D21034",
+        "rationale": "São Tomé and Príncipe national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "SUR": {
+    "color": "#ECC81D",
+    "rationale": "Suriname national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#377E3F",
+        "rationale": "Suriname national flag: flag-derived green."
+      },
+      {
+        "color": "#B40A2D",
+        "rationale": "Suriname national flag: alternative deep red for neighbor contrast."
+      },
+      {
+        "color": "#ECC81D",
+        "rationale": "Suriname national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "SVK": {
+    "color": "#0B4EA2",
+    "rationale": "Slovakia national flag: alternative deep blue for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#EE1C25",
+        "rationale": "Slovakia national flag: flag-derived red."
+      },
+      {
+        "color": "#0B4EA2",
+        "rationale": "Slovakia national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "SVN": {
+    "color": "#0000BF",
+    "rationale": "Slovenia national flag: alternative deep blue for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#D50000",
+        "rationale": "Slovenia national flag: flag-derived red."
+      },
+      {
+        "color": "#0000BF",
+        "rationale": "Slovenia national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#FFDF00",
+        "rationale": "Slovenia national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "SWE": {
+    "color": "#FECB00",
+    "rationale": "Sweden national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#005293",
+        "rationale": "Sweden national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#FECB00",
+        "rationale": "Sweden national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "SWZ": {
+    "color": "#FFD900",
+    "rationale": "Eswatini national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#3E5EB9",
+        "rationale": "Eswatini national flag: flag-derived blue."
+      },
+      {
+        "color": "#FFD900",
+        "rationale": "Eswatini national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#B10C0C",
+        "rationale": "Eswatini national flag: alternative deep red for neighbor contrast."
+      }
+    ]
+  },
+  "SXM": {
+    "color": "#FFFF00",
+    "rationale": "Sint Maarten national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#ED2939",
+        "rationale": "Sint Maarten national flag: flag-derived red."
+      },
+      {
+        "color": "#002395",
+        "rationale": "Sint Maarten national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#FFFF00",
+        "rationale": "Sint Maarten national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "SYC": {
+    "color": "#D92223",
+    "rationale": "Seychelles national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#D92223",
+        "rationale": "Seychelles national flag: flag-derived red."
+      },
+      {
+        "color": "#FCD955",
+        "rationale": "Seychelles national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#003D88",
+        "rationale": "Seychelles national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "SYR": {
+    "color": "#CE1126",
+    "rationale": "Syria national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#007A3D",
+        "rationale": "Syria national flag: flag-derived green."
+      },
+      {
+        "color": "#CE1126",
+        "rationale": "Syria national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "TCA": {
+    "color": "#002868",
+    "rationale": "Turks and Caicos Islands national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#002868",
+        "rationale": "Turks and Caicos Islands national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#FCD116",
+        "rationale": "Turks and Caicos Islands national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#FCAD56",
+        "rationale": "Turks and Caicos Islands national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "TCD": {
+    "color": "#002664",
+    "rationale": "Chad national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#002664",
+        "rationale": "Chad national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#C60C30",
+        "rationale": "Chad national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#FECB00",
+        "rationale": "Chad national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "TGO": {
+    "color": "#D80000",
+    "rationale": "Togo national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFE300",
+        "rationale": "Togo national flag: flag-derived gold."
+      },
+      {
+        "color": "#118600",
+        "rationale": "Togo national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#D80000",
+        "rationale": "Togo national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "THA": {
+    "color": "#BB5062",
+    "rationale": "Thailand national flag: display variant of its deep red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#A51931",
+        "rationale": "Thailand national flag: flag-derived deep red."
+      },
+      {
+        "color": "#BB5062",
+        "rationale": "Thailand national flag: display variant of its deep red for neighbor contrast."
+      }
+    ]
+  },
+  "TJK": {
+    "color": "#F8C300",
+    "rationale": "Tajikistan national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#006600",
+        "rationale": "Tajikistan national flag: flag-derived green."
+      },
+      {
+        "color": "#CC0000",
+        "rationale": "Tajikistan national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#F8C300",
+        "rationale": "Tajikistan national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "TKL": {
+    "color": "#00247D",
+    "rationale": "Ocean blue from the Tokelau flag.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00247D",
+        "rationale": "Ocean blue from the Tokelau flag."
+      },
+      {
+        "color": "#FED100",
+        "rationale": "Canoe gold from the Tokelau flag as an alternative for neighbor contrast."
+      }
+    ]
+  },
+  "TKM": {
+    "color": "#FFC72C",
+    "rationale": "Turkmenistan national flag: alternative orange for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#00843D",
+        "rationale": "Turkmenistan national flag: flag-derived green."
+      },
+      {
+        "color": "#D22630",
+        "rationale": "Turkmenistan national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#FFC72C",
+        "rationale": "Turkmenistan national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "TLS": {
+    "color": "#F8C00C",
+    "rationale": "East Timor national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#CB000F",
+        "rationale": "East Timor national flag: flag-derived deep red."
+      },
+      {
+        "color": "#F8C00C",
+        "rationale": "East Timor national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "TON": {
+    "color": "#C10000",
+    "rationale": "Tonga national flag: flag-derived deep red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#C10000",
+        "rationale": "Tonga national flag: flag-derived deep red."
+      },
+      {
+        "color": "#D03D3D",
+        "rationale": "Tonga national flag: display variant of its deep red for neighbor contrast."
+      }
+    ]
+  },
+  "TTO": {
+    "color": "#E00000",
+    "rationale": "Trinidad and Tobago national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#E00000",
+        "rationale": "Trinidad and Tobago national flag: flag-derived red."
+      },
+      {
+        "color": "#A10000",
+        "rationale": "Trinidad and Tobago national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "TUN": {
+    "color": "#E70013",
+    "rationale": "Tunisia national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#E70013",
+        "rationale": "Tunisia national flag: flag-derived red."
+      },
+      {
+        "color": "#A6000E",
+        "rationale": "Tunisia national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "TUR": {
+    "color": "#E30A17",
+    "rationale": "Turkey national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#E30A17",
+        "rationale": "Turkey national flag: flag-derived red."
+      },
+      {
+        "color": "#A30711",
+        "rationale": "Turkey national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "TUV": {
+    "color": "#009FCA",
+    "rationale": "Tuvalu national flag: flag-derived teal.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#009FCA",
+        "rationale": "Tuvalu national flag: flag-derived teal."
+      },
+      {
+        "color": "#FFF40D",
+        "rationale": "Tuvalu national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#012169",
+        "rationale": "Tuvalu national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "TWN": {
+    "color": "#000095",
+    "rationale": "Blue Sky with a White Sun blue, locked by JourneySphere design.",
+    "locked": true,
+    "candidates": [
+      {
+        "color": "#000095",
+        "rationale": "Blue Sky with a White Sun blue, locked by JourneySphere design."
+      },
+      {
+        "color": "#FF0000",
+        "rationale": "Taiwan flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "TZA": {
+    "color": "#FFFF00",
+    "rationale": "Tanzania national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0099FF",
+        "rationale": "Tanzania national flag: flag-derived blue."
+      },
+      {
+        "color": "#009900",
+        "rationale": "Tanzania national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#FFFF00",
+        "rationale": "Tanzania national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "UGA": {
+    "color": "#FFE700",
+    "rationale": "Uganda national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFE700",
+        "rationale": "Uganda national flag: flag-derived gold."
+      },
+      {
+        "color": "#DE3908",
+        "rationale": "Uganda national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#DE3108",
+        "rationale": "Uganda national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "UKR": {
+    "color": "#FFD700",
+    "rationale": "Ukraine national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0057B8",
+        "rationale": "Ukraine national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#FFD700",
+        "rationale": "Ukraine national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "UMI": {
+    "color": "#BD3D44",
+    "rationale": "United States Minor Outlying Islands national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#BD3D44",
+        "rationale": "United States Minor Outlying Islands national flag: flag-derived red."
+      },
+      {
+        "color": "#192F5D",
+        "rationale": "United States Minor Outlying Islands national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "URY": {
+    "color": "#FCD116",
+    "rationale": "Uruguay national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0038A8",
+        "rationale": "Uruguay national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#FCD116",
+        "rationale": "Uruguay national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "USA": {
+    "color": "#00205B",
+    "rationale": "Deep blue from the United States flag, locked by JourneySphere design.",
+    "locked": true,
+    "candidates": [
+      {
+        "color": "#00205B",
+        "rationale": "Deep blue from the United States flag, locked by JourneySphere design."
+      },
+      {
+        "color": "#BD3D44",
+        "rationale": "United States of America national flag: flag-derived red."
+      },
+      {
+        "color": "#192F5D",
+        "rationale": "United States of America national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "USG": {
+    "color": "#BD3D44",
+    "rationale": "United States flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#BD3D44",
+        "rationale": "United States flag: flag-derived red."
+      },
+      {
+        "color": "#192F5D",
+        "rationale": "United States flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "UZB": {
+    "color": "#CE1126",
+    "rationale": "Uzbekistan national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#1EB53A",
+        "rationale": "Uzbekistan national flag: flag-derived green."
+      },
+      {
+        "color": "#0099B5",
+        "rationale": "Uzbekistan national flag: alternative teal for neighbor contrast."
+      },
+      {
+        "color": "#CE1126",
+        "rationale": "Uzbekistan national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "VAT": {
+    "color": "#FA0204",
+    "rationale": "Vatican City national flag: alternative red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFE000",
+        "rationale": "Vatican City national flag: flag-derived gold."
+      },
+      {
+        "color": "#CE9D09",
+        "rationale": "Vatican City national flag: alternative gold for neighbor contrast."
+      },
+      {
+        "color": "#FA0204",
+        "rationale": "Vatican City national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "VCT": {
+    "color": "#F4F100",
+    "rationale": "Saint Vincent and the Grenadines national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#F4F100",
+        "rationale": "Saint Vincent and the Grenadines national flag: flag-derived gold."
+      },
+      {
+        "color": "#199A00",
+        "rationale": "Saint Vincent and the Grenadines national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#0058AA",
+        "rationale": "Saint Vincent and the Grenadines national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "VEN": {
+    "color": "#FFCC00",
+    "rationale": "Venezuela national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#CF142B",
+        "rationale": "Venezuela national flag: flag-derived red."
+      },
+      {
+        "color": "#00247D",
+        "rationale": "Venezuela national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#FFCC00",
+        "rationale": "Venezuela national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "VGB": {
+    "color": "#FFFF00",
+    "rationale": "British Virgin Islands national flag: flag-derived gold.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#FFFF00",
+        "rationale": "British Virgin Islands national flag: flag-derived gold."
+      },
+      {
+        "color": "#000066",
+        "rationale": "British Virgin Islands national flag: alternative deep blue for neighbor contrast."
+      },
+      {
+        "color": "#012169",
+        "rationale": "British Virgin Islands national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "VIR": {
+    "color": "#369443",
+    "rationale": "United States Virgin Islands national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#369443",
+        "rationale": "United States Virgin Islands national flag: flag-derived green."
+      },
+      {
+        "color": "#F4C53D",
+        "rationale": "United States Virgin Islands national flag: alternative orange for neighbor contrast."
+      },
+      {
+        "color": "#0081C6",
+        "rationale": "United States Virgin Islands national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "VNM": {
+    "color": "#FFFF00",
+    "rationale": "Vietnam national flag: alternative gold for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#DA251D",
+        "rationale": "Vietnam national flag: flag-derived red."
+      },
+      {
+        "color": "#FFFF00",
+        "rationale": "Vietnam national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "VUT": {
+    "color": "#009543",
+    "rationale": "Vanuatu national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#009543",
+        "rationale": "Vanuatu national flag: flag-derived green."
+      },
+      {
+        "color": "#D21034",
+        "rationale": "Vanuatu national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#FDCE12",
+        "rationale": "Vanuatu national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  },
+  "WLF": {
+    "color": "#000091",
+    "rationale": "Wallis and Futuna national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000091",
+        "rationale": "Wallis and Futuna national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#E1000F",
+        "rationale": "Wallis and Futuna national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "WSB": {
+    "color": "#012169",
+    "rationale": "British flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#012169",
+        "rationale": "British flag: flag-derived deep blue."
+      },
+      {
+        "color": "#C8102E",
+        "rationale": "British flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "WSM": {
+    "color": "#CE1126",
+    "rationale": "Samoa national flag: flag-derived red.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#CE1126",
+        "rationale": "Samoa national flag: flag-derived red."
+      },
+      {
+        "color": "#002B7F",
+        "rationale": "Samoa national flag: alternative deep blue for neighbor contrast."
+      }
+    ]
+  },
+  "XKX": {
+    "color": "#D0A650",
+    "rationale": "Gold map silhouette from the Kosovo flag as an alternative for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#244AA5",
+        "rationale": "Blue field from the Kosovo flag."
+      },
+      {
+        "color": "#D0A650",
+        "rationale": "Gold map silhouette from the Kosovo flag as an alternative for neighbor contrast."
+      }
+    ]
+  },
+  "YEM": {
+    "color": "#AE0400",
+    "rationale": "Yemen national flag: display variant of its red for neighbor contrast.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#F10600",
+        "rationale": "Yemen national flag: flag-derived red."
+      },
+      {
+        "color": "#AE0400",
+        "rationale": "Yemen national flag: display variant of its red for neighbor contrast."
+      }
+    ]
+  },
+  "ZAF": {
+    "color": "#000C8A",
+    "rationale": "South Africa national flag: flag-derived deep blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#000C8A",
+        "rationale": "South Africa national flag: flag-derived deep blue."
+      },
+      {
+        "color": "#E1392D",
+        "rationale": "South Africa national flag: alternative red for neighbor contrast."
+      },
+      {
+        "color": "#FFB915",
+        "rationale": "South Africa national flag: alternative orange for neighbor contrast."
+      }
+    ]
+  },
+  "ZMB": {
+    "color": "#198A00",
+    "rationale": "Zambia national flag: flag-derived green.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#198A00",
+        "rationale": "Zambia national flag: flag-derived green."
+      },
+      {
+        "color": "#EF7D00",
+        "rationale": "Zambia national flag: alternative orange for neighbor contrast."
+      },
+      {
+        "color": "#DE2010",
+        "rationale": "Zambia national flag: alternative red for neighbor contrast."
+      }
+    ]
+  },
+  "ZWE": {
+    "color": "#0000FF",
+    "rationale": "Zimbabwe national flag: flag-derived blue.",
+    "locked": false,
+    "candidates": [
+      {
+        "color": "#0000FF",
+        "rationale": "Zimbabwe national flag: flag-derived blue."
+      },
+      {
+        "color": "#006400",
+        "rationale": "Zimbabwe national flag: alternative green for neighbor contrast."
+      },
+      {
+        "color": "#FFD200",
+        "rationale": "Zimbabwe national flag: alternative gold for neighbor contrast."
+      }
+    ]
+  }
+}

@@ -1,0 +1,524 @@
+{
+  "atlasVersion": "journeysphere-atlas-v2",
+  "visited": [
+    "CAN:ADM2:CAN-CD-3520",
+    "CAN:ADM2:CAN-CD-3526",
+    "CHN:ADM2:110000",
+    "CHN:ADM2:310000",
+    "CHN:ADM2:320100",
+    "CHN:ADM2:320500",
+    "CHN:ADM2:330100",
+    "CHN:ADM2:350100",
+    "CHN:ADM2:350200",
+    "CHN:ADM2:350500",
+    "CHN:ADM2:350700",
+    "CHN:ADM2:350900",
+    "CHN:ADM2:360700",
+    "CHN:ADM2:370400",
+    "CHN:ADM2:370800",
+    "CHN:ADM2:410700",
+    "CHN:ADM2:440100",
+    "CHN:ADM2:440300",
+    "CHN:ADM2:440400",
+    "CHN:ADM2:441200",
+    "CHN:ADM2:441800",
+    "CHN:ADM2:442000",
+    "CHN:ADM2:500000",
+    "CHN:ADM2:510100",
+    "HKG:ADM0:HKG",
+    "JPN:ADM2:22064153B21881953859573",
+    "JPN:ADM2:22064153B24851023127688",
+    "JPN:ADM2:22064153B3938039280311",
+    "JPN:ADM2:22064153B51830778550704",
+    "JPN:ADM2:22064153B56990836800595",
+    "JPN:ADM2:22064153B57425006507818",
+    "JPN:ADM2:22064153B61345801484335",
+    "JPN:ADM2:22064153B81121179767320",
+    "JPN:ADM2:22064153B88888028347521",
+    "KOR:ADM1:KOR-2497",
+    "KOR:ADM1:KOR-2507",
+    "KOR:ADM2:91817680B29624883381183",
+    "KOR:ADM2:91817680B43312282385471",
+    "KOR:ADM2:91817680B85110926045998",
+    "MAC:ADM0:MAC",
+    "SGP:ADM0:SGP",
+    "TWN:ADM1:90331920B22703176907123",
+    "TWN:ADM1:90331920B2879670148147",
+    "TWN:ADM1:90331920B52218866814205",
+    "TWN:ADM1:90331920B80042697765976",
+    "TWN:ADM1:90331920B8812801353421",
+    "USA:ADM2:52423323B1907827935694",
+    "USA:ADM2:52423323B38635571773884",
+    "USA:ADM2:52423323B42930074476451",
+    "USA:ADM2:52423323B44038614744637",
+    "USA:ADM2:52423323B55530972166869",
+    "USA:ADM2:52423323B68557587713523",
+    "USA:ADM2:52423323B79763443872127",
+    "USA:ADM2:52423323B86897144494159",
+    "USA:ADM2:52423323B97000000441045"
+  ],
+  "labels": {
+    "CAN:ADM2:CAN-CD-3520": "多倫多市",
+    "CAN:ADM2:CAN-CD-3526": "Regional Municipality of Niagara",
+    "CHN:ADM2:110000": "北京市",
+    "CHN:ADM2:310000": "上海市",
+    "CHN:ADM2:320100": "南京市",
+    "CHN:ADM2:320500": "蘇州市",
+    "CHN:ADM2:330100": "杭州市",
+    "CHN:ADM2:350100": "福州市",
+    "CHN:ADM2:350200": "廈門市",
+    "CHN:ADM2:350500": "泉州市",
+    "CHN:ADM2:350700": "南平市",
+    "CHN:ADM2:350900": "寧德市",
+    "CHN:ADM2:360700": "贛州市",
+    "CHN:ADM2:370400": "棗莊市",
+    "CHN:ADM2:370800": "濟寧市",
+    "CHN:ADM2:410700": "新鄉市",
+    "CHN:ADM2:440100": "廣州市",
+    "CHN:ADM2:440300": "深圳市",
+    "CHN:ADM2:440400": "珠海市",
+    "CHN:ADM2:441200": "肇慶市",
+    "CHN:ADM2:441800": "清遠市",
+    "CHN:ADM2:442000": "中山市",
+    "CHN:ADM2:500000": "重慶市",
+    "CHN:ADM2:510100": "成都市",
+    "HKG:ADM0:HKG": "香港",
+    "JPN:ADM2:22064153B21881953859573": "奈良市",
+    "JPN:ADM2:22064153B24851023127688": "八幡市",
+    "JPN:ADM2:22064153B3938039280311": "大阪市",
+    "JPN:ADM2:22064153B51830778550704": "高山市",
+    "JPN:ADM2:22064153B56990836800595": "宇治市",
+    "JPN:ADM2:22064153B57425006507818": "京都市",
+    "JPN:ADM2:22064153B61345801484335": "白川村",
+    "JPN:ADM2:22064153B81121179767320": "名古屋市",
+    "JPN:ADM2:22064153B88888028347521": "大津市",
+    "KOR:ADM1:KOR-2497": "首爾特別市",
+    "KOR:ADM1:KOR-2507": "釜山廣域市",
+    "KOR:ADM2:91817680B29624883381183": "濟州道 · Jeju-si",
+    "KOR:ADM2:91817680B43312282385471": "水原市",
+    "KOR:ADM2:91817680B85110926045998": "濟州道 · Seogwipo-si",
+    "MAC:ADM0:MAC": "澳門",
+    "SGP:ADM0:SGP": "Singapore",
+    "TWN:ADM1:90331920B22703176907123": "台北市",
+    "TWN:ADM1:90331920B2879670148147": "新北市",
+    "TWN:ADM1:90331920B52218866814205": "花蓮縣",
+    "TWN:ADM1:90331920B80042697765976": "南投縣",
+    "TWN:ADM1:90331920B8812801353421": "桃園市",
+    "USA:ADM2:52423323B1907827935694": "Middlesex County",
+    "USA:ADM2:52423323B38635571773884": "New York City · Richmond",
+    "USA:ADM2:52423323B42930074476451": "New York City · Kings",
+    "USA:ADM2:52423323B44038614744637": "New York City · Bronx",
+    "USA:ADM2:52423323B55530972166869": "Washington, D.C.",
+    "USA:ADM2:52423323B68557587713523": "New York City · New York",
+    "USA:ADM2:52423323B79763443872127": "Montgomery County",
+    "USA:ADM2:52423323B86897144494159": "New York City · Queens",
+    "USA:ADM2:52423323B97000000441045": "Suffolk County"
+  },
+  "migration": [
+    {
+      "legacyName": "上海市",
+      "label": "上海市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:310000"
+      ]
+    },
+    {
+      "legacyName": "重庆市",
+      "label": "重慶市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:500000"
+      ]
+    },
+    {
+      "legacyName": "北京市",
+      "label": "北京市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:110000"
+      ]
+    },
+    {
+      "legacyName": "香港特别行政区",
+      "label": "香港",
+      "countryCode": "HKG",
+      "regionIds": [
+        "HKG:ADM0:HKG"
+      ]
+    },
+    {
+      "legacyName": "澳门特别行政区",
+      "label": "澳門",
+      "countryCode": "MAC",
+      "regionIds": [
+        "MAC:ADM0:MAC"
+      ]
+    },
+    {
+      "legacyName": "成都市",
+      "label": "成都市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:510100"
+      ]
+    },
+    {
+      "legacyName": "苏州市",
+      "label": "蘇州市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:320500"
+      ]
+    },
+    {
+      "legacyName": "南京市",
+      "label": "南京市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:320100"
+      ]
+    },
+    {
+      "legacyName": "杭州市",
+      "label": "杭州市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:330100"
+      ]
+    },
+    {
+      "legacyName": "广州市",
+      "label": "廣州市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:440100"
+      ]
+    },
+    {
+      "legacyName": "深圳市",
+      "label": "深圳市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:440300"
+      ]
+    },
+    {
+      "legacyName": "珠海市",
+      "label": "珠海市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:440400"
+      ]
+    },
+    {
+      "legacyName": "清远市",
+      "label": "清遠市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:441800"
+      ]
+    },
+    {
+      "legacyName": "中山市",
+      "label": "中山市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:442000"
+      ]
+    },
+    {
+      "legacyName": "肇庆市",
+      "label": "肇慶市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:441200"
+      ]
+    },
+    {
+      "legacyName": "福州市",
+      "label": "福州市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:350100"
+      ]
+    },
+    {
+      "legacyName": "宁德市",
+      "label": "寧德市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:350900"
+      ]
+    },
+    {
+      "legacyName": "厦门市",
+      "label": "廈門市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:350200"
+      ]
+    },
+    {
+      "legacyName": "泉州市",
+      "label": "泉州市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:350500"
+      ]
+    },
+    {
+      "legacyName": "南平市",
+      "label": "南平市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:350700"
+      ]
+    },
+    {
+      "legacyName": "枣庄市",
+      "label": "棗莊市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:370400"
+      ]
+    },
+    {
+      "legacyName": "济宁市",
+      "label": "濟寧市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:370800"
+      ]
+    },
+    {
+      "legacyName": "新乡市",
+      "label": "新鄉市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:410700"
+      ]
+    },
+    {
+      "legacyName": "赣州市",
+      "label": "贛州市",
+      "countryCode": "CHN",
+      "regionIds": [
+        "CHN:ADM2:360700"
+      ]
+    },
+    {
+      "legacyName": "花蓮縣",
+      "label": "花蓮縣",
+      "countryCode": "TWN",
+      "regionIds": [
+        "TWN:ADM1:90331920B52218866814205"
+      ]
+    },
+    {
+      "legacyName": "臺北市",
+      "label": "台北市",
+      "countryCode": "TWN",
+      "regionIds": [
+        "TWN:ADM1:90331920B22703176907123"
+      ]
+    },
+    {
+      "legacyName": "新北市",
+      "label": "新北市",
+      "countryCode": "TWN",
+      "regionIds": [
+        "TWN:ADM1:90331920B2879670148147"
+      ]
+    },
+    {
+      "legacyName": "南投縣",
+      "label": "南投縣",
+      "countryCode": "TWN",
+      "regionIds": [
+        "TWN:ADM1:90331920B80042697765976"
+      ]
+    },
+    {
+      "legacyName": "桃園市",
+      "label": "桃園市",
+      "countryCode": "TWN",
+      "regionIds": [
+        "TWN:ADM1:90331920B8812801353421"
+      ]
+    },
+    {
+      "legacyName": "부산광역시",
+      "label": "釜山廣域市",
+      "countryCode": "KOR",
+      "regionIds": [
+        "KOR:ADM1:KOR-2507"
+      ]
+    },
+    {
+      "legacyName": "서울특별시",
+      "label": "首爾特別市",
+      "countryCode": "KOR",
+      "regionIds": [
+        "KOR:ADM1:KOR-2497"
+      ]
+    },
+    {
+      "legacyName": "제주특별자치도",
+      "label": "濟州道",
+      "countryCode": "KOR",
+      "regionIds": [
+        "KOR:ADM2:91817680B29624883381183",
+        "KOR:ADM2:91817680B85110926045998"
+      ]
+    },
+    {
+      "legacyName": "수원시",
+      "label": "水原市",
+      "countryCode": "KOR",
+      "regionIds": [
+        "KOR:ADM2:91817680B43312282385471"
+      ]
+    },
+    {
+      "legacyName": "京都市",
+      "label": "京都市",
+      "countryCode": "JPN",
+      "regionIds": [
+        "JPN:ADM2:22064153B57425006507818"
+      ]
+    },
+    {
+      "legacyName": "大津市",
+      "label": "大津市",
+      "countryCode": "JPN",
+      "regionIds": [
+        "JPN:ADM2:22064153B88888028347521"
+      ]
+    },
+    {
+      "legacyName": "名古屋市",
+      "label": "名古屋市",
+      "countryCode": "JPN",
+      "regionIds": [
+        "JPN:ADM2:22064153B81121179767320"
+      ]
+    },
+    {
+      "legacyName": "宇治市",
+      "label": "宇治市",
+      "countryCode": "JPN",
+      "regionIds": [
+        "JPN:ADM2:22064153B56990836800595"
+      ]
+    },
+    {
+      "legacyName": "八幡市",
+      "label": "八幡市",
+      "countryCode": "JPN",
+      "regionIds": [
+        "JPN:ADM2:22064153B24851023127688"
+      ]
+    },
+    {
+      "legacyName": "奈良市",
+      "label": "奈良市",
+      "countryCode": "JPN",
+      "regionIds": [
+        "JPN:ADM2:22064153B21881953859573"
+      ]
+    },
+    {
+      "legacyName": "高山市",
+      "label": "高山市",
+      "countryCode": "JPN",
+      "regionIds": [
+        "JPN:ADM2:22064153B51830778550704"
+      ]
+    },
+    {
+      "legacyName": "白川村",
+      "label": "白川村",
+      "countryCode": "JPN",
+      "regionIds": [
+        "JPN:ADM2:22064153B61345801484335"
+      ]
+    },
+    {
+      "legacyName": "大阪市",
+      "label": "大阪市",
+      "countryCode": "JPN",
+      "regionIds": [
+        "JPN:ADM2:22064153B3938039280311"
+      ]
+    },
+    {
+      "legacyName": "Washington, D.C.",
+      "label": "Washington, D.C.",
+      "countryCode": "USA",
+      "regionIds": [
+        "USA:ADM2:52423323B55530972166869"
+      ]
+    },
+    {
+      "legacyName": "Montgomery County",
+      "label": "Montgomery County",
+      "countryCode": "USA",
+      "regionIds": [
+        "USA:ADM2:52423323B79763443872127"
+      ]
+    },
+    {
+      "legacyName": "New York City",
+      "label": "New York City",
+      "countryCode": "USA",
+      "regionIds": [
+        "USA:ADM2:52423323B38635571773884",
+        "USA:ADM2:52423323B42930074476451",
+        "USA:ADM2:52423323B44038614744637",
+        "USA:ADM2:52423323B68557587713523",
+        "USA:ADM2:52423323B86897144494159"
+      ]
+    },
+    {
+      "legacyName": "Suffolk County",
+      "label": "Suffolk County",
+      "countryCode": "USA",
+      "regionIds": [
+        "USA:ADM2:52423323B97000000441045"
+      ]
+    },
+    {
+      "legacyName": "Middlesex County",
+      "label": "Middlesex County",
+      "countryCode": "USA",
+      "regionIds": [
+        "USA:ADM2:52423323B1907827935694"
+      ]
+    },
+    {
+      "legacyName": "City of Toronto",
+      "label": "多倫多市",
+      "countryCode": "CAN",
+      "regionIds": [
+        "CAN:ADM2:CAN-CD-3520"
+      ]
+    },
+    {
+      "legacyName": "Regional Municipality of Niagara",
+      "label": "Regional Municipality of Niagara",
+      "countryCode": "CAN",
+      "regionIds": [
+        "CAN:ADM2:CAN-CD-3526"
+      ]
+    },
+    {
+      "legacyName": "Singapore",
+      "label": "Singapore",
+      "countryCode": "SGP",
+      "regionIds": [
+        "SGP:ADM0:SGP"
+      ]
+    }
+  ]
+}
