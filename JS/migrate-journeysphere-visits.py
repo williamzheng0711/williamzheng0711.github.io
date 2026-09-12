@@ -1,4 +1,5 @@
 """One-time legacy travel migration. Requires Python + Shapely (build tooling only)."""
+import argparse
 import json
 import subprocess
 from pathlib import Path
@@ -6,7 +7,10 @@ from shapely.geometry import shape
 from shapely import make_valid
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / 'packages/journeysphere/data'
+parser = argparse.ArgumentParser(description='Migrate legacy visits using a local journey-sphere checkout.')
+parser.add_argument('journey_sphere_dir', type=Path, help='Path to the extracted journey-sphere repository')
+args = parser.parse_args()
+DATA = args.journey_sphere_dir.resolve() / 'data'
 catalog = json.loads((DATA / 'catalog.json').read_text())
 legacy = json.loads((ROOT / 'data/visited-boundaries.geojson').read_text())
 # Read the authoritative old selection instead of assuming every stored polygon was visited.

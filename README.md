@@ -1,23 +1,23 @@
 # William Zheng's personal website
 
-The travel map is now a consumer of **JourneySphere**, a standalone package under [`packages/journeysphere`](packages/journeysphere/README.md). The visual design remains a flat, pannable Leaflet map. Internal city/county boundaries are shown only inside visited first-level divisions (provinces, states, and prefectures); unvisited divisions retain only a faint outline and no hover label.
+The travel map is now a consumer of **JourneySphere**, a standalone public package maintained in the [`journey-sphere` repository](https://github.com/williamzheng0711/journey-sphere). The visual design remains a flat, pannable Leaflet map. Internal city/county boundaries are shown only inside visited first-level divisions (provinces, states, and prefectures); unvisited divisions retain only a faint outline and no hover label.
 
 ## Maintain the map
 
 - **Your visits:** `data/journeysphere-visits.json` contains the atlas version, selected stable region IDs and optional display labels.
-- **Available regions:** `packages/journeysphere/data/catalog.json` lists region IDs and per-country coverage; each `countries/<ISO3>.geojson` associates IDs with names and geometry.
-- **Colors:** `packages/journeysphere/data/palette.json` records country colors and their inspiration. The package also accepts a `colors` override.
-- **Website integration:** `JS/site.js` loads the package and your record. Reset restores the original record; clicking modifies only the current browser session.
+- **Available regions:** The public [`catalog.json`](https://cdn.jsdelivr.net/gh/williamzheng0711/journey-sphere@main/data/catalog.json) lists region IDs and per-country coverage.
+- **Colors:** The public [`palette.json`](https://cdn.jsdelivr.net/gh/williamzheng0711/journey-sphere@main/data/palette.json) records country colors and their inspiration. The package also accepts a `colors` override.
+- **Website integration:** `JS/site.js` loads the public package and your local record. Reset restores the original record; clicking modifies only the current browser session.
 
-Serve the repository over HTTP, then open `index.html`. No website compilation is needed. Leaflet 1.9.4 and its stylesheet are loaded from the existing CDN; all geographic data is hosted locally.
+Serve the repository over HTTP, then open `index.html`. No website compilation is needed. Leaflet 1.9.4 is loaded from the existing CDN; JourneySphere code and geographic data are loaded from its public `main` branch through jsDelivr.
 
-Run `node JS/verify-map-runtime.mjs` to validate atlas integrity, the homepage's selected IDs, state serialization, and package regression tests. The package's `examples/index.html` is an independent consumer and can be served from an extracted package directory.
+Run `node JS/verify-map-runtime.mjs` to validate the homepage's selected IDs against the public atlas and confirm that the remote package files are reachable. Package regression tests and atlas validation now live in the `journey-sphere` repository.
 
-## Extract JourneySphere later
+## Update the map
 
-Move the entire `packages/journeysphere` directory to its own repository. It contains its source, data, attribution, tests, example and package metadata; runtime paths do not refer back to this personal website. Pack it with `npm pack`, install the tarball in another project, and host its `data` directory. The homepage keeps only its personal travel record and adapter. See the package README for bundler usage and the full API.
+The homepage follows the public `main` branch of `journey-sphere`. After changing the map package, push the changes to that repository and wait for jsDelivr to refresh; the homepage will then load the new map code or data. Keep `data/journeysphere-visits.json` here because it contains this website owner's personal visits. If region identities change, update its `atlasVersion` and migrate the IDs as described in the JourneySphere README.
 
-The package has not been published to npm and the live website has not been deployed by this change.
+The package can later be published to npm for users who prefer `npm install`; the GitHub Pages/CDN path already lets browser-only sites use it without a build step.
 
 ## Historical sources
 

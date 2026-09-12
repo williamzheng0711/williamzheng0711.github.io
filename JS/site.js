@@ -1,4 +1,9 @@
-import { createJourneySphere, loadAtlas } from '../packages/journeysphere/src/index.js';
+import { createJourneySphere, loadAtlas } from 'https://cdn.jsdelivr.net/gh/williamzheng0711/journey-sphere@main/src/index.js';
+
+// The homepage consumes the public JourneySphere repository. Keeping the
+// branch in one place makes updates to the public map visible here without
+// copying the package back into this website.
+const JOURNEY_SPHERE_DATA_URL = 'https://cdn.jsdelivr.net/gh/williamzheng0711/journey-sphere@main/data/';
 
 const navLinks = [...document.querySelectorAll('.menu-item')];
 const observer = new IntersectionObserver(entries => {
@@ -14,9 +19,8 @@ async function renderTravelMap() {
   if (!container) return;
   container.textContent = 'Loading visited regions…';
   try {
-    const dataUrl = new URL('../packages/journeysphere/data/', import.meta.url);
     const [atlas, response] = await Promise.all([
-      loadAtlas(dataUrl), fetch(new URL('../data/journeysphere-visits.json', import.meta.url)),
+      loadAtlas(JOURNEY_SPHERE_DATA_URL), fetch(new URL('../data/journeysphere-visits.json', import.meta.url)),
     ]);
     if (!response.ok) throw new Error('Travel record could not be loaded.');
     const record = await response.json();
