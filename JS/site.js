@@ -1,9 +1,8 @@
-import { createJourneySphere, loadAtlas } from 'https://cdn.jsdelivr.net/gh/williamzheng0711/journey-sphere@main/src/index.js';
+import { createCompiledJourneySphere } from 'https://cdn.jsdelivr.net/gh/williamzheng0711/journey-sphere@3b7fcbbded7a35b2574c6b74e8628f4ca330131e/src/compiled.js';
+import manifest from 'https://cdn.jsdelivr.net/gh/williamzheng0711/journey-sphere@3b7fcbbded7a35b2574c6b74e8628f4ca330131e/data/compiled/manifest.js';
 
-// The homepage consumes the public JourneySphere repository. Keeping the
-// branch in one place makes updates to the public map visible here without
-// copying the package back into this website.
-const JOURNEY_SPHERE_DATA_URL = 'https://cdn.jsdelivr.net/gh/williamzheng0711/journey-sphere@main/data/';
+// Pin code and geometry to the same release so CDN updates cannot mix versions.
+const JOURNEY_SPHERE_DATA_URL = 'https://cdn.jsdelivr.net/gh/williamzheng0711/journey-sphere@3b7fcbbded7a35b2574c6b74e8628f4ca330131e/data/';
 
 const navLinks = [...document.querySelectorAll('.menu-item')];
 const observer = new IntersectionObserver(entries => {
@@ -19,15 +18,13 @@ async function renderTravelMap() {
   if (!container) return;
   container.textContent = 'Loading visited regions…';
   try {
-    const [atlas, response] = await Promise.all([
-      loadAtlas(JOURNEY_SPHERE_DATA_URL), fetch(new URL('../data/journeysphere-visits.json', import.meta.url)),
-    ]);
+    const response = await fetch(new URL('../data/journeysphere-visits.json', import.meta.url));
     if (!response.ok) throw new Error('Travel record could not be loaded.');
     const record = await response.json();
-    if (record.atlasVersion !== atlas.catalog.version) throw new Error('Travel record and atlas versions do not match.');
+    if (record.atlasVersion !== manifest.version) throw new Error('Travel record and atlas versions do not match.');
     container.textContent = '';
-    const journey = await createJourneySphere(container, {
-      atlas, visited: record.visited, labels: record.labels,
+    const journey = await createCompiledJourneySphere(container, {
+      dataUrl: JOURNEY_SPHERE_DATA_URL, manifest, visited: record.visited, labels: record.labels,
       center: [31.5, 121.8], zoom: 4,
     });
     // The homepage is a consumer; all rendering and visit state live in the package.
