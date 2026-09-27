@@ -1,0 +1,42 @@
+{
+  "network": "1.6 Mbps, 150 ms latency, empty browser cache, gzip; one warmup plus three alternating samples per variant",
+  "baselineMedian": 27693.399999976158,
+  "currentMedian": 3612.199999988079,
+  "improvementPercent": 86.95645893970698,
+  "results": {
+    "baseline": [
+      {
+        "ms": 27693.399999976158,
+        "bytes": 4095716,
+        "visited": 55
+      },
+      {
+        "ms": 27804.5,
+        "bytes": 4095716,
+        "visited": 55
+      },
+      {
+        "ms": 27656.59999999404,
+        "bytes": 4095716,
+        "visited": 55
+      }
+    ],
+    "current": [
+      {
+        "ms": 3612.199999988079,
+        "bytes": 622951,
+        "visited": 55
+      },
+      {
+        "ms": 3534.699999988079,
+        "bytes": 622951,
+        "visited": 55
+      },
+      {
+        "ms": 3617.399999976158,
+        "bytes": 622951,
+        "visited": 55
+      }
+    ]
+  }
+}
