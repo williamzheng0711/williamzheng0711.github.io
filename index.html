@@ -5,18 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="我的主頁.">
     <title>鄭惟嘉 William Zheng's Homepage</title>
-    <link rel="modulepreload" href="packages/journey-sphere/src/compiled.js">
-    <link rel="modulepreload" href="packages/journey-sphere/src/compiled-layer.js">
-    <link rel="modulepreload" href="packages/journey-sphere/src/state.js">
-    <link rel="modulepreload" href="packages/journey-sphere/data/compiled/manifest.js">
-    <link rel="preload" as="fetch" href="packages/journey-sphere/data/startup.json" crossorigin>
-    <link rel="preload" as="fetch" href="packages/journey-sphere/data/compiled/world.json" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="packages/leaflet/leaflet.css">
     <link rel="stylesheet" href="CSS/style.css?v=drag-continuity-20260805-r2">
-    <link rel="stylesheet" href="packages/journey-sphere/src/style.css">
   </head>
   <body>
     <div class="page">
@@ -122,14 +114,14 @@
               </div>
               <button type="button" class="small-button" data-reset-map>Reset</button>
             </div>
-            <div id="china-map" class="china-map" role="region" aria-label="Interactive world map with visited administrative regions." aria-busy="true">Loading visited regions…</div>
+            <journey-sphere id="china-map" class="china-map" center="31.5,121.8" zoom="4" aria-label="Interactive world map with visited places."></journey-sphere>
             <div id="visited-place-summary" class="visited-place-summary" aria-label="Visited place list"></div>
           </div>
         </section>
       </main>
     </div>
 
-    <script src="packages/leaflet/leaflet.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/gh/williamzheng0711/journey-sphere@d883c187beb35c871e7d53e7e000e2d10b01ec58/embed.js"></script>
     <script type="module" src="JS/site.js"></script>
   </body>
 </html>

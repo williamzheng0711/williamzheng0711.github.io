@@ -1,42 +1,25 @@
 # William Zheng's personal website
 
-歡迎來到我的主頁 :)
+The homepage owns its layout, portrait and personal travel list.
+JourneySphere owns map rendering, place-name lookup, styles and all geography.
 
-## Ownership
+## Edit visited places
 
-This project owns the homepage, portrait, personal travel record, map adapter and
-website integration/performance checks. JourneySphere owns map rendering,
-progressive loading, atlas processing, deployment generation and map regression tests.
+Edit `data/travel-places.json`: a list of place names. No build or data sync is
+needed. Push the page and the list as normal.
 
-`packages/journey-sphere/` is generated deployment output, not a second map source
-tree. Never edit it directly. Its `export-manifest.json` records exact source and
-output hashes. The website serves these files locally for fast first visits.
-`packages/leaflet/` is the unchanged Leaflet 1.9.4 distribution used by the page.
+The page includes one pinned remote `JourneySphere/embed.js` module and a
+`<journey-sphere>` element. `JS/site.js` gives the element the personal list and
+connects the page's Reset button. All map dependencies and data load from the
+JourneySphere release, never from this repository.
 
-## Update the travel map
+For ambiguous names, qualify with the region and ISO3 country, for example
+`Middlesex County, Massachusetts, USA`. Unknown or ambiguous places show an error
+rather than silently selecting another location.
 
-After editing `data/journeysphere-visits.json` or changing JourneySphere:
+## Verification
 
-```sh
-node JS/sync-map.mjs
-node JS/verify-map-runtime.mjs
-```
-
-The sync command calls the exporter in the sibling `../journey-sphere` checkout.
-Set `JOURNEY_SPHERE_SOURCE=/path/to/journey-sphere` for another location. It copies
-canonical runtime files, generates exact visited-region startup geometry, and
-copies the required country shards automatically. Other countries use the pinned
-compatible atlas URL configured in `JS/sync-map.mjs`; update it with atlas releases.
-Sync checks the remote manifest against the source atlas before writing output,
-and requires network access when this fallback is configured.
-The deployed site does not need the source checkout or Node.js.
-
-Map behavior tests run in JourneySphere. Homepage cold-cache measurements and
-render/selection/zoom/reset integration checks remain here:
-
-```sh
-PLAYWRIGHT_MODULE=/absolute/path/to/playwright node JS/benchmark-map.mjs
-```
-
-See [the performance report](docs/map-performance.md) for measurement conditions.
-The optimized portrait and original photo are both retained.
+`node JS/verify-map-runtime.mjs` checks the consumer contract and the remote
+release entry. Map tests, data generation and performance benchmarks belong in
+the JourneySphere project. There is no local map package, boundary data, Leaflet
+copy or synchronization command to maintain here.

@@ -1,4 +1,0 @@
-.journeysphere { min-height: 320px; background: #eef7fb; font-family: inherit; }
-.journeysphere-status { max-width: min(420px, 65vw); padding: 5px 8px; border-radius: 5px; background: rgb(255 255 255 / 90%); color: #526173; font: 11px/1.4 system-ui, sans-serif; }
-.journeysphere .leaflet-tooltip { font: 12px/1.5 system-ui, sans-serif; }
-@media (prefers-reduced-motion: reduce) { .journeysphere .leaflet-zoom-animated { transition: none; } }

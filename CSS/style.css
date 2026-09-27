@@ -188,80 +188,11 @@ p {
 }
 
 .china-map {
-  position: relative;
-  min-height: 580px;
-  background: #eef7fb;
-}
-
-.china-map .leaflet-container,
-.china-map {
+  display: block;
   width: 100%;
   height: 580px;
-}
-
-.leaflet-container {
-  font: inherit;
+  --journey-sphere-height: 580px;
   background: #eef7fb;
-}
-
-#china-map.leaflet-container:focus {
-  outline: none;
-}
-
-.travel-region {
-  fill: var(--land);
-  stroke: var(--land-stroke);
-  stroke-width: 0.45;
-  cursor: pointer;
-  transition: fill 120ms ease, stroke 120ms ease;
-}
-
-.country-region {
-  fill: #f9fafb;
-  stroke: #c1cad8;
-  stroke-width: 0.55;
-  pointer-events: none;
-  vector-effect: non-scaling-stroke;
-}
-
-.travel-region:hover {
-  fill: #dfeafe;
-  stroke: #6f84a6;
-}
-
-.travel-region.visited {
-  fill: var(--visited);
-  stroke: #1557c0;
-  stroke-width: 0.7;
-}
-
-.travel-region.visited.municipality {
-  fill: var(--visited);
-  stroke: #00006b;
-}
-
-.travel-region.visited.sar {
-  fill: var(--visited);
-  stroke: #00006b;
-}
-
-.province-outline {
-  fill: none;
-  stroke: #657083;
-  stroke-width: 0.75;
-  pointer-events: none;
-  vector-effect: non-scaling-stroke;
-}
-
-.leaflet-map-tip {
-  max-width: min(460px, calc(100% - 24px));
-  padding: 8px 10px;
-  border: 1px solid rgba(185, 195, 210, 0.75);
-  border-radius: 8px;
-  color: var(--muted);
-  background: rgba(255, 255, 255, 0.92);
-  font-size: 12px;
-  line-height: 1.45;
 }
 
 .visited-place-summary {
@@ -343,10 +274,9 @@ p {
     height: 112px;
   }
 
-  .china-map,
-  .china-map svg {
-    min-height: 430px;
+  .china-map {
     height: 430px;
+    --journey-sphere-height: 430px;
   }
 
   .visited-place-summary {
