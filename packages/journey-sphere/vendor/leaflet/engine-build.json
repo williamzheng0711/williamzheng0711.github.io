@@ -1,0 +1,39 @@
+{
+  "format": 1,
+  "source": {
+    "file": "leaflet-src.esm.js",
+    "version": "1.9.4",
+    "sha256": "39ee93464f11fe3847137e50c0dc8189f706c460e36989ea7871bf7d540f3306",
+    "bytes": 424589,
+    "url": "https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.esm.js"
+  },
+  "license": {
+    "file": "LICENSE",
+    "sha256": "53e8dc25862014e4324741ca18fbe3611e11d42ef69f59f86ea8c5389647d4cb"
+  },
+  "minifier": {
+    "name": "terser",
+    "version": "5.51.2",
+    "options": {
+      "module": true,
+      "ecma": 2015,
+      "compress": {
+        "passes": 2,
+        "unsafe": false
+      },
+      "mangle": {
+        "properties": false
+      },
+      "safari10": true,
+      "format": {
+        "comments": false,
+        "ascii_only": true
+      }
+    }
+  },
+  "output": {
+    "file": "leaflet.esm.min.js",
+    "sha256": "cb82db32f31ab1e786c5be33ee040dce6207eb8ef4f8b27603ed090f5d01a08c",
+    "bytes": 148908
+  }
+}

@@ -7,6 +7,10 @@
     <title>鄭惟嘉 William Zheng's Homepage</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+    <link rel="modulepreload" href="packages/journey-sphere/embed.js">
+    <link rel="modulepreload" href="packages/journey-sphere/vendor/leaflet/leaflet.esm.min.js">
+    <link rel="preload" as="fetch" crossorigin="anonymous" href="https://raw.githubusercontent.com/williamzheng0711/journey-sphere/5079212a661d9bd2b73dfcb7d1e2ca3adfb60633/data/embed/world.json">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="CSS/style.css?v=drag-continuity-20260805-r2">
   </head>
@@ -114,14 +118,14 @@
               </div>
               <button type="button" class="small-button" data-reset-map>Reset</button>
             </div>
-            <journey-sphere id="china-map" class="china-map" center="31.5,121.8" zoom="4" aria-label="Interactive world map with visited places."></journey-sphere>
+            <journey-sphere id="china-map" class="china-map" center="31.5,121.8" zoom="4" data-base-url="https://raw.githubusercontent.com/williamzheng0711/journey-sphere/5079212a661d9bd2b73dfcb7d1e2ca3adfb60633/data/embed/" aria-label="Interactive world map with visited places."></journey-sphere>
             <div id="visited-place-summary" class="visited-place-summary" aria-label="Visited place list"></div>
           </div>
         </section>
       </main>
     </div>
 
-    <script type="module" src="https://cdn.jsdelivr.net/gh/williamzheng0711/journey-sphere@main/embed.js"></script>
+    <script type="module" src="packages/journey-sphere/embed.js"></script>
     <script type="module" src="JS/site.js"></script>
   </body>
 </html>

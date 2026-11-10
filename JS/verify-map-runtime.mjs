@@ -1,4 +1,5 @@
 import { readFile, readdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 const root = new URL('../', import.meta.url);
 const read = file => readFile(new URL(file, root), 'utf8');
@@ -9,13 +10,22 @@ assert.ok(Array.isArray(places) && places.length > 0);
 assert.ok(places.every(place => typeof place === 'string' && place.trim()));
 assert.equal(new Set(places).size, places.length);
 assert.match(html, /<journey-sphere\b/);
-assert.doesNotMatch(html + adapter, /packages\/|data\/compiled|createCompiledJourneySphere|initialCountries|leaflet\.js/);
+assert.doesNotMatch(adapter, /data\/compiled|createCompiledJourneySphere|initialCountries|leaflet\.js/);
+assert.doesNotMatch(html + adapter, /cdn\.jsdelivr\.net|@main\//);
 assert.ok(adapter.includes('element.places = places'));
 assert.ok(!(await readdir(new URL('data/', root))).some(name => /geojson|startup/.test(name)), 'Consumer must not contain map boundaries');
-const entry = html.match(/src="(https:\/\/cdn\.jsdelivr\.net\/gh\/williamzheng0711\/journey-sphere@([a-f0-9]{40})\/embed\.js)"/);
-assert.ok(entry, 'Pin the remote map entry to a full release commit');
-const response = await fetch(entry[1], { signal: AbortSignal.timeout(30_000) });
-assert.ok(response.ok, `Map entry unavailable: ${response.status}`);
-assert.match(response.headers.get('content-type'), /javascript/);
-assert.equal(response.headers.get('access-control-allow-origin'), '*');
-console.log(`Verified remote-only map consumer with ${places.length} place names; no local map files.`);
+assert.match(html, /<script type="module" src="packages\/journey-sphere\/embed\.js"><\/script>/);
+const dataAttribute = html.match(/<journey-sphere\b[^>]*data-base-url="([^"]+)"/);
+assert.ok(dataAttribute, 'Set a pinned data-base-url on the map');
+const dataBaseUrl = dataAttribute[1];
+assert.match(dataBaseUrl, /^https:\/\/raw\.githubusercontent\.com\/williamzheng0711\/journey-sphere\/[a-f0-9]{40}\/data\/embed\/$/);
+assert.ok(html.includes(`<link rel="preload" as="fetch" crossorigin="anonymous" href="${dataBaseUrl}world.json">`), 'Preload the same pinned overview used by the map');
+const deploymentRoot = new URL('packages/journey-sphere/', root);
+const provenance = JSON.parse(await readFile(new URL('export-manifest.json', deploymentRoot), 'utf8'));
+assert.equal(provenance.dataBaseUrl, dataBaseUrl, 'Runtime and data must use the verified deployment configuration');
+for (const [file, hash] of Object.entries(provenance.files)) {
+  assert.equal(createHash('sha256').update(await readFile(new URL(file, deploymentRoot))).digest('hex'), hash, `Generated map file changed: ${file}`);
+}
+assert.ok(provenance.files['embed.js'] && provenance.files['src/embed.js'] && provenance.files['vendor/leaflet/leaflet.esm.min.js']);
+assert.ok(!Object.keys(provenance.files).some(file => /\.(?:geojson|json)$/.test(file) && file.startsWith('data/')), 'Geographic data stays in the pinned JourneySphere release');
+console.log(`Verified generated map runtime with ${places.length} place names and immutable remote geography.`);
