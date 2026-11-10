@@ -26,8 +26,9 @@ Use the intended full data commit in the command, the element's
 file hashes. Make map changes in JourneySphere and regenerate this directory.
 Editing the personal place list still needs no build.
 
-The page preloads the map entry, Leaflet engine and world overview. It also
-connects to the data host early, so map loading overlaps the rest of the page.
+The page preloads the initial map modules, styles, Leaflet engine and world
+overview. It also connects to the data host early. Font styles load in the
+background, so a slow font request does not delay map startup.
 
 For ambiguous names, qualify with the region and ISO3 country, for example
 `Middlesex County, Massachusetts, USA`. Unknown or ambiguous places show an error
